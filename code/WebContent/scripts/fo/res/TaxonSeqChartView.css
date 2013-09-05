@@ -1,0 +1,9 @@
+.TaxonSeqChartView
+{
+    
+}
+
+.TaxonSeqChartView .taxon
+{
+    fill: rgba(123, 29, 32, 1);
+}

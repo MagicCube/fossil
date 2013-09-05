@@ -1,0 +1,50 @@
+.SearchBoxView 
+{
+    height: 75px;
+    position: relative;
+    z-index: 999999999;
+}
+
+.SearchBoxView #head
+{
+    position: absolute;
+    width: 90px;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background: url(images/search-box-head.png) no-repeat;
+    overflow: hidden;
+}
+
+.SearchBoxView #body
+{
+    position: absolute;
+    left: 89.5px;
+    right: 35px;
+    top: 0;
+    bottom: 0;
+    background: url(images/search-box-body.png) repeat-x;
+}
+
+.SearchBoxView #tail
+{
+    position: absolute;
+    width: 35px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: url(images/search-box-tail.png) no-repeat;
+}
+
+.SearchBoxView input
+{
+    position: absolute;
+    top: 16px;
+    bottom: 19px;
+    left: 88px;
+    right: 20px;
+    border: none;
+    color: white;
+    background: none;
+    font-size: 26px;
+}
