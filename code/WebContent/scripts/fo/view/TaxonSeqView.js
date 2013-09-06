@@ -4,6 +4,7 @@ $import("fo.view.View3D");
 $import("fo.ani.Animation");
 
 $include("fo.res.TaxonSeqView.css");
+$include("fo.res.TaxonSeqView3D.css");
 
 fo.view.TaxonSeqView = function()
 {
@@ -23,9 +24,6 @@ fo.view.TaxonSeqView = function()
     
     me.$scene = null;
     me.$camera = null;
-    
-    var _scrollableContainer = null;
-    var _scalableContainer = null;
 
     base.init = me.init;
     me.init = function(p_options)
@@ -67,7 +65,7 @@ fo.view.TaxonSeqView = function()
           
           .append("div")
           .style({
-              "background-color": function() { return "rgba(123, 29, 32, " + (0.65 + Math.random() * 0.25) + ")"; }
+              "background-color": function() { return "rgba(123, 29, 32, " + (0.4 + Math.random() * 0.5) + ")"; }
           })
           
           .append("span")
@@ -158,6 +156,13 @@ fo.view.TaxonSeqView = function()
             top: "",
             position: ""
         });
+        me.$container.find(".taxon div").css(
+        {
+            height: "",
+            border: "",
+            borderRadius: ""
+        });
+        
         
         me.$scene = me.$container.find(".scene");
         me.$camera = me.$container.find(".camera");
@@ -165,10 +170,12 @@ fo.view.TaxonSeqView = function()
         
         me.$camera.css("-webkit-transform-origin-x", "0");
         me.$camera.css("-webkit-transform-origin-y", "0");
-        me.$scene.on("mousewheel", _onmousewheel);
+        me.$scene.css("overflow", "auto").on("mousewheel", _onmousewheel);
 
         me.$container.addClass("two-d");
         me.$container.removeClass("three-d");
+        
+        me.$container.on("mouseover");
         
         me.$camera.append(me.$container.children(".taxon"));
         
@@ -213,6 +220,7 @@ fo.view.TaxonSeqView = function()
         }
         else
         {
+            /*
             e.preventDefault();
             
             var scrollTop = me.$scene.scrollTop();
@@ -230,6 +238,7 @@ fo.view.TaxonSeqView = function()
                 return;
             }
             me.$scene.scrollTop(scrollTop);
+            */
         }
         e.stopPropagation();
     }

@@ -1,0 +1,28 @@
+.TaxonSeqView.three-d .taxon > div
+{
+    position: absolute;
+    overflow: hidden;
+}
+
+.TaxonSeqView.three-d .taxon > div
+{
+    width: 280px;
+    height: 280px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+.TaxonSeqView.three-d .taxon > div > span
+{
+    display: block;
+    line-height: 280px;
+    color: white;
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.TaxonSeqView.three-d > .taxon
+{
+    display: none;
+}
