@@ -7,7 +7,9 @@ fo.view.View3D = function()
     var base = {};
 
     
+    me.isRendering = true;
     me.isAnimating = false;
+    me.antialias = false;
     
     
     me.scene = null;
@@ -18,7 +20,7 @@ fo.view.View3D = function()
     me.trackballControl = null;
     
     
-    
+    me.objects = [];
 
     
     me.onrendering = null;
@@ -60,8 +62,7 @@ fo.view.View3D = function()
         {
             me.rendererClass = THREE.WebGLRenderer;
         }
-        //me.renderer = new me.rendererClass({ antialias: true });
-        me.renderer = new me.rendererClass();
+        me.renderer = new me.rendererClass({ antialias: me.antialias });
         me.renderer.setSize(me.frame.width, me.frame.height);
         me.$element.get(0).appendChild(me.renderer.domElement);
     };
@@ -77,10 +78,7 @@ fo.view.View3D = function()
         {
             me.trackballControl = new THREE.TrackballControls(me.camera, me.renderer.domElement);
             me.trackballControl.rotateSpeed = 0.5;
-            me.trackballControl.addEventListener("change", function()
-            {
-                
-            });
+            //me.trackballControl.noRotateY = true;
             me.on("rendering", function()
             {
                 me.trackballControl.update();
@@ -104,16 +102,19 @@ fo.view.View3D = function()
         
         TWEEN.update();
         
-        me.renderer.render(me.scene, me.camera);
+        if (me.isRendering)
+        {
+            me.renderer.render(me.scene, me.camera);
+        }
     };
     
-    me.startAnimate = function()
+    me.startAnimation = function()
     {
         me.isAnimating = true;
         me.render();
     };
     
-    me.stopAnimate = function()
+    me.stopAnimation = function()
     {
         me.isAnimating = false;
     };

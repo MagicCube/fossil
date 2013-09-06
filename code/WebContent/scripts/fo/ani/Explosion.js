@@ -5,7 +5,7 @@ fo.ani.Explosion = function()
     var me = $extend(fo.ani.Animation);
     var base = {};
     
-    me.duration = 8000;
+    me.duration = 5000;
     me.range = 6000;
     
     base.init = me.init;

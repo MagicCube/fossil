@@ -1,5 +1,7 @@
 $ns("fo.scn");
 
+$import("fo.view.TaxonChaosView3D");
+
 $include("fo.res.WelcomeScene.css");
 
 fo.scn.WelcomeScene = function()
@@ -9,6 +11,8 @@ fo.scn.WelcomeScene = function()
     me.elementClass = "WelcomeScene";
     var base = {};
     
+    me.taxonChaosView3D = null;
+    
     var _$intro = null;
 
     base.init = me.init;
@@ -17,6 +21,19 @@ fo.scn.WelcomeScene = function()
         base.init(p_options);
         
         _initIntro();
+        me.initTaxonView();
+    };
+    
+    me.initTaxonView = function()
+    {
+        me.taxonView = new fo.view.TaxonChaosView3D({
+            frame: {
+                left: 0,
+                right: 0,
+                width: me.frame.width,
+                height: me.frame.height
+            }
+        });
     };
     
     function _initIntro()
@@ -51,6 +68,11 @@ fo.scn.WelcomeScene = function()
                     scale: 1
                 }, 2000);
             }
+            
+            if ($debug)
+            {
+                me.start();
+            }
         }
         else
         {
@@ -58,23 +80,35 @@ fo.scn.WelcomeScene = function()
         }
     };
     
+    base.deactivate = me.deactivate;
+    me.deactivate = function()
+    {
+        base.deactivate();
+        fo.app.searchBoxView.delegate = null;
+    };
+    
     me.start = function()
     {
         _$intro.fadeOut(function()
         {
+            $("#projectLogo").fadeIn("slow");
             _$intro.remove();
             
-            fo.app.setRootScene("Overview");
+            me.addSubview(me.taxonView);
+            var ani = me.taxonView.startAnimation("Splash");
+            ani.on("complete", function()
+            {
+                if ($debug)
+                {
+                    fo.app.searchBoxView.show();
+                }
+                else
+                {
+                    fo.app.searchBoxView.$container.fadeIn(1500);
+                }
+                fo.app.searchBoxView.delegate = me.taxonView;
+            });
         });
-    };
-    
-    
-    me.onKeydown = function(e)
-    {
-        if (e.keyCode == 13 || e.keyCode == 32)
-        {
-            me.start();
-        }
     };
 
     return me.endOfClass(arguments);

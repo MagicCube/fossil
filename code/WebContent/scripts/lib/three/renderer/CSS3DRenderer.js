@@ -52,6 +52,7 @@ THREE.CSS3DRenderer = function () {
 
 	var domElement = document.createElement( 'div' );
 	domElement.style.overflow = 'hidden';
+	domElement.className = "scene";
 
 	domElement.style.WebkitTransformStyle = 'preserve-3d';
 	domElement.style.MozTransformStyle = 'preserve-3d';
@@ -61,6 +62,7 @@ THREE.CSS3DRenderer = function () {
 	this.domElement = domElement;
 
 	var cameraElement = document.createElement( 'div' );
+	cameraElement.className = "camera";
 
 	cameraElement.style.WebkitTransformStyle = 'preserve-3d';
 	cameraElement.style.MozTransformStyle = 'preserve-3d';

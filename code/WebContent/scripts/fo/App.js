@@ -3,7 +3,6 @@ $ns("fo");
 $import("lib.three.Three", function(){
     $import("lib.three.control.TrackballControls");
     $import("lib.three.renderer.CSS3DRenderer");
-    $import("lib.globe.Globe");
 });
 $import("lib.d3.D3");
 $import("lib.jquery.plugin.Transit");
@@ -70,7 +69,7 @@ fo.App = function()
     me.loadTaxons = function()
     {
         $.ajax({
-            url: $mappath("~/data/taxon.dic"),
+            url: $mappath("~/data/taxon.txt"),
             async: false
         }).success(function(e)
         {
@@ -82,7 +81,8 @@ fo.App = function()
                 var id = line.substr(0, 10);
                 var taxon = {
                     id: id,
-                    name: line.substr(17, 8)
+                    name: line.substr(17, 8).replace(".1111", ""),
+                    fullName: line.substr(39, 24).trim() + " " + line.substr(64, 23).trim()
                 };
                 $taxons.add(taxon);
             }
@@ -92,11 +92,19 @@ fo.App = function()
     base.run = me.run;
     me.run = function(args)
     {
-        me.setRootScene("Welcome");
-        //me.setRootScene("Overview");
+        //me.setRootScene("Welcome");
+        me.setRootScene("Overview");
         //me.setRootScene("Diversity");
     };
     
+    
+    $(document).on("keydown", function(e)
+    {
+        if (me.activeScene != null && isFunction(me.activeScene.onKeydown))
+        {
+            me.activeScene.onKeydown(e);
+        }
+    });
     
     
     

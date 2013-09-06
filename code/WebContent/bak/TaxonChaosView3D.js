@@ -68,8 +68,8 @@ fo.view.TaxonChaosView3D = function()
     };
 
     
-    base.startAnimate = me.startAnimate;
-    me.startAnimate = function(p_animationName)
+    base.startAnimation = me.startAnimation;
+    me.startAnimation = function(p_animationName)
     {
         if (me.trackballControl == null)
         {
@@ -92,7 +92,7 @@ fo.view.TaxonChaosView3D = function()
             ani.start();
         }
         
-        base.startAnimate();
+        base.startAnimation();
         return ani;
     };
     
@@ -102,7 +102,7 @@ fo.view.TaxonChaosView3D = function()
     {
         if (p_keyword == "")
         {
-            me.startAnimate("Explosion");
+            me.startAnimation("Explosion");
             return;
         }
         

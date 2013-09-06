@@ -1,6 +1,6 @@
 $ns("fo.scn");
 
-$import("fo.view.TaxonSeqChartView");
+$import("fo.view.TaxonSeqView");
 
 $include("fo.res.OverviewScene.css");
 
@@ -11,19 +11,19 @@ fo.scn.OverviewScene = function()
     me.elementClass = "OverviewScene";
     var base = {};
     
-    me.chartView = null;
+    me.seqView = null;
     
     base.init = me.init;
     me.init = function(p_options)
     {
         base.init(p_options);
         
-        me.initChartView();
+        me.initSeqView();
     };
     
-    me.initChartView = function()
+    me.initSeqView = function()
     {
-        me.chartView = new fo.view.TaxonSeqChartView({
+        me.seqView = new fo.view.TaxonSeqView({
             frame: {
                 left: 0,
                 top: 0,
@@ -31,7 +31,7 @@ fo.scn.OverviewScene = function()
                 height: me.frame.height - 0
             }
         });
-        me.addSubview(me.chartView);
+        me.addSubview(me.seqView);
     };
     
     base.activate = me.activate;
@@ -46,6 +46,16 @@ fo.scn.OverviewScene = function()
         else
         {
             
+        }
+    };
+    
+    
+    
+    me.onKeydown = function(e)
+    {
+        if (e.keyCode == 13 || e.keyCode == 32)
+        {
+            me.seqView.startAnimation("To2D");
         }
     };
 

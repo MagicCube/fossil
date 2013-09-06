@@ -2,6 +2,7 @@ $ns("fo.ani");
 
 $import("fo.ani.Explosion");
 $import("fo.ani.Splash");
+$import("fo.ani.To2D");
 
 fo.ani.Animation = function()
 {
@@ -9,6 +10,7 @@ fo.ani.Animation = function()
     var base = {};
     
     me.nextAnimation = null;
+    me.view = null;
     me.camera = null;
     me.objects = null;
     
@@ -43,6 +45,10 @@ fo.ani.Animation = function()
         {
             me.nextAnimation.start();
         }
+        me.nextAnimation = null;
+        me.view = null;
+        me.camera = null;
+        me.objects = null;
     };
 
     return me.endOfClass(arguments);

@@ -21,6 +21,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 	this.panSpeed = 0.3;
 
 	this.noRotate = false;
+	this.noRotateY = false;
 	this.noZoom = false;
 	this.noPan = false;
 	this.noRoll = false;
@@ -38,6 +39,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 	this.target = new THREE.Vector3();
 
 	var lastPosition = new THREE.Vector3();
+	var lastClientY = 0;
 
 	var _state = STATE.NONE,
 	_prevState = STATE.NONE,
@@ -381,9 +383,9 @@ THREE.TrackballControls = function ( object, domElement ) {
 		}
 
 		if ( _state === STATE.ROTATE && !_this.noRotate ) {
-
+		    lastClientY = event.clientY;
 			_rotateStart = _this.getMouseProjectionOnBall( event.clientX, event.clientY );
-			_rotateEnd.copy(_rotateStart)
+			_rotateEnd.copy(_rotateStart);
 
 		} else if ( _state === STATE.ZOOM && !_this.noZoom ) {
 
@@ -393,7 +395,7 @@ THREE.TrackballControls = function ( object, domElement ) {
 		} else if ( _state === STATE.PAN && !_this.noPan ) {
 
 			_panStart = _this.getMouseOnScreen( event.clientX, event.clientY );
-			_panEnd.copy(_panStart)
+			_panEnd.copy(_panStart);
 
 		}
 
@@ -410,9 +412,14 @@ THREE.TrackballControls = function ( object, domElement ) {
 		event.stopPropagation();
 
 		if ( _state === STATE.ROTATE && !_this.noRotate ) {
-
-			_rotateEnd = _this.getMouseProjectionOnBall( event.clientX, event.clientY );
-
+		    if (_this.noRotateY)
+	        {
+		        _rotateEnd = _this.getMouseProjectionOnBall( event.clientX, lastClientY );
+	        }
+		    else
+	        {
+		        _rotateEnd = _this.getMouseProjectionOnBall( event.clientX, event.clientY );
+	        }
 		} else if ( _state === STATE.ZOOM && !_this.noZoom ) {
 
 			_zoomEnd = _this.getMouseOnScreen( event.clientX, event.clientY );

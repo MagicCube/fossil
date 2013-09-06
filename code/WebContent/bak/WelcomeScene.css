@@ -1,0 +1,42 @@
+.WelcomeScene
+{
+    
+}
+
+.WelcomeScene #intro
+{
+    display: block;
+    position: absolute;
+    width: 800px;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.WelcomeScene #intro #welcomeTo
+{
+    text-align: center;
+    font-family: MyriadProCondRegular;
+    font-size: 25px;
+}
+
+.WelcomeScene #intro #title
+{
+    display: block;
+    width: 540px;
+    text-align: center;
+    border: 1px solid white;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 24px;
+    margin-bottom: 38px;
+    font-family: MyriadProCondRegular;
+    font-size: 72px;
+    font-weight: bold;
+}
+
+.WelcomeScene #intro #description
+{
+    text-align: center;
+    font-family: MyriadProCondRegular;
+    font-size: 23px;
+}

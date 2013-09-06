@@ -29,6 +29,23 @@ fo.scn.DiversityScene = function()
                     height: me.frame.height}
         });
         me.addSubview(me.globeView);
+        
+        d3.tsv($mappath("~/data/section.txt"), function(e) { 
+            var data = [];
+            for (var i = 0; i < e.length; i++)
+            {
+                var row = e[i];
+                data.add({
+                    value: parseInt(row.id),
+                    location: {
+                        lng: parseFloat(row.lng),
+                        lat: parseFloat(row.lat)
+                    }
+                });
+            }
+            console.log(data);
+            me.globeView.addData(data);
+        });
     };
 
     base.activate = me.activate;
@@ -39,7 +56,7 @@ fo.scn.DiversityScene = function()
         if (!isPoppedBack)
         {
             $("#projectLogo").fadeIn();
-            me.globeView.startAnimate();
+            me.globeView.startAnimation();
         }
         else
         {

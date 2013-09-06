@@ -5,7 +5,7 @@ fo.ani.Splash = function()
     var me = $extend(fo.ani.Animation);
     var base = {};
     
-    me.duration = 8000;
+    me.duration = 1000 * 8;
     me.range = 6500;
     
     base.init = me.init;
