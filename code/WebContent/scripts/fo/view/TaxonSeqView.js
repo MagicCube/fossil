@@ -24,6 +24,7 @@ fo.view.TaxonSeqView = function()
     
     me.$scene = null;
     me.$camera = null;
+    me.styleSheet = null;
 
     base.init = me.init;
     me.init = function(p_options)
@@ -31,6 +32,17 @@ fo.view.TaxonSeqView = function()
         base.init(p_options);
         
         me.startAnimation("Splash");
+        
+        
+        var i = 0;
+        for (i = 0; i <  document.styleSheets.length; i++)
+        {
+            if (document.styleSheets[i].href.contains("TaxonSeqView.css"))
+            {
+                break;
+            }
+        }
+        me.styleSheet = document.styleSheets[i];
     };
     
     base.initScene = me.initScene;
@@ -170,19 +182,15 @@ fo.view.TaxonSeqView = function()
         
         me.$camera.css("-webkit-transform-origin-x", "0");
         me.$camera.css("-webkit-transform-origin-y", "0");
-        me.$scene.css("overflow", "auto").on("mousewheel", _onmousewheel);
+        me.$scene.css("overflowY", "auto").on("mousewheel", _onmousewheel);
 
         me.$container.addClass("two-d");
         me.$container.removeClass("three-d");
-        
-        me.$container.on("mouseover");
         
         me.$camera.append(me.$container.children(".taxon"));
         
         TWEEN.removeAll();
     };
-    
-    
     
     
     function _onmousewheel(e)
@@ -200,22 +208,24 @@ fo.view.TaxonSeqView = function()
                 me.scale += (e.originalEvent.wheelDelta) / 1000;
             }
             
-            if (me.scale > 2)
+            if (me.scale > 1)
             {
-                me.scale = 2;
+                me.scale = 1;
             }
             else if (me.scale < 0.1)
             {
                 me.scale = 0.1;
             }
             
-            if (me.scale < 1)
+            var height = parseInt(18 * me.scale);
+            me.styleSheet.rules[3].style.height = height + "px";
+            if (me.scale >= 0.8)
             {
-                me.$camera.css("transform", "scale(" + me.scale + ")");
+                me.styleSheet.rules[5].style.display = "";
             }
             else
             {
-                me.$camera.css("transform", "scale(" + me.scale + ")");
+                me.styleSheet.rules[5].style.display = "none";
             }
         }
         else

@@ -92,8 +92,8 @@ fo.App = function()
     base.run = me.run;
     me.run = function(args)
     {
-        //me.setRootScene("Welcome");
-        me.setRootScene("Overview");
+        me.setRootScene("Welcome");
+        //me.setRootScene("Overview");
         //me.setRootScene("Diversity");
     };
     
