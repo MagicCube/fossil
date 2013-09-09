@@ -22,6 +22,8 @@ fo.view.TaxonSeqView = function()
         right: 25
     };
     
+    
+    me.rootObject = null;
     me.$scene = null;
     me.$camera = null;
     me.styleSheet = null;
@@ -35,7 +37,7 @@ fo.view.TaxonSeqView = function()
         
         
         var i = 0;
-        for (i = 0; i <  document.styleSheets.length; i++)
+        for (i = 0; i < document.styleSheets.length; i++)
         {
             if (document.styleSheets[i].href.contains("TaxonSeqView.css"))
             {
@@ -88,6 +90,8 @@ fo.view.TaxonSeqView = function()
     {
         me.initTaxons();
 
+        me.rootObject = new THREE.Object3D();
+        
         var vector = new THREE.Vector3();
         var l = 500;
         var radius = l * 3.5;
@@ -109,16 +113,17 @@ fo.view.TaxonSeqView = function()
 
             object.lookAt(vector);
 
-            me.scene.add(object);
             me.objects.add(object);
+            me.rootObject.add(object);
         }
+        me.scene.add(me.rootObject);
     };
     
     base.startAnimation = me.startAnimation;
     me.startAnimation = function(p_animationName, duration)
     {
         var ani = null;
-        ani = fo.ani.Animation.createInstance(p_animationName, { camera: me.camera, objects: me.objects, view: me });
+        ani = fo.ani.Animation.createInstance(p_animationName, { camera: me.camera, scene: me.scene, rootObject: me.rootObject, objects: me.objects, view: me });
         if (ani != null)
         {
             if ($speed == "fast")
@@ -182,11 +187,11 @@ fo.view.TaxonSeqView = function()
         
         me.$camera.css("-webkit-transform-origin-x", "0");
         me.$camera.css("-webkit-transform-origin-y", "0");
-        me.$scene.css("overflowY", "auto").on("mousewheel", _onmousewheel);
+        me.$scene.css("overflow", "auto").on("mousewheel", _onmousewheel);
 
         me.$container.addClass("two-d");
         me.$container.removeClass("three-d");
-        
+                
         me.$camera.append(me.$container.children(".taxon"));
         
         TWEEN.removeAll();
@@ -230,6 +235,11 @@ fo.view.TaxonSeqView = function()
         }
         else
         {
+            var event = e.originalEvent;
+            if (event.wheelDeltaX > 0 && me.$scene.get(0).scrollLeft == 0)
+            {
+                e.preventDefault();
+            }
             /*
             e.preventDefault();
             

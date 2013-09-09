@@ -19,14 +19,16 @@ fo.ani.Splash = function()
     {
         base.start();
         
-        // Zoom in
-        var zoomInFirst = new TWEEN.Tween(me.camera.position)
+        // Opening
+        new TWEEN.Tween(me.camera.position)
             .to({ z: 3800 }, me.duration * 0.4)
-            .easing(TWEEN.Easing.Cubic.Out);       
-        zoomInFirst.start(); 
-        
-        var yoyoRotate = new TWEEN.Tween(me.camera.position)
-            .to({ x: -4600, z: 1800, y: 2000 }, 1000 * 120)
+            .easing(TWEEN.Easing.Cubic.Out)
+            .start();       
+    
+        // Loop
+        var yoyoRotate = new TWEEN.Tween(me.rootObject.rotation)
+            .delay(me.duration * 0.7)
+            .to({ y: 2 * Math.PI, x: 2 * Math.PI, z: 2 * Math.PI }, 1000 * 240)
             .easing(TWEEN.Easing.Sinusoidal.InOut)
             .yoyo(true)
             .repeat(1000);

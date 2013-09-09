@@ -81,6 +81,13 @@ fo.ani.To2D = function()
             }
         }
         
+        new TWEEN.Tween(me.rootObject.rotation)
+            .to({ x: 0,
+                  y: 0,
+                  z: 0 }, duration)
+            .easing(TWEEN.Easing.Exponential.InOut)
+            .start();
+        
         new TWEEN.Tween(me.camera.rotation)
             .delay(Math.random() * duration / 2)
             .to({ x: 0,
