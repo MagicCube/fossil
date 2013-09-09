@@ -98,7 +98,10 @@ fo.view.View3D = function()
             requestAnimationFrame(me.render);
         }
 
-        me.trigger("rendering");
+        if (me.isRendering)
+        {
+            me.trigger("rendering");
+        }
         
         TWEEN.update();
         

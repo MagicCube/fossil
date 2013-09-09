@@ -12,7 +12,7 @@
     border-radius: 10px;
 }
 
-.TaxonSeqView.three-d .taxon > div > span
+.TaxonSeqView.three-d .taxon > div > #name
 {
     display: block;
     line-height: 280px;
@@ -20,6 +20,11 @@
     font-size: 50px;
     font-weight: bold;
     text-align: center;
+}
+
+.TaxonSeqView.three-d .taxon > div > #fullName
+{
+    display: none;
 }
 
 .TaxonSeqView.three-d > .taxon

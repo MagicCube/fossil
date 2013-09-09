@@ -31,6 +31,7 @@ fo.scn.OverviewScene = function()
                 height: me.frame.height - 0
             }
         });
+
         me.addSubview(me.seqView);
     };
     
@@ -53,7 +54,7 @@ fo.scn.OverviewScene = function()
     
     me.onKeydown = function(e)
     {
-        if (e.keyCode == 13 || e.keyCode == 32)
+        if (e.keyCode == 32)
         {
             me.seqView.startAnimation("To2D");
         }

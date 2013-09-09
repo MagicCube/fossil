@@ -25,6 +25,7 @@ fo.App = function()
     
     me.scenes = [];
     me.activeScene = null;
+    me.homeSceneName = "Welcome";
     
     me.searchBoxView = null;
     
@@ -73,18 +74,18 @@ fo.App = function()
             async: false
         }).success(function(e)
         {
-            window.$taxons = [];
+            fo.taxons = [];
             var lines = e.split("\n");
             for (var i = 0; i < 1200; i++)
             {
                 var line = lines[i];
-                var id = line.substr(0, 10);
+                var id = line.substr(1, 10);
                 var taxon = {
                     id: id,
                     name: line.substr(17, 8).replace(".1111", ""),
-                    fullName: line.substr(39, 24).trim() + " " + line.substr(64, 23).trim()
+                    fullName: line.substr(39, 24).trim() + " " + line.substr(64, 23).trim().replace("1", "")
                 };
-                $taxons.add(taxon);
+                fo.taxons.add(taxon);
             }
         });
     };
@@ -92,7 +93,7 @@ fo.App = function()
     base.run = me.run;
     me.run = function(args)
     {
-        me.setRootScene("Welcome");
+        me.setRootScene(me.homeSceneName);
         //me.setRootScene("Overview");
         //me.setRootScene("Diversity");
     };

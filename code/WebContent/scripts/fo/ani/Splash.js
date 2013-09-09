@@ -26,15 +26,13 @@ fo.ani.Splash = function()
             .start();       
     
         // Loop
-        var yoyoRotate = new TWEEN.Tween(me.rootObject.rotation)
-            .delay(me.duration * 0.7)
+        new TWEEN.Tween(me.rootObject.rotation)
             .to({ y: 2 * Math.PI, x: 2 * Math.PI, z: 2 * Math.PI }, 1000 * 240)
             .easing(TWEEN.Easing.Sinusoidal.InOut)
-            .yoyo(true)
-            .repeat(1000);
+            .repeat(1000)
+            .start();
         
-        setTimeout(function() { yoyoRotate.start(); }, me.duration * 0.3);
-        setTimeout(me.explode, me.duration * 0.2);
+        me.explode();
     };
     
     me.explode = function()
@@ -45,7 +43,7 @@ fo.ani.Splash = function()
         {
             var obj = me.objects[i];
             new TWEEN.Tween(obj.position)
-                .delay(Math.random() * explosionDuration / 2)
+                .delay(Math.random() * explosionDuration / 2 + me.duration * 0.2)
                 .to({ x: Math.random() * me.range - me.range / 2,
                       y: Math.random() * me.range - me.range / 2,
                       z: Math.random() * me.range - me.range / 2 }, explosionDuration / 2)

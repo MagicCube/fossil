@@ -35,7 +35,7 @@ fo.view.TaxonChaosView3D = function()
         var radius = l * 3.5;
         for ( var i = 0; i < l; i++)
         {
-            var t = $taxons[i];
+            var t = fo.taxons[i];
             var $div = $("<div class='taxon'>");
             $div.css("backgroundColor", "rgba(123, 29, 32, " + (0.4 + Math.random() * 0.5) + ")");
             $div.text(t.name.replace(".1111", ""));

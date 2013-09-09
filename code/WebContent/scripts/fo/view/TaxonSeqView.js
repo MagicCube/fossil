@@ -52,6 +52,13 @@ fo.view.TaxonSeqView = function()
     {
         me.switchTo3D();
         
+        if ($speed == "fast")
+        {
+            setTimeout(function(){
+                me.startAnimation("To2D");
+            }, 50);
+        }
+        
         base.initScene();
     };
     
@@ -67,23 +74,27 @@ fo.view.TaxonSeqView = function()
 
     me.initTaxons = function()
     {
-        d3.select(me.$container.get(0)).selectAll(".taxon")
-          .data($taxons)
+        var innerDiv = d3.select(me.$container.get(0)).selectAll(".taxon")
+          .data(fo.taxons)
           .enter()
           .append("div")
           .classed("taxon", true)
           .attr({
-              "id": function(d) { return d.name; },
+              "id": function(d) { return "t" + d.id; },
               "title": function(d) { return d.fullName; }
           })
           
           .append("div")
           .style({
               "background-color": function() { return "rgba(123, 29, 32, " + (0.4 + Math.random() * 0.5) + ")"; }
-          })
-          
-          .append("span")
-          .text(function(d) { return d.name; });
+          });
+        
+        innerDiv.append("span")
+                .attr("id", "name")
+                .text(function(d) { return d.name; });
+        innerDiv.append("span")
+                .attr("id", "fullName")
+                .text(function(d) { return d.fullName; });
     };
     
     me.initObjects = function()
@@ -148,8 +159,9 @@ fo.view.TaxonSeqView = function()
     };
     
     me.switchTo2D = function()
-    {       
+    {
         me.stopAnimation();
+        me.isRendering = false;
         me.mode = "2D";
         
         fo.app.searchBoxView.$container.fadeIn("slow");
@@ -171,7 +183,7 @@ fo.view.TaxonSeqView = function()
             transform : "",
             webkitTransformStyle : "",
             top: "",
-            position: ""
+            position: "relative"
         });
         me.$container.find(".taxon div").css(
         {
@@ -179,14 +191,12 @@ fo.view.TaxonSeqView = function()
             border: "",
             borderRadius: ""
         });
-        
-        
         me.$scene = me.$container.find(".scene");
         me.$camera = me.$container.find(".camera");
-        
-        
         me.$camera.css("-webkit-transform-origin-x", "0");
         me.$camera.css("-webkit-transform-origin-y", "0");
+        
+        
         me.$scene.css("overflow", "auto").on("mousewheel", _onmousewheel);
 
         me.$container.addClass("two-d");
@@ -195,7 +205,33 @@ fo.view.TaxonSeqView = function()
         me.$camera.append(me.$container.children(".taxon"));
         
         TWEEN.removeAll();
+        
+        fo.app.searchBoxView.delegate = me;
     };
+    
+    me.search = function(p_keyword, p_control)
+    {
+        var keyword = p_keyword.trim().toLowerCase();
+        me.$scene.scrollTop(0);
+        for (var i = 0; i < fo.taxons.length; i++)
+        {
+            var t = fo.taxons[i];
+            var tDiv = document.getElementById("t" + t.id);
+            if (t.fullName.toLowerCase().startsWith(keyword))
+            {
+                $(tDiv).show();
+            }
+            else
+            {
+                $(tDiv).hide();
+            }
+        }
+    };
+    
+    
+    
+    
+    
     
     
     function _onmousewheel(e)
@@ -240,25 +276,6 @@ fo.view.TaxonSeqView = function()
             {
                 e.preventDefault();
             }
-            /*
-            e.preventDefault();
-            
-            var scrollTop = me.$scene.scrollTop();
-            
-            var delta = parseInt((e.originalEvent.wheelDelta) * 0.8);
-            scrollTop = scrollTop - delta;
-            
-            if (scrollTop < 0)
-            {
-                scrollTop = 0;
-            }
-            else if (me.scale < 1 && ((me.$scene.get(0).scrollHeight * me.scale - scrollTop) <= me.$scene.height()))
-            {
-                me.$scene.get(0);
-                return;
-            }
-            me.$scene.scrollTop(scrollTop);
-            */
         }
         e.stopPropagation();
     }

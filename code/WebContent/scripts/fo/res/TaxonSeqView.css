@@ -10,7 +10,7 @@
     right: 0;
     top: 0;
     bottom: 0;
-    overflow: scroll;
+    overflow: auto;
     padding-top: 75px;
 }
 
@@ -34,18 +34,26 @@
     height: 100%;
 }
 
-.TaxonSeqView.two-d .taxon > div > span
+.TaxonSeqView.two-d .taxon > div > #name
 {
     position: absolute;
     color: rgb(180, 20, 20);
     font-size: 12px;
-    top: 2px;
+    bottom: 2px;
     left: 5px;
     right: 5px;
     text-align: center;
 }
 
-
+.TaxonSeqView.two-d .taxon > div > #fullName
+{
+    position: absolute;
+    color: rgb(255, 20, 20);
+    font-size: 36px;
+    display: none;
+    bottom: -8px;
+    white-space: nowrap;
+}
 
 
 
@@ -56,7 +64,6 @@
 .TaxonSeqView.two-d .taxon:hover
 {
     background: rgba(255, 200, 200, 0.1);
-    height: 54px;
 }
 
 .TaxonSeqView.two-d .taxon:hover > div
@@ -64,30 +71,12 @@
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
-.TaxonSeqView.two-d .taxon:hover > div > span
+.TaxonSeqView.two-d .taxon:hover > div > #name
 {
-    color: rgb(255, 20, 20);
-    font-size: 36px;
+    display: none;
+}
+
+.TaxonSeqView.two-d .taxon:hover > div > #fullName
+{
     display: inline-block;
 }
-
-
-
-
-.TaxonSeqView.two-d .taxon:hover+.taxon
-{
-    height: 30px;
-}
-
-.TaxonSeqView.two-d .taxon:hover+.taxon > div
-{
-    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-}
-
-.TaxonSeqView.two-d .taxon:hover+.taxon > div > span
-{
-    font-size: 20px;
-    display: inline-block;
-}
-
-

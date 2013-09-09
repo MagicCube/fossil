@@ -1,6 +1,5 @@
 $ns("fo.ani");
 
-$import("fo.ani.Explosion");
 $import("fo.ani.Splash");
 $import("fo.ani.To2D");
 

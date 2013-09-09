@@ -24,7 +24,7 @@ fo.ani.To2D = function()
         var duration = me.duration;
         
         var $extra = me.view.$container.children(".taxon");
-        for (var i = 0; i < $taxons.length; i++)
+        for (var i = 0; i < fo.taxons.length; i++)
         {
             var target = { 
                     left: i* 2 + me.view.padding.left,
@@ -106,7 +106,6 @@ fo.ani.To2D = function()
                   z: z }, duration)
             .easing(TWEEN.Easing.Exponential.InOut)
             .onComplete(function(){
-                me.view.stopAnimation();
                 setTimeout(_afterFirstMove, 200);
             })
             .start();
