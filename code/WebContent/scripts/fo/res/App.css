@@ -53,17 +53,6 @@ body>img#background {
     height: 100%;
 }
 
-.Scene
-{
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-
-
 #projectLogo
 {
     display: none;
@@ -75,4 +64,44 @@ body>img#background {
     height: 166px;
     background: url(images/project-logo.png);
     zoom: 0.5;
+}
+
+
+
+
+
+
+
+#overlay
+{
+    position: absolute;
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.5);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.Scene
+{
+    overflow: hidden;
+    position: absolute;
+}
+
+.Scene.root
+{
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.Scene.popped
+{
+    border: 3px solid rgba(255, 29, 32, 0.8);
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.8);
+    right: auto;
+    bottom: auto;
 }

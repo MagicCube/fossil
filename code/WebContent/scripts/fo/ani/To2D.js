@@ -26,9 +26,10 @@ fo.ani.To2D = function()
         var $extra = me.view.$container.children(".taxon");
         for (var i = 0; i < fo.taxons.length; i++)
         {
+            var t = fo.taxons[i];
             var target = { 
-                    left: i* 2 + me.view.padding.left,
-                    width: 300 * Math.random(),
+                    left: t.start + me.view.padding.left,
+                    width: (t.end - t.start),
                     height: 18,
                     top: (-i) * 18 - me.view.padding.top,
                     borderOpacity: 0

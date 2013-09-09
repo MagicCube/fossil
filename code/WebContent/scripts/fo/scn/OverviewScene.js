@@ -52,10 +52,12 @@ fo.scn.OverviewScene = function()
     
     
     
+    var _to2D = false;
     me.onKeydown = function(e)
     {
-        if (e.keyCode == 32)
+        if (!_to2D && (e.keyCode == 13 || e.keyCode == 32))
         {
+            _to2D = true;
             me.seqView.startAnimation("To2D");
         }
     };

@@ -1,0 +1,14 @@
+.DetailScene
+{
+    
+}
+
+.DetailScene > h1
+{
+    width: 100%;
+    color: rgb(255, 20, 20);
+    font-size: 36px;
+    margin: 0;
+    padding: 8px;
+    white-space: nowrap;
+}
