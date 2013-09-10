@@ -14,7 +14,19 @@
     top: 14px;
     width: 36px;
     height: 36px;
+    border-radius: 18px;
     background-repeat: no-repeat;
+    -webkit-transition: 0.3s box-shadow;
+}
+
+.PlayControlView #playPause:hover
+{
+    box-shadow: 0 0 20px rgba(128, 128, 255, 1);
+}
+
+.PlayControlView #playPause:active
+{
+    box-shadow: 0 0 45px rgba(128, 128, 255, 1);
 }
 
 .PlayControlView #playPause.playing

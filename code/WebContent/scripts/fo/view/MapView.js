@@ -47,7 +47,7 @@ fo.view.MapView = function()
     
     me.initMap = function()
     {
-        me.map = L.mapbox.map(me.mapElement, "henryli.map-ccti13xw");
+        me.map = L.mapbox.map(me.mapElement, "henryli.map-ccti13xw", { minZoom: 3 });
         window.Lmap = me.map;
         me.initLayers();
         me.zoomToDefault();
