@@ -48,7 +48,7 @@
 {
     position: absolute;
     top: 25px;
-    left: 80px;
+    left: 65px;
     right: 14px;
     height: 14px;
     border: 1px solid white;
@@ -63,29 +63,22 @@
     left: 0;
     width: 15px;
     background: rgba(255, 255, 255, 0.5);
-    border-right: 2px solid white;
+    border-right: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
 }
 
-.PlayControlView #progressBar #cursor span
+
+
+
+
+
+.PlayControlView #label
 {
     position: absolute;
-    top: -18px;
-    right: -2px;
-    text-align: right;
-    border-right: 2px solid white;
-    font-weight: bold;
-    font-size: 15px;
-    text-shadow: 0 1px 1px black;
-    color: white;
-    padding-right: 2px;
+    top: -68px;
+    right: 8px;
+    font-size: 58px;
 }
-
-
-
-
-
-
-
 
 .PlayControlView .range
 {
@@ -96,7 +89,7 @@
 
 .PlayControlView #start
 {
-    left: 80px;
+    left: 65px;
 }
 
 .PlayControlView #end
@@ -108,6 +101,6 @@
 .PlayControlView #center
 {
     text-align: center;
-    left: 80px;
+    left: 65px;
     right: 14px;
 }

@@ -30,6 +30,9 @@ fo.App = function()
     me.poppedScene = null;
     me.homeSceneName = "Welcome";
     
+    me.taxons = [];
+    me.sections = [];
+    
     me.searchBoxView = null;
     
     var _$background = null;
@@ -43,6 +46,7 @@ fo.App = function()
         me.initBackground();
         me.initOverlay();
         me.loadTaxons();
+        me.loadSections();
         me.initSearchBoxView();
         
         me.$container.on("mousewheel", function(e)
@@ -110,6 +114,27 @@ fo.App = function()
             {
                 return a.start - b.start;
             });
+        });
+    };
+    
+    me.loadSections = function()
+    {
+        d3.tsv($mappath("~/data/section.txt"), function(p_rows)
+        {
+            fo.sections = [];
+            for (var i = 0; i < p_rows.length; i++)
+            {
+                var row = p_rows[i];
+                var section = {
+                    id: "s" + row.id,
+                    location: {
+                        lat: parseFloat(row.lat),
+                        lng: parseFloat(row.lng)
+                    }
+                };
+                fo.sections[section.id] = section;
+                fo.sections.add(section);
+            }
         });
     };
 

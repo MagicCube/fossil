@@ -16,6 +16,7 @@ fo.view.PlayControlView = function()
     me.onplaystatechanged = null;
     me.onpositionchanged = null;
     
+    var _$label = null;
     var _$playPause = null;
     var _$progressBar = null;
     var _$cursor = null;
@@ -27,6 +28,8 @@ fo.view.PlayControlView = function()
     me.init = function(p_options)
     {
         base.init(p_options);
+        
+        _initLabel();
         _initPlayPause();
         _initProgressBar();
         _initRange();
@@ -34,6 +37,12 @@ fo.view.PlayControlView = function()
         me.setRange(me.range);
         me.pause();
     };
+    
+    function _initLabel()
+    {
+        _$label = $("<div id='label'/>");
+        me.$container.append(_$label);
+    }
 
     function _initPlayPause()
     {
@@ -44,10 +53,9 @@ fo.view.PlayControlView = function()
     
     function _initProgressBar()
     {
-        _$progressBar = $("<div id=progressBar><div id=cursor><span/></div></div>");
+        _$progressBar = $("<div id=progressBar><div id=cursor></div></div>");
         _$progressBar.on("mousedown", _progressBar_onmousedown);
         _$cursor = _$progressBar.children("#cursor");
-        _$cursorLabel = _$cursor.children("span");
         me.$container.append(_$progressBar);
     }
     
@@ -140,6 +148,7 @@ fo.view.PlayControlView = function()
             me.positionPercentage = (me.position - me.range[0]) / (me.range[1] - me.range[0]);
             me.update();
             
+            _$label.text("#" + me.position);
             me.trigger("positionchanged");
         }
         return me.position;
@@ -152,7 +161,7 @@ fo.view.PlayControlView = function()
     
     me.update = function()
     {
-        _$cursorLabel.text(me.position);
+        _$label.text(me.position);
         _$cursor.css({
             width: (_$progressBar.width() - 15)  * me.positionPercentage + 15
         });
