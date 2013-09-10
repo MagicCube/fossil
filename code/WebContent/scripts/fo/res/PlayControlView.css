@@ -49,6 +49,6 @@
     bottom: 0;
     left: 0;
     width: 15px;
-    background: white;
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 3px;
 }

@@ -1,8 +1,12 @@
 $ns("it.view");
 
-$import("lib.leaflet.Leaflet");
+$import("lib.leaflet.Leaflet", function()
+{
+    $import("lib.leaflet.plugin.Mapbox");
+});
 
 $include("lib.leaflet.leaflet.css");
+$include("lib.leaflet.plugin.mapbox.css");
 $include("fo.res.MapView.css");
 
 fo.view.MapView = function()
@@ -43,9 +47,7 @@ fo.view.MapView = function()
     
     me.initMap = function()
     {
-        me.map = L.map(me.mapElement, {
-            minZoom: 3
-        });
+        me.map = L.mapbox.map(me.mapElement, "henryli.map-ccti13xw");
         window.Lmap = me.map;
         me.initLayers();
         me.zoomToDefault();
@@ -53,12 +55,14 @@ fo.view.MapView = function()
     
     me.initLayers = function()
     {
+        /*
         var baseLayer = L.tileLayer(
             me.baseTileUrl,
             {
                 maxZoom: 18
             });
         me.addLayer(baseLayer, "osm,", "OSM", true, true);
+        */
     };
     
     
