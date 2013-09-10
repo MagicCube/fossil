@@ -1,7 +1,9 @@
 $ns("it.view");
 
+$import("lib.heatmap.Heatmap");
 $import("lib.leaflet.Leaflet", function()
 {
+    $import("lib.leaflet.plugin.Heatmap");
     $import("lib.leaflet.plugin.Mapbox");
 });
 
@@ -47,7 +49,7 @@ fo.view.MapView = function()
     
     me.initMap = function()
     {
-        me.map = L.mapbox.map(me.mapElement, "henryli.map-ccti13xw", { minZoom: 3 });
+        me.map = L.mapbox.map(me.mapElement, "henryli.map-ccti13xw", { minZoom: 3, maxZoom: 10 });
         window.Lmap = me.map;
         me.initLayers();
         me.zoomToDefault();
