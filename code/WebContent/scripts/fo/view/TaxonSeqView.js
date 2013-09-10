@@ -267,10 +267,9 @@ fo.view.TaxonSeqView = function()
         var element = this;
         var taxon = fo.taxons[element.id];
         var y = element.offsetTop - me.$scene.scrollTop();
-        fo.app.popupScene("Detail", {
+        fo.app.popupScene("TaxonDetail", {
             taxon: taxon,
-            title: taxon.fullName,
-            frame: { top: y, left: parseInt(element.childNodes[0].style.left), width: 100, height: 18 }
+            title: taxon.fullName
         });
     }
     

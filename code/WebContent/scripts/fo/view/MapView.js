@@ -1,5 +1,6 @@
 $ns("it.view");
 
+$import("lib.quadtree.QuadTree");
 $import("lib.heatmap.Heatmap");
 $import("lib.leaflet.Leaflet", function()
 {
@@ -24,7 +25,7 @@ fo.view.MapView = function()
     me.baseTileUrl = "https://tiles.mapbox.com/v3/henryli.map-ccti13xw/{z}/{x}/{y}.png";
     
     
-    me.defaultZoom = 5;
+    me.defaultZoom = 4;
     me.defaultLocation = {lat: 37.579412513438385, lng: 106.5234375 };
     
     
@@ -49,7 +50,12 @@ fo.view.MapView = function()
     
     me.initMap = function()
     {
-        me.map = L.mapbox.map(me.mapElement, "henryli.map-ccti13xw", { minZoom: 3, maxZoom: 10 });
+        me.map = L.mapbox.map(me.mapElement, "henryli.map-ccti13xw", {
+            minZoom: 3,
+            maxZoom: 10,
+            zoomControl: false,
+            attributionControl: false
+        });
         window.Lmap = me.map;
         me.initLayers();
         me.zoomToDefault();

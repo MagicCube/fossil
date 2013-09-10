@@ -90,25 +90,16 @@ fo.App = function()
     me.loadTaxons = function()
     {
         $.ajax({
-            url: $mappath("~/data/taxon.txt"),
+            url: $mappath("~/data/taxons.json"),
             async: false
-        }).success(function(e)
+        }).success(function(taxons)
         {
             fo.taxons = [];
-            var lines = e.split("\n");
-            for (var i = 0; i < 1200; i++)
+            for (var i = 0; i < taxons.length; i++)
             {
-                var line = lines[i];
-                var id = "t" + line.substr(1, 10);
-                var taxon = {
-                    id: id,
-                    name: line.substr(17, 8).replace(".1111", ""),
-                    fullName: line.substr(39, 24).trim() + " " + line.substr(64, 23).trim().replace("1", "")
-                };
-                taxon.start = parseInt(Math.random() * (i < 1800 ? i : 1800));
-                taxon.end = taxon.start + parseInt(Math.random() * 600);
+                var taxon = taxons[i];
                 fo.taxons.add(taxon);
-                fo.taxons[id] = taxon;
+                fo.taxons[taxon.id] = taxon;
             }
             fo.taxons = fo.taxons.sort(function(a, b)
             {
@@ -119,19 +110,15 @@ fo.App = function()
     
     me.loadSections = function()
     {
-        d3.tsv($mappath("~/data/section.txt"), function(p_rows)
+        $.ajax({
+            url: $mappath("~/data/sections.json"),
+            async: false
+        }).success(function(sections)
         {
             fo.sections = [];
-            for (var i = 0; i < p_rows.length; i++)
+            for (var i = 0; i < sections.length; i++)
             {
-                var row = p_rows[i];
-                var section = {
-                    id: "s" + row.id,
-                    location: {
-                        lat: parseFloat(row.lat),
-                        lng: parseFloat(row.lng)
-                    }
-                };
+                var section = sections[i];
                 fo.sections[section.id] = section;
                 fo.sections.add(section);
             }
@@ -218,14 +205,15 @@ fo.App = function()
         me.poppedScene = scene;
         me.activeScene = scene;
         scene.activate(args, false);
-        scene.$container.css({ opacity: 0 });
+        scene.$container.css({ scale: 0.2, opacity: 0 });
         scene.$container.transit({
             opacity: 1,
+            scale: 1,
             left: (window.innerWidth - scene.frame.width) / 2,
             top: (window.innerHeight - scene.frame.height) / 2,
             width: scene.frame.width,
             height: scene.frame.height
-        });
+        }, 500, "ease");
         return scene;
     };
     
@@ -233,11 +221,17 @@ fo.App = function()
     {
         if (me.poppedScene != null)
         {
+            var poppedScene = me.poppedScene;
             _$overlay.fadeOut(function(){
                 _$overlay.detach();
             });
             me.poppedScene.deactivate();
-            me.poppedScene.$container.detach();
+            me.poppedScene.$container.transit({
+                opacity: 0,
+                scale: 0.2
+            }, 300, "ease", function(){
+                poppedScene.$container.detach();
+            });
             me.poppedScene.$container.removeClass("popped");
             me.poppedScene = null;
             me.activeScene = null;
@@ -247,9 +241,7 @@ fo.App = function()
                 me.activateScene.activate({}, true);
             }
             me.searchBoxView.$container.fadeIn();
-            $("#projectLogo").transit({
-                opacity: 1
-            });
+            $("#projectLogo").transit({ opacity: 1 }, 2000);
         }
     };
 

@@ -1,7 +1,7 @@
 $ns("fo.scn");
 
 $import("fo.view.TaxonInfoView");
-$import("fo.view.MapView");
+$import("fo.view.HeatmapView");
 $import("fo.view.PlayControlView");
 
 $include("fo.res.TaxonDetailScene.css");
@@ -19,6 +19,7 @@ fo.scn.TaxonDetailScene = function()
     me.infoView = null;
     
     var _$title = null;
+    var _$dimension = null;
 
     base.init = me.init;
     me.init = function(p_options)
@@ -26,12 +27,23 @@ fo.scn.TaxonDetailScene = function()
         me.frame = { width: window.innerWidth, height: window.innerHeight };
         base.init(p_options);
         
+        me.initTitle();
+        me.initDimension();
+        me.initInfoView();
+        me.initPlayControlView();
+        me.initMapView();
+    };
+    
+    me.initTitle = function()
+    {
         _$title = $("<h1 id='title'>");
         me.$container.append(_$title);
+    };
     
-        me.initInfoView();
-        me.initMapView();
-        me.initPlayControlView();
+    me.initDimension = function()
+    {
+        _$dimension = $("<h1 id='dimension'>");
+        me.$container.append(_$dimension);
     };
     
     me.initInfoView = function()
@@ -39,7 +51,7 @@ fo.scn.TaxonDetailScene = function()
         me.infoView = fo.view.TaxonInfoView({
             frame: {
                 top: 15,
-                right: 15
+                left: 15
             }
         });
         me.addSubview(me.infoView);
@@ -49,9 +61,10 @@ fo.scn.TaxonDetailScene = function()
     {
         var $map = $("<div id='map'/>");
         $(document.body).append($map);
-        me.mapView = new fo.view.MapView({
+        me.mapView = new fo.view.HeatmapView({
             id: "map",
             $element: $map,
+            playControlView: me.playControlView,
             frame: {
                 left: 0,
                 right: 0,
@@ -77,8 +90,6 @@ fo.scn.TaxonDetailScene = function()
 
         if (!isPoppedBack)
         {
-            me.$container.css(args.frame);
-            me.taxon = args.taxon;
             me.setTaxon(args.taxon);
         }
         else
@@ -87,11 +98,20 @@ fo.scn.TaxonDetailScene = function()
         }
     };
     
+    base.deactivate = me.deactivate;
+    me.deactivate = function()
+    {
+        base.deactivate();
+        
+        me.playControlView.pause();
+    };
+    
     me.setTaxon = function(p_taxon)
     {
         me.taxon = p_taxon;
         _$title.text(me.taxon.title);
         me.infoView.setTaxon(me.taxon);
+        me.playControlView.setRange([me.taxon.start, me.taxon.end]);
     };
     
     me.onKeydown = function(e)
@@ -99,6 +119,10 @@ fo.scn.TaxonDetailScene = function()
         if (e.keyCode == 27)
         {
             fo.app.hidePoppedScene();
+        }
+        else if (e.keyCode == 13 || e.keyCode == 32)
+        {
+            me.playControlView.togglePlay();
         }
     };
 

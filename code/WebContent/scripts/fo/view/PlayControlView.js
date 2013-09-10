@@ -123,6 +123,7 @@ fo.view.PlayControlView = function()
     
     me.setRange = function(p_range)
     {
+        me.pause();
         me.range = p_range;
         _$start.text(me.range[0]);
         _$end.text(me.range[1]);

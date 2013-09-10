@@ -11,7 +11,6 @@ fo.view.TaxonInfoView = function()
     me.taxon = null;
     
     var _$name = null;
-    var _$shortName = null;
     var _$detailList = null;
 
     base.init = me.init;
@@ -32,7 +31,6 @@ fo.view.TaxonInfoView = function()
         _$detailList.append("<dl><dt>Class:</dt> <dd id='cls'>Bivalvia</dd></dl>");
         _$detailList.append("<dl><dt>Genus:</dt> <dd id='genus'>Palaeoneilo</dd></dl>");
         _$detailList.append("<dl><dt>Author:</dt> <dd id='author'>Li Xin</dd></dl>");
-        _$detailList.append("<dl><dt>Year:</dt> <dd id='year'>1984</dd></dl>");
         me.$container.append(_$detailList);
     }
     
@@ -41,11 +39,10 @@ fo.view.TaxonInfoView = function()
         me.taxon = p_taxon;
         _setProps({
             name: p_taxon.fullName,
-            rank: "#" + p_taxon.rank,
+            rank: "#" + (fo.taxons.indexOf(p_taxon) + 1),
             cls: p_taxon.cls,
             genus: p_taxon.genus,
-            author: p_taxon.author,
-            year: p_taxon.year,
+            author: p_taxon.author + "(" + p_taxon.year + ")",
         });
     };
     
@@ -59,7 +56,7 @@ fo.view.TaxonInfoView = function()
     
     function _setProp(p_name, p_value)
     {
-        me.$container.find("#" + p_name).text(p_value ? p_value : "");
+        me.$container.find("#" + p_name).text(p_value ? p_value : "N/A");
     }
 
     return me.endOfClass(arguments);

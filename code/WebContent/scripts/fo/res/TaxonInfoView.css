@@ -3,7 +3,7 @@
     z-index: 99999999;
     min-width: 420px;
     padding: 14px;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .TaxonInfoView *
