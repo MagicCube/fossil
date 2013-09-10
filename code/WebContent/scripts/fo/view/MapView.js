@@ -1,4 +1,4 @@
-$ns("it.view");
+$ns("fo.view");
 
 $import("lib.quadtree.QuadTree");
 $import("lib.heatmap.Heatmap");

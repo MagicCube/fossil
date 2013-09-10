@@ -39,18 +39,15 @@ fo.scn.WelcomeScene = function()
 
         if (!isPoppedBack)
         {
-            if (!$debug)
-            {
-                _$intro.css({
-                    display: "block",
-                    opacity: 0,
-                    webkitTransform: "scale(0.96)"
-                });
-                _$intro.transit({
-                    opacity: 1,
-                    scale: 1
-                }, 2000);
-            }
+            _$intro.css({
+                display: "block",
+                opacity: 0,
+                webkitTransform: "scale(0.96)"
+            });
+            _$intro.transit({
+                opacity: 1,
+                scale: 1
+            }, 2000);
         }
         else
         {

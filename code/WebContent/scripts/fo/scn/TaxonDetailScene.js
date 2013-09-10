@@ -24,7 +24,7 @@ fo.scn.TaxonDetailScene = function()
     base.init = me.init;
     me.init = function(p_options)
     {
-        me.frame = { width: window.innerWidth, height: window.innerHeight };
+        me.frame = { width: fo.app.frame.width, height: fo.app.frame.height };
         base.init(p_options);
         
         me.initTitle();

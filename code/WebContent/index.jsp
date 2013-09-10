@@ -1,9 +1,12 @@
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="mx" tagdir="/WEB-INF/tags/mx"%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <title>The Fossil Project</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<script type="text/javascript" src="scripts/mx/debug.js"></script>
+<mx:Framework debugMode="true"/>
 </head>
 
 <body>
@@ -23,7 +26,10 @@
 $import("fo.App");
 
 $speed = "fas";
-$debug = false;
+if (!mx.debugMode)
+{
+    $speed = "normal";
+}
 mx.whenReady(function()
 {
     fo.app = new fo.App();

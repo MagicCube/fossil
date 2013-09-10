@@ -41,6 +41,7 @@ fo.App = function()
     base.init = me.init;
     me.init = function(p_options)
     {
+        me.frame = { width: window.innerWidth, height: window.innerHeight };
         base.init(p_options);
         
         me.initBackground();
@@ -155,8 +156,8 @@ fo.App = function()
                 frame = {
                     left: 0,
                     top: 0,
-                    width: window.innerWidth,
-                    height: window.innerHeight
+                    width: me.frame.width,
+                    height: me.frame.height
                 };
             }
             scene = new cls({
@@ -213,7 +214,7 @@ fo.App = function()
             top: (window.innerHeight - scene.frame.height) / 2,
             width: scene.frame.width,
             height: scene.frame.height
-        }, 500, "ease");
+        }, 400, "ease");
         return scene;
     };
     
