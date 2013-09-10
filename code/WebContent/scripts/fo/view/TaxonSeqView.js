@@ -93,7 +93,7 @@ fo.view.TaxonSeqView = function()
                 .text(function(d) { return d.name; });
         innerDiv.append("span")
                 .attr("id", "fullName")
-                .text(function(d) { return d.fullName + " #" + (fo.taxons.indexOf(d) + 1); });
+                .text(function(d) { return d.fullName; });
     };
     
     me.initObjects = function()

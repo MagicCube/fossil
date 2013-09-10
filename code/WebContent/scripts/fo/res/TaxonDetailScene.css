@@ -1,9 +1,9 @@
-.DetailScene
+.TaxonDetailScene
 {
-    
+    background: black;
 }
 
-.DetailScene > h1
+.TaxonDetailScene > h1
 {
     width: 100%;
     color: rgb(255, 20, 20);

@@ -64,6 +64,7 @@ body>img#background {
     height: 166px;
     background: url(images/project-logo.png);
     zoom: 0.5;
+    -webkit-transform-origin: right top;
 }
 
 
@@ -99,9 +100,8 @@ body>img#background {
 
 .Scene.popped
 {
-    border: 3px solid rgba(255, 29, 32, 0.8);
-    border-radius: 8px;
-    background: rgba(0, 0, 0, 0.8);
+    z-index: 9999999999;
+    background: black;
     right: auto;
     bottom: auto;
 }

@@ -10,7 +10,7 @@ $import("lib.tween.Tween");
 
 $import("fo.view.SearchBoxView");
 
-$import("fo.scn.DetailScene");
+$import("fo.scn.TaxonDetailScene");
 $import("fo.scn.DiversityScene");
 $import("fo.scn.OverviewScene");
 $import("fo.scn.WelcomeScene");
@@ -116,7 +116,8 @@ fo.App = function()
     base.run = me.run;
     me.run = function(args)
     {
-        me.setRootScene(me.homeSceneName);
+        //me.setRootScene(me.homeSceneName);
+        me.setRootScene("TaxonDetail", { taxon: fo.taxons[0], frame: { left: 0, right: 0 } });
     };
     
     
@@ -184,6 +185,9 @@ fo.App = function()
         scene.$container.addClass("popped");
         _$overlay.hide();
         me.$container.append(_$overlay);
+        $("#projectLogo").transit({
+            opacity: 0
+        });
         _$overlay.fadeIn();
         me.$container.append(scene.$container);
         me.poppedScene = scene;
@@ -218,6 +222,9 @@ fo.App = function()
                 me.activateScene.activate({}, true);
             }
             me.searchBoxView.$container.fadeIn();
+            $("#projectLogo").transit({
+                opacity: 1
+            });
         }
     };
 
