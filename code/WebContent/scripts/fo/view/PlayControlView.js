@@ -40,7 +40,7 @@ fo.view.PlayControlView = function()
     
     function _initProgressBar()
     {
-        _$progressBar = $("<div id=progressBar><div id=cursor/></div>");
+        _$progressBar = $("<div id=progressBar><div id=cursor><span/></div></div>");
         _$cursor = _$progressBar.children("#cursor");
         me.$container.append(_$progressBar);
     }
