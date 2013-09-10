@@ -5,7 +5,7 @@ fo.ani.To2D = function()
     var me = $extend(fo.ani.Animation);
     var base = {};
     
-    me.duration = 1000 * 4;
+    me.duration = 1000 * 8;
     
     
     base.init = me.init;

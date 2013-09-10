@@ -128,8 +128,8 @@ fo.App = function()
     base.run = me.run;
     me.run = function(args)
     {
-        //me.setRootScene(me.homeSceneName);
-        me.setRootScene("TaxonDetail", { taxon: fo.taxons[0], frame: { left: 0, right: 0 } });
+        me.setRootScene(me.homeSceneName);
+        //me.setRootScene("TaxonDetail", { taxon: fo.taxons[0], frame: { left: 0, right: 0 } });
     };
     
     
@@ -205,7 +205,7 @@ fo.App = function()
         me.poppedScene = scene;
         me.activeScene = scene;
         scene.activate(args, false);
-        scene.$container.css({ scale: 0.2, opacity: 0 });
+        scene.$container.css({ scale: 4, opacity: 0 });
         scene.$container.transit({
             opacity: 1,
             scale: 1,

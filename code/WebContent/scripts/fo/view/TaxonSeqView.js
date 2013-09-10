@@ -79,8 +79,7 @@ fo.view.TaxonSeqView = function()
           .append("div")
           .classed("taxon", true)
           .attr({
-              "id": function(d) { return d.id; },
-              "title": function(d) { return d.fullName; }
+              "id": function(d) { return d.id; }
           })
           
           .append("div")
@@ -163,10 +162,10 @@ fo.view.TaxonSeqView = function()
         me.isRendering = false;
         me.mode = "2D";
         
-        fo.app.searchBoxView.$container.fadeIn("slow");
+        fo.app.searchBoxView.$container.delay(600).fadeIn("slow");
         
         me.$container.append("<div id='topShadow' class='shadow'/><div id='bottomShadow' class='shadow'/>");
-        me.$container.find(".shadow").hide().fadeIn();
+        me.$container.find(".shadow").hide().fadeIn(5000);
         
         
         me.$container.find(".camera").css(
@@ -230,14 +229,14 @@ fo.view.TaxonSeqView = function()
         for (var i = 0; i < fo.taxons.length; i++)
         {
             var t = fo.taxons[i];
-            var tDiv = document.getElementById(t.id);
+            var $div = me.$container.find(".taxon#" + t.id);
             if (t.fullName.toLowerCase().startsWith(keyword))
             {
-                $(tDiv).show();
+                $div.show();
             }
             else
             {
-                $(tDiv).hide();
+                $div.hide();
             }
         }
     };
@@ -266,7 +265,6 @@ fo.view.TaxonSeqView = function()
     {
         var element = this;
         var taxon = fo.taxons[element.id];
-        var y = element.offsetTop - me.$scene.scrollTop();
         fo.app.popupScene("TaxonDetail", {
             taxon: taxon,
             title: taxon.fullName

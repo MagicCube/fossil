@@ -22,14 +22,20 @@
 <script>
 $import("fo.App");
 
-$speed = "fast";
+$speed = "fas";
 $debug = false;
 mx.whenReady(function()
 {
     fo.app = new fo.App();
-    fo.app.homeSceneName = "Overview";
-    // Or you can try this if you want to customize the root element of the app
-    // fo.app = new fo.App({ $element: $("body") });
+    
+    if ($speed == "fast")
+    {
+        fo.app.homeSceneName = "Overview";
+    }
+    else
+    {
+        fo.app.homeSceneName = "Welcome";
+    }
 
     var args = { };
     fo.app.run(args);

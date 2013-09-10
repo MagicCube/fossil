@@ -90,13 +90,17 @@
     /**
      * Inserts data into quadtree and redraws heatmap canvas
      */
-    setData: function(dataset) {
+    setData: function(dataset, maxValue)
+    {
         var self = this;
         var latLngs = [];
-        this._maxValue = 0;
+        this._maxValue = (maxValue == null ? 0 : maxValue);
         dataset.forEach(function(d) {
-            latLngs.push(new L.LatLng(d.lat, d.lon));
-            self._maxValue = Math.max(self._maxValue, d.value);
+            latLngs.push(new L.LatLng(d.location.lat, d.location.lng));
+            if (maxValue == null)
+            {
+                self._maxValue = Math.max(self._maxValue, d.value);
+            }
         });
         this._bounds = new L.LatLngBounds(latLngs);
 
@@ -104,8 +108,8 @@
 
         dataset.forEach(function(d) {
             self._quad.insert({
-                x: d.lon,
-                y: d.lat,
+                x: d.location.lng,
+                y: d.location.lat,
                 value: d.value
             });
         });

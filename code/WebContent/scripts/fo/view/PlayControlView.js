@@ -21,7 +21,6 @@ fo.view.PlayControlView = function()
     var _$progressBar = null;
     var _$cursor = null;
     var _$start = null;
-    var _$center = null;
     var _$end = null;
 
     base.init = me.init;
@@ -63,10 +62,8 @@ fo.view.PlayControlView = function()
     {
         _$start = $("<div id='start' class='range'/>");
         _$end = $("<div id='end' class='range'/>");
-        _$center = $("<div id='center' class='range'/>");
         me.$container.append(_$start);
         me.$container.append(_$end);
-        me.$container.append(_$center);
     }
     
     
@@ -127,8 +124,6 @@ fo.view.PlayControlView = function()
         me.range = p_range;
         _$start.text(me.range[0]);
         _$end.text(me.range[1]);
-        _$center.text(me.range[0] + parseInt((me.range[1] - me.range[0]) / 2));
-        _$center.toggle(_$start.text() != _$center.text() && _$end.text() != _$center.text());
         me.setPosition(me.range[0], true);
     };
     

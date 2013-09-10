@@ -12,7 +12,7 @@ fo.view.HeatmapView = function()
     
     me.playControlView = null;
     me.heatmapLayer = null;
-    me.data = null;
+    me.dataSet = null;
 
     base.init = me.init;
     me.init = function(p_options)
@@ -37,23 +37,24 @@ fo.view.HeatmapView = function()
         me.heatmapLayer = L.TileLayer.heatmap({
             radius: { value: 4, absolute: false },
             opacity: 0.8,
-            gradient: {
-                "0.45": "rgb(0,0,255)",
-                "0.55": "rgb(0,255,255)",
-                "0.65": "rgb(0,255,0)",
-                "0.95": "yellow",
-                "1.0": "rgb(255,0,0)"
+            gradient :
+            {
+                "0.2" : "rgb(0,0,255)",
+                "0.4" : "rgb(0,255,255)",
+                "0.6" : "rgb(0,255,0)",
+                "0.75" : "yellow",
+                "0.85" : "rgb(255,0,0)"
             }
         });
         me.map.addLayer(me.heatmapLayer);
         
-        me.data = [];
+        me.dataSet = [];
         for (var i = 0; i < fo.sections.length; i++)
         {
             var section = fo.sections[i];
-            var row = { lat: section.location.lat, lon: section.location.lng, value: 0 };
-            me.data[section.id] = row;
-            me.data.add(row);
+            var row = { location: section.location, value: 0 };
+            me.dataSet[section.id] = row;
+            me.dataSet.add(row);
         }        
     };
     
@@ -74,14 +75,20 @@ fo.view.HeatmapView = function()
     
     
     
+    
+    function _updateDataSet()
+    {
+        for (var i = 0; i < me.dataSet.length; i++)
+        {
+            var row = me.dataSet[i];
+            row.value = Math.round(Math.random());
+        }
+    }
+    
     function _playControlView_onpositionchanged(e)
     {
-        for (var i = 0; i < me.data.length; i++)
-        {
-            var row = me.data[i];
-            row.value = Math.random() * 50;
-        }
-        me.heatmapLayer.setData(me.data);
+        _updateDataSet();
+        me.heatmapLayer.setData(me.dataSet, 1);
     }
 
     return me.endOfClass(arguments);

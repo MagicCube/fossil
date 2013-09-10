@@ -6,7 +6,7 @@ fo.ani.Splash = function()
     var base = {};
     
     me.duration = 1000 * 8;
-    me.range = 6500;
+    me.range = 6200;
     
     base.init = me.init;
     me.init = function(p_options)
@@ -21,7 +21,7 @@ fo.ani.Splash = function()
         
         // Opening
         new TWEEN.Tween(me.camera.position)
-            .to({ z: 3800 }, me.duration * 0.4)
+            .to({ z: 3800 }, me.duration * 0.5)
             .easing(TWEEN.Easing.Cubic.Out)
             .start();       
     
@@ -38,7 +38,7 @@ fo.ani.Splash = function()
     me.explode = function()
     {
         // Explosion
-        var explosionDuration = me.duration * 0.8;
+        var explosionDuration = me.duration * 0.7;
         for (var i = 0; i < me.objects.length; i++)
         {
             var obj = me.objects[i];
