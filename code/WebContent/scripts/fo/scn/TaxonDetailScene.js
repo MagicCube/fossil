@@ -124,6 +124,20 @@ fo.scn.TaxonDetailScene = function()
         {
             me.playControlView.togglePlay();
         }
+        else if (e.keyCode == 39 || e.keyCode == 40)
+        {
+            me.playControlView.pause();
+            me.playControlView.moveToNextFrame();
+            e.stopPropagation();
+            e.preventDefault();
+        }
+        else if (e.keyCode == 37 || e.keyCode == 38)
+        {
+            me.playControlView.pause();
+            me.playControlView.moveToPreviousFrame();
+            e.stopPropagation();
+            e.preventDefault();
+        }
     };
 
     return me.endOfClass(arguments);

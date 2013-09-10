@@ -163,6 +163,16 @@ fo.view.PlayControlView = function()
         });
     };
     
+    me.moveToNextFrame = function()
+    {
+        me.setPosition(me.position + 1, true);
+    };
+    
+    me.moveToPreviousFrame = function()
+    {
+        me.setPosition(me.position - 1, true);
+    };
+    
     me.onFraming = function()
     {
         if (me.position >= me.range[1])
@@ -170,7 +180,7 @@ fo.view.PlayControlView = function()
             me.pause();
             return;
         }
-        me.setPosition(me.position + 1, true);
+        me.moveToNextFrame();
     };
     
     

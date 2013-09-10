@@ -31,7 +31,7 @@ fo.ani.To2D = function()
                     left: t.start + me.view.padding.left,
                     width: (t.end - t.start),
                     height: 18,
-                    top: (-i) * 18 - me.view.padding.top,
+                    top: (-i) * 19 - me.view.padding.top,
                     borderOpacity: 0
             };
             if (i < me.objects.length)
