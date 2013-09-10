@@ -1,5 +1,6 @@
 $ns("fo.scn");
 
+$import("fo.view.TaxonInfoView");
 $import("fo.view.MapView");
 $import("fo.view.PlayControlView");
 
@@ -15,6 +16,7 @@ fo.scn.TaxonDetailScene = function()
     me.taxon = null;
     me.mapView = null;
     me.playControlView = null;
+    me.infoView = null;
     
     var _$title = null;
 
@@ -26,9 +28,21 @@ fo.scn.TaxonDetailScene = function()
         
         _$title = $("<h1 id='title'>");
         me.$container.append(_$title);
-        
+    
+        me.initInfoView();
         me.initMapView();
         me.initPlayControlView();
+    };
+    
+    me.initInfoView = function()
+    {
+        me.infoView = fo.view.TaxonInfoView({
+            frame: {
+                top: 15,
+                right: 15
+            }
+        });
+        me.addSubview(me.infoView);
     };
     
     me.initMapView = function()
@@ -65,12 +79,19 @@ fo.scn.TaxonDetailScene = function()
         {
             me.$container.css(args.frame);
             me.taxon = args.taxon;
-            _$title.text(me.taxon.title);
+            me.setTaxon(args.taxon);
         }
         else
         {
             
         }
+    };
+    
+    me.setTaxon = function(p_taxon)
+    {
+        me.taxon = p_taxon;
+        _$title.text(me.taxon.title);
+        me.infoView.setTaxon(me.taxon);
     };
     
     me.onKeydown = function(e)

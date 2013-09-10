@@ -1,0 +1,58 @@
+.TaxonInfoView
+{
+    z-index: 99999999;
+    min-width: 320px;
+    padding: 14px;
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.TaxonInfoView *
+{
+    white-space: nowrap;
+}
+
+.TaxonInfoView #name
+{
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    color: rgb(255, 128, 0);
+    border-bottom: 1px solid rgb(255, 128, 0);
+}
+
+.TaxonInfoView #shortName
+{
+    position: absolute;
+    color: silver;
+    top: 7px;
+    right: 10px;
+}
+
+.TaxonInfoView #detailList
+{
+    padding-left: 8px;
+    padding-top: 8px;
+}
+
+.TaxonInfoView dl
+{
+    font-size: 17px;
+    display: block;
+    list-style: none;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+.TaxonInfoView dt
+{
+    display: inline-block;
+    width: 80px;
+    text-align: right;
+}
+
+.TaxonInfoView dd
+{
+    margin-left: 25px;
+    display: inline-block;
+}
