@@ -32,6 +32,7 @@
 .PlayControlView.playing #playPause
 {
     background-image: url(images/playing.png);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
 }
 
 .PlayControlView.paused #playPause
@@ -47,7 +48,7 @@
 {
     position: absolute;
     top: 25px;
-    left: 64px;
+    left: 80px;
     right: 14px;
     height: 14px;
     border: 1px solid white;
@@ -62,11 +63,51 @@
     left: 0;
     width: 15px;
     background: rgba(255, 255, 255, 0.5);
-    border-radius: 5px;
     border-right: 2px solid white;
 }
 
 .PlayControlView #progressBar #cursor span
 {
-    
+    position: absolute;
+    top: -18px;
+    right: -2px;
+    text-align: right;
+    border-right: 2px solid white;
+    font-weight: bold;
+    font-size: 15px;
+    text-shadow: 0 1px 1px black;
+    color: white;
+    padding-right: 2px;
+}
+
+
+
+
+
+
+
+
+.PlayControlView .range
+{
+    color: white;
+    position: absolute;
+    top: 42px;
+}
+
+.PlayControlView #start
+{
+    left: 80px;
+}
+
+.PlayControlView #end
+{
+    text-align: right;
+    right: 14px;
+}
+
+.PlayControlView #center
+{
+    text-align: center;
+    left: 80px;
+    right: 14px;
 }

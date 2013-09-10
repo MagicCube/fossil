@@ -19,6 +19,9 @@ fo.view.PlayControlView = function()
     var _$playPause = null;
     var _$progressBar = null;
     var _$cursor = null;
+    var _$start = null;
+    var _$center = null;
+    var _$end = null;
 
     base.init = me.init;
     me.init = function(p_options)
@@ -26,6 +29,7 @@ fo.view.PlayControlView = function()
         base.init(p_options);
         _initPlayPause();
         _initProgressBar();
+        _initRange();
         
         me.setRange(me.range);
         me.pause();
@@ -41,10 +45,21 @@ fo.view.PlayControlView = function()
     function _initProgressBar()
     {
         _$progressBar = $("<div id=progressBar><div id=cursor><span/></div></div>");
+        _$progressBar.on("mousedown", _progressBar_onmousedown);
         _$cursor = _$progressBar.children("#cursor");
+        _$cursorLabel = _$cursor.children("span");
         me.$container.append(_$progressBar);
     }
     
+    function _initRange()
+    {
+        _$start = $("<div id='start' class='range'/>");
+        _$end = $("<div id='end' class='range'/>");
+        _$center = $("<div id='center' class='range'/>");
+        me.$container.append(_$start);
+        me.$container.append(_$end);
+        me.$container.append(_$center);
+    }
     
     
     
@@ -101,10 +116,14 @@ fo.view.PlayControlView = function()
     me.setRange = function(p_range)
     {
         me.range = p_range;
-        me.setPosition(me.range[0]);
+        _$start.text(me.range[0]);
+        _$end.text(me.range[1]);
+        _$center.text(me.range[0] + parseInt((me.range[1] - me.range[0]) / 2));
+        _$center.toggle(_$start.text() != _$center.text() && _$end.text() != _$center.text());
+        me.setPosition(me.range[0], true);
     };
     
-    me.setPosition = function(p_pos)
+    me.setPosition = function(p_pos, p_forceChanged)
     {
         if (p_pos > me.range[1])
         {
@@ -114,16 +133,26 @@ fo.view.PlayControlView = function()
         {
             p_pos = me.range[0];
         }
-        me.position = p_pos;
-        me.positionPercentage = (me.position - me.range[0]) / (me.range[1] - me.range[0]);
-        me.update();
         
-        me.trigger("positionchanged");
+        if (me.position != p_pos || p_forceChanged)
+        {
+            me.position = p_pos;
+            me.positionPercentage = (me.position - me.range[0]) / (me.range[1] - me.range[0]);
+            me.update();
+            
+            me.trigger("positionchanged");
+        }
         return me.position;
+    };
+    
+    me.setPositionPercentage = function(p_pos)
+    {
+        me.setPosition(parseInt(p_pos * (me.range[1] - me.range[0]) + me.range[0]));
     };
     
     me.update = function()
     {
+        _$cursorLabel.text(me.position);
         _$cursor.css({
             width: (_$progressBar.width() - 15)  * me.positionPercentage + 15
         });
@@ -136,7 +165,7 @@ fo.view.PlayControlView = function()
             me.pause();
             return;
         }
-        me.setPosition(me.position + 1);
+        me.setPosition(me.position + 1, true);
     };
     
     
@@ -155,9 +184,46 @@ fo.view.PlayControlView = function()
         me.onFraming();
     }
     
+    
+    
+    
     function _playPause_onclick(e)
     {
         me.togglePlay();
+    }
+    
+    function _progressBar_onmousedown(e)
+    {
+        $(document.body).css({
+            webkitUserSelect: "none"
+        });
+        $(document.body).on("mousemove", _progressBar_onmousemove);
+        $(document.body).on("mouseup", _progressBar_onmouseup);
+    }
+    
+    function _progressBar_onmousemove(e)
+    {
+        var percentage = _mouseX2Percentage(e);
+        me.setPositionPercentage(percentage);
+    }
+    
+    function _progressBar_onmouseup(e)
+    {
+        var percentage = _mouseX2Percentage(e);
+        me.setPositionPercentage(percentage);
+     
+        $(document.body).css({
+            webkitUserSelect: ""
+        });
+        $(document.body).off("mousemove", _progressBar_onmousemove);
+        $(document.body).off("mouseup", _progressBar_onmouseup);
+    }
+    
+    function _mouseX2Percentage(e)
+    {
+        var pos = (e.pageX - _$progressBar.offset().left + me.$container.offset().left - 22);
+        var percentage = pos / (_$progressBar.width() - 15);
+        return percentage;
     }
 
     return me.endOfClass(arguments);
