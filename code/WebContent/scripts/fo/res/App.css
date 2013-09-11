@@ -73,8 +73,7 @@ body>img#background {
 #overlay
 {
     position: absolute;
-    background: rgba(0, 0, 0, 0.4);
-    box-shadow: 0 0 35px rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     left: 0;
     right: 0;
     top: 0;
@@ -101,4 +100,5 @@ body>img#background {
     background: black;
     right: auto;
     bottom: auto;
+    box-shadow: 0 0 60px rgba(0, 0, 0, 0.5);
 }

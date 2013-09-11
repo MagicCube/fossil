@@ -11,16 +11,16 @@
  */
 
  L.TileLayer.Heatmap = L.TileLayer.Canvas.extend({
-    options: {
+	options: {
         debug: false,
         opacity: 0.9,  // opactity is between 0 and 1, not in percent
         radius: {
             value: 20,
             absolute: false  // true: radius in meters, false: radius in pixels
         }
-    },
+	},
 
-    initialize: function (options, data) {
+	initialize: function (options, data) {
         var self = this;
         L.Util.setOptions(this, options);
 
@@ -90,11 +90,14 @@
     /**
      * Inserts data into quadtree and redraws heatmap canvas
      */
-    setData: function(dataset, maxValue)
-    {
+    setData: function(dataset, maxValue) {
         var self = this;
         var latLngs = [];
-        this._maxValue = (maxValue == null ? 0 : maxValue);
+        this._maxValue = 0;
+        if (maxValue != null)
+        {
+            this._maxValue = maxValue;
+        }
         dataset.forEach(function(d) {
             latLngs.push(new L.LatLng(d.location.lat, d.location.lng));
             if (maxValue == null)
@@ -177,10 +180,10 @@
             radiusValue = this.options.radius.value;
 
         var localXY, value, pointsInTile = [];
-        
+
         var nwPoint = ctx.tilePoint.multiplyBy(tileSize),
             sePoint = nwPoint.add(new L.Point(tileSize, tileSize));
-        
+
         // Set the radius for the tile, if necessary.
         // The radius of a circle can be either absolute in pixels or in meters
         // The radius in pixels is not the same on the whole map.
@@ -201,10 +204,9 @@
 
         // padding
         var pad = new L.Point(radiusValue, radiusValue);
-
         nwPoint = nwPoint.subtract(pad);
         sePoint = sePoint.add(pad);
-        
+
         var bounds = new L.LatLngBounds(this._map.unproject(sePoint), this._map.unproject(nwPoint));
         this._quad.retrieveInBounds(this._boundsToQuery(bounds)).forEach(function(obj) {
             localXY = self._tilePoint(ctx, [obj.x, obj.y]);

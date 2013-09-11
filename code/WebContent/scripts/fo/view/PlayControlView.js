@@ -152,7 +152,7 @@ fo.view.PlayControlView = function()
     
     me.setPositionPercentage = function(p_pos)
     {
-        me.setPosition(parseInt(p_pos * (me.range[1] - me.range[0]) + me.range[0]));
+        me.setPosition(Math.round(p_pos * (me.range[1] - me.range[0]) + me.range[0]));
     };
     
     me.update = function()

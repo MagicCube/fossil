@@ -198,20 +198,15 @@ fo.App = function()
         scene.$container.addClass("popped");
         _$overlay.hide();
         me.$container.append(_$overlay);
-        $("#projectLogo").transit({
-            opacity: 0
-        });
         _$overlay.fadeIn();
         me.$container.append(scene.$container);
         me.poppedScene = scene;
         me.activeScene = scene;
         scene.activate(args, false);
-        scene.$container.css({ scale: 4, opacity: 0 });
+        scene.$container.css({ scale: 4, opacity: 0, left: (me.frame.width - scene.frame.width) / 2, top: (me.frame.height - scene.frame.height) / 2, });
         scene.$container.transit({
             opacity: 1,
             scale: 1,
-            left: (window.innerWidth - scene.frame.width) / 2,
-            top: (window.innerHeight - scene.frame.height) / 2,
             width: scene.frame.width,
             height: scene.frame.height
         }, 400, "ease");
@@ -242,7 +237,6 @@ fo.App = function()
                 me.activateScene.activate({}, true);
             }
             me.searchBoxView.$container.fadeIn();
-            $("#projectLogo").transit({ opacity: 1 }, 2000);
         }
     };
 
