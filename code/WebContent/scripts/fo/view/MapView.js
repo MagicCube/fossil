@@ -26,7 +26,7 @@ fo.view.MapView = function()
     
     
     me.defaultZoom = 4;
-    me.defaultLocation = {lat: 18, lng: 160 };
+    me.defaultLocation = {lat: 25, lng: 132 };
     
     
     me.layers = [];
