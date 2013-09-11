@@ -25,13 +25,13 @@ fo.scn.TaxonDetailScene = function()
     {
         var width = 1280;
         var height = 720;
-        if (width > fo.app.frame.width)
+        if (width > fo.app.frame.width - 80)
         {
-            width = fo.app.frame.width;
+            width = fo.app.frame.width - 80;
         }
-        if (height > fo.app.frame.height)
+        if (height > fo.app.frame.height - 80)
         {
-            height = fo.app.frame.height;
+            height = fo.app.frame.height - 80;
         }
         me.frame = { width: width, height: height };
         base.init(p_options);

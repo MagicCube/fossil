@@ -198,6 +198,7 @@ fo.DefaultApp = function()
         me.poppedScene = scene;
         me.activeScene = scene;
         scene.activate(args, false);
+        $("#projectLogo").fadeOut();
         scene.$container.css({ scale: 1, opacity: 0, left: (me.frame.width - scene.frame.width) / 2, top: (me.frame.height - scene.frame.height) / 2, });
         scene.$container.transit({
             opacity: 1,
@@ -230,6 +231,7 @@ fo.DefaultApp = function()
                 me.activateScene = me.rootScene;
                 me.activateScene.activate({}, true);
             }
+            $("#projectLogo").fadeIn();
             me.searchBoxView.$container.fadeIn();
         }
     };

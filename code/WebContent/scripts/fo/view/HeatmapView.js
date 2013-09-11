@@ -29,7 +29,7 @@ fo.view.HeatmapView = function()
     me.initHeatmap = function()
     {
         me.heatmapLayer = L.TileLayer.heatmap({
-            radius: { value: 4, absolute: false },
+            radius: { value: 5, absolute: false },
             opacity: 1,
             gradient :
             {
