@@ -128,7 +128,7 @@ fo.view.DistributionCompositeView = function()
             {
                 view.deactivate();
             }
-            view.$container.fadeOut(function(){
+            view.$container.fadeOut("slow", function(){
                 me.removeSubview(view);
             });
         }
@@ -155,7 +155,7 @@ fo.view.DistributionCompositeView = function()
         }
         
         me.addSubview(me.activeView);
-        me.activeView.$container.fadeIn();
+        me.activeView.$container.fadeIn("slow");
         if (isFunction(me.activeView.activate))
         {
             me.activeView.activate();
@@ -192,7 +192,7 @@ fo.view.DistributionCompositeView = function()
         for (var i = 0; i < me.dataSet.length; i++)
         {
             var row = me.dataSet[i];
-            row.value = Math.round(Math.random());
+            row.value = Math.random() > 0.9 ? 1 : 0;
         }
     }
 

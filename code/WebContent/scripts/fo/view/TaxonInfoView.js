@@ -27,7 +27,7 @@ fo.view.TaxonInfoView = function()
     function _initDetailList()
     {
         _$detailList = $("<div id='detailList'/>");
-        _$detailList.append("<dl><dt>Rank:</dt> <dd id='rank'>#1</dd></dl>");
+        //_$detailList.append("<dl><dt>Rank:</dt> <dd id='rank'>#1</dd></dl>");
         _$detailList.append("<dl><dt>Class:</dt> <dd id='cls'>Bivalvia</dd></dl>");
         _$detailList.append("<dl><dt>Genus:</dt> <dd id='genus'>Palaeoneilo</dd></dl>");
         _$detailList.append("<dl><dt>Author:</dt> <dd id='author'>Li Xin</dd></dl>");

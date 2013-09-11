@@ -30,14 +30,14 @@ fo.view.HeatmapView = function()
     {
         me.heatmapLayer = L.TileLayer.heatmap({
             radius: { value: 4, absolute: false },
-            opacity: 0.8,
+            opacity: 1,
             gradient :
             {
-                "0.2" : "rgb(0,0,255)",
-                "0.4" : "rgb(0,255,255)",
-                "0.6" : "rgb(0,255,0)",
-                "0.75" : "yellow",
-                "0.85" : "rgb(255,0,0)"
+                "0.1" : "blue",
+                "0.3" : "rgb(0,255,255)",
+                "0.5" : "green",
+                "0.7" : "yellow",
+                "0.8" : "red"
             }
         });
         me.map.addLayer(me.heatmapLayer);
