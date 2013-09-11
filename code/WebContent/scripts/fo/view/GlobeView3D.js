@@ -12,6 +12,9 @@ fo.view.GlobeView3D = function()
     me.antialias = false;
     var base = {};
 
+    me.dataSet = null;
+    me.maxLineLength = 80;
+    
     me.sphereGeometry = null;
     me.earth = null;
     me.points = null;
@@ -41,7 +44,7 @@ fo.view.GlobeView3D = function()
         {
             me.trackballControl = new THREE.TrackballControls(me.camera, me.renderer.domElement);
             me.trackballControl.rotateSpeed = 0.5;
-            me.trackballControl.noRotateY = true;
+            //me.trackballControl.noRotateY = true;
             me.trackballControl.addEventListener("change", function(){
                 me.render();
             });
@@ -98,18 +101,18 @@ fo.view.GlobeView3D = function()
         me.isAnimating = true;
         me.loop();
         
-        var duration = 2500;
-        new TWEEN.Tween(me.camera.position)
-            .to({ x: 60, y: 60, z: 650 }, duration)
-            .easing(TWEEN.Easing.Exponential.Out)
-            .onUpdate(function(){
-                me.camera.lookAt(me.scene.position);
-                me.render();
-            })
-            .start();
-        
         if (me.trackballControl == null)
         {
+            var duration = 2500;
+            new TWEEN.Tween(me.camera.position)
+                .to({ x: 60, y: 60, z: 650 }, duration)
+                .easing(TWEEN.Easing.Exponential.Out)
+                .onUpdate(function()
+                {
+                    me.camera.lookAt(me.scene.position);
+                    me.render();
+                })
+                .start();
             me.initTrackballControl();
         }
     };
@@ -163,13 +166,32 @@ fo.view.GlobeView3D = function()
         THREE.GeometryUtils.merge(_pointGeometrys, _point);
     };
     
-    me.addData = function(p_data)
+    me.setDataSet = function(p_dataSet, p_maxValue)
     {
-        var max = d3.max(p_data, function(d) { return d.value; });
-        for (var i = 0; i < p_data.length; i++)
+        me.dataSet = p_dataSet;
+        
+        var maxValue = null;
+        if (p_maxValue == null)
         {
-            var item = p_data[i];
-            me.addPoint(item.location, (item.value / max) * 80, me.colorScale(item.value / max));
+            maxValue = d3.max(p_dataSet, function(d) { return d.value; });
+        }
+        else
+        {
+            maxValue = p_maxValue;
+        }
+        for (var i = 0; i < p_dataSet.length; i++)
+        {
+            var item = p_dataSet[i];
+            var percentage = item.value / maxValue;
+            if (percentage == 0)
+            {
+                length = 0;
+            }
+            else
+            {
+                length = percentage * me.maxLineLength;
+            }
+            me.addPoint(item.location, length, me.colorScale(percentage));
         }
         
         me.points = new THREE.Mesh(_pointGeometrys, new THREE.MeshBasicMaterial(
