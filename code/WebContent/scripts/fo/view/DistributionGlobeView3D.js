@@ -1,8 +1,6 @@
 $ns("fo.view");
 
-$import("lib.cbrandolino.PointPolygon");
-$import("lib.mgomes.ConvexHull");
-
+$import("fo.geo.Polygon");
 $import("fo.view.GlobeView3D");
 
 fo.view.DistributionGlobeView3D = function()
@@ -41,28 +39,19 @@ fo.view.DistributionGlobeView3D = function()
                 points.add(row.location);
             }
         }
-        points.sort(sortPointY);
-        points.sort(sortPointX);
-        var hullPoints = [];
-        chainHull_2D(points, points.length, hullPoints);
-        var polygon = new L.Polygon(hullPoints);
+        var polygon = new fo.geo.Polygon({ vertices: points });
+        polygon = polygon.getConvexPolygon();
         var bounds = polygon.getBounds();
-        var x1 = bounds.getWest();
-        var x2 = bounds.getEast();
-        var y1 = bounds.getSouth();
-        var y2 = bounds.getNorth();
         
-        var polygon2 = new Polygon(hullPoints);
-        
-        for (var y = y1; y <= y2; y += 0.6)
+        for (var y = bounds.y1; y <= bounds.y2; y += 0.6)
         {
-            for (var x = x1; x <= x2; x += 0.6)
+            for (var x = bounds.x1; x <= bounds.x2; x += 0.6)
             {
                 var point = {
                     lat: y,
                     lng: x
                 };
-                if (polygon2.contains(point))
+                if (polygon.contains(point))
                 {
                     me.data.add({
                         value: 1,
