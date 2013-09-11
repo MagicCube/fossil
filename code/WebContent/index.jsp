@@ -25,7 +25,7 @@
 <script>
 $import("fo.DefaultApp");
 
-$speed = "fast";
+$speed = "fas";
 if (!mx.debugMode)
 {
     $speed = "normal";
@@ -36,7 +36,7 @@ mx.whenReady(function()
     
     if ($speed == "fast")
     {
-        fo.app.homeSceneName = "Diversity";
+        fo.app.homeSceneName = "TaxonDetail";
     }
     else
     {
