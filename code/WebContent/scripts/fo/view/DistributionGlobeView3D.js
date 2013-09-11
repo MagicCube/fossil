@@ -20,7 +20,6 @@ fo.view.DistributionGlobeView3D = function()
     {
         me.startAnimation();
         me.updateDataSet();
-        me.render();
     };
     
     me.deactivate = function()
@@ -29,14 +28,10 @@ fo.view.DistributionGlobeView3D = function()
     };
     
     
-    var _first = true;
     me.updateDataSet = function()
     {
-        if (_first)
-        {
-            _first = false;
-            me.setDataSet(me.dataSet, 1);
-        }
+        me.setDataSet(me.dataSet, 1);
+        me.render();
     };
     
     me.colorScale = function(x)

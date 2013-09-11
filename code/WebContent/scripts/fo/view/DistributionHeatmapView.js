@@ -13,6 +13,11 @@ fo.view.DistributionHeatmapView = function()
     {
         base.init(p_options);
     };
+    
+    me.activate = function()
+    {
+        me.updateDataSet();
+    };
 
     me.updateDataSet = function()
     {

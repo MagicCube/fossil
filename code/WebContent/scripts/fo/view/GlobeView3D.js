@@ -27,8 +27,6 @@ fo.view.GlobeView3D = function()
     {
         base.init(p_options);
         
-        _pointGeometrys = new THREE.Geometry();
-        
         var geometry = new THREE.CubeGeometry(0.75, 0.75, 1, 1, 1, 1, null, false);
         for ( var i = 0; i < geometry.vertices.length; i++)
         {
@@ -169,6 +167,13 @@ fo.view.GlobeView3D = function()
     me.setDataSet = function(p_dataSet, p_maxValue)
     {
         me.dataSet = p_dataSet;
+        
+        if (me.points != null)
+        {
+            me.scene.remove(me.points);
+        }
+        me.points = null;
+        _pointGeometrys = new THREE.Geometry();
         
         var maxValue = null;
         if (p_maxValue == null)
