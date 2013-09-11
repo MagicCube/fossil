@@ -1,6 +1,8 @@
 $ns("fo.view");
 
-$import("fo.geo.Polygon");
+$import("lib.mgomes.ConvexHull");
+$import("lib.cbrandolino.Polygon");
+
 $import("fo.view.GlobeView3D");
 
 fo.view.DistributionGlobeView3D = function()
@@ -39,13 +41,12 @@ fo.view.DistributionGlobeView3D = function()
                 points.add(row.location);
             }
         }
-        var polygon = new fo.geo.Polygon({ vertices: points });
-        polygon = polygon.getConvexPolygon();
+        var polygon = new Polygon(points).getConvexPolygon();
         var bounds = polygon.getBounds();
         
-        for (var y = bounds.y1; y <= bounds.y2; y += 0.6)
+        for (var y = bounds.y1; y <= bounds.y2; y += 0.7)
         {
-            for (var x = bounds.x1; x <= bounds.x2; x += 0.6)
+            for (var x = bounds.x1; x <= bounds.x2; x += 0.7)
             {
                 var point = {
                     lat: y,
