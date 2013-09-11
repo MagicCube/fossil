@@ -1,5 +1,8 @@
 $ns("fo.view");
 
+$import("lib.cbrandolino.PointPolygon");
+$import("lib.mgomes.ConvexHull");
+
 $import("fo.view.GlobeView3D");
 
 fo.view.DistributionGlobeView3D = function()
@@ -30,7 +33,48 @@ fo.view.DistributionGlobeView3D = function()
     
     me.updateDataSet = function()
     {
-        me.setDataSet(me.dataSet, 1);
+        me.data = [];
+        var points = [];
+        for (var i = 0; i < me.dataSet.length; i++)
+        {
+            var row = me.dataSet[i];
+            if (row.value == 1)
+            {
+                points.add(row.location);
+            }
+        }
+        points.sort(sortPointY);
+        points.sort(sortPointX);
+        var hullPoints = [];
+        chainHull_2D(points, points.length, hullPoints);
+        var polygon = new L.Polygon(hullPoints);
+        var bounds = polygon.getBounds();
+        var x1 = bounds.getWest();
+        var x2 = bounds.getEast();
+        var y1 = bounds.getSouth();
+        var y2 = bounds.getNorth();
+        
+        var polygon2 = new Polygon(hullPoints);
+        
+        for (var y = y1; y <= y2; y += 0.8)
+        {
+            for (var x = x1; x <= x2; x += 0.8)
+            {
+                var point = {
+                    lat: y,
+                    lng: x
+                };
+                if (polygon2.contains(point))
+                {
+                    me.data.add({
+                        value: 1,
+                        location: point
+                    });
+                }
+            }
+        }
+        
+        me.setData(me.data, 1);
         me.render();
     };
     
@@ -43,7 +87,7 @@ fo.view.DistributionGlobeView3D = function()
         }
         else
         {
-            c.setRGB(0, 0, 255);
+            c.setRGB(0.5, 0.5, 1);
         }
         return c;
     };

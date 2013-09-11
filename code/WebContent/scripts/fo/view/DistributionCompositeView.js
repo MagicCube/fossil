@@ -156,7 +156,7 @@ fo.view.DistributionCompositeView = function()
         
         me.addSubview(me.activeView);
         me.activeView.$container.fadeIn();
-        if (isFunction(me.activeView.deactivate))
+        if (isFunction(me.activeView.activate))
         {
             me.activeView.activate();
         }

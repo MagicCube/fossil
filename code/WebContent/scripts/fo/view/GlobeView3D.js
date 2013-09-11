@@ -12,7 +12,7 @@ fo.view.GlobeView3D = function()
     me.antialias = false;
     var base = {};
 
-    me.dataSet = null;
+    me.data = null;
     me.maxLineLength = 80;
     
     me.sphereGeometry = null;
@@ -103,7 +103,7 @@ fo.view.GlobeView3D = function()
         {
             var duration = 2500;
             new TWEEN.Tween(me.camera.position)
-                .to({ x: 60, y: 60, z: 650 }, duration)
+                .to({ x: 0, y: 0, z: 650 }, duration)
                 .easing(TWEEN.Easing.Exponential.Out)
                 .onUpdate(function()
                 {
@@ -164,9 +164,9 @@ fo.view.GlobeView3D = function()
         THREE.GeometryUtils.merge(_pointGeometrys, _point);
     };
     
-    me.setDataSet = function(p_dataSet, p_maxValue)
+    me.setData = function(p_data, p_maxValue)
     {
-        me.dataSet = p_dataSet;
+        me.data = p_data;
         
         if (me.points != null)
         {
@@ -178,15 +178,15 @@ fo.view.GlobeView3D = function()
         var maxValue = null;
         if (p_maxValue == null)
         {
-            maxValue = d3.max(p_dataSet, function(d) { return d.value; });
+            maxValue = d3.max(p_data, function(d) { return d.value; });
         }
         else
         {
             maxValue = p_maxValue;
         }
-        for (var i = 0; i < p_dataSet.length; i++)
+        for (var i = 0; i < p_data.length; i++)
         {
-            var item = p_dataSet[i];
+            var item = p_data[i];
             var percentage = item.value / maxValue;
             if (percentage == 0)
             {

@@ -21,7 +21,7 @@ fo.view.DistributionHeatmapView = function()
 
     me.updateDataSet = function()
     {
-        me.heatmapLayer.setData(me.dataSet, 1);
+        me.setData(me.dataSet, 1);
     };
 
 

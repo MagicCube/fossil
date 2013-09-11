@@ -11,7 +11,7 @@ fo.view.HeatmapView = function()
     var base = {};
     
     me.heatmapLayer = null;
-    me.dataSet = null;
+    me.data = null;
 
     base.init = me.init;
     me.init = function(p_options)
@@ -43,27 +43,11 @@ fo.view.HeatmapView = function()
         me.map.addLayer(me.heatmapLayer);
     };
     
-    me.setDataSet = function(p_dataSet, p_max)
+    me.setData = function(p_data, p_max)
     {
-        me.dataSet = p_dataSet;
-        me.heatmapLayer.setData(me.dataSet, p_max);
+        me.data = p_data;
+        me.heatmapLayer.setData(me.data, p_max);
     };
-    
-    
-    function _updateDataSet()
-    {
-        for (var i = 0; i < me.dataSet.length; i++)
-        {
-            var row = me.dataSet[i];
-            row.value = Math.round(Math.random());
-        }
-    }
-    
-    function _playControlView_onpositionchanged(e)
-    {
-        _updateDataSet();
-        me.heatmapLayer.setData(me.dataSet, 1);
-    }
 
     return me.endOfClass(arguments);
 };
