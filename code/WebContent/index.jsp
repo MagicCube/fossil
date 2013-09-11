@@ -23,7 +23,7 @@
 </body>
 
 <script>
-$import("fo.App");
+$import("fo.DefaultApp");
 
 $speed = "fast";
 if (!mx.debugMode)
@@ -32,7 +32,7 @@ if (!mx.debugMode)
 }
 mx.whenReady(function()
 {
-    fo.app = new fo.App();
+    fo.app = new fo.DefaultApp();
     
     if ($speed == "fast")
     {

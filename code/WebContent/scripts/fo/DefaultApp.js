@@ -15,9 +15,9 @@ $import("fo.scn.DiversityScene");
 $import("fo.scn.OverviewScene");
 $import("fo.scn.WelcomeScene");
 
-$include("fo.res.App.css");
+$include("fo.res.DefaultApp.css");
 
-fo.App = function()
+fo.DefaultApp = function()
 {
     var me = $extend(mx.app.Application);
     me.appId = "fo.App";
