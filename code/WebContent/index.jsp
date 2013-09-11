@@ -25,7 +25,7 @@
 <script>
 $import("fo.App");
 
-$speed = "fast";
+$speed = "fas";
 if (!mx.debugMode)
 {
     $speed = "normal";

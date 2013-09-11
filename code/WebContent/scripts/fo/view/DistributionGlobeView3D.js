@@ -54,9 +54,9 @@ fo.view.DistributionGlobeView3D = function()
         
         var polygon2 = new Polygon(hullPoints);
         
-        for (var y = y1; y <= y2; y += 0.8)
+        for (var y = y1; y <= y2; y += 0.6)
         {
-            for (var x = x1; x <= x2; x += 0.8)
+            for (var x = x1; x <= x2; x += 0.6)
             {
                 var point = {
                     lat: y,
@@ -85,7 +85,7 @@ fo.view.DistributionGlobeView3D = function()
         }
         else
         {
-            c.setRGB(0.5, 0.5, 1);
+            c.setRGB(0.2, 0.35, 1);
         }
         return c;
     };
