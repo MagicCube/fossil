@@ -236,7 +236,8 @@ fo.view.PlayControlView = function()
     
     function _mouseX2Percentage(e)
     {
-        var pos = (e.pageX - _$progressBar.offset().left + me.$container.offset().left - 22);
+        var offsetLeft = _$progressBar.position().left + me.$container.position().left + me.$container.parent().position().left;
+        var pos = (e.pageX - offsetLeft - 15);
         var percentage = pos / (_$progressBar.width() - 15);
         return percentage;
     }
