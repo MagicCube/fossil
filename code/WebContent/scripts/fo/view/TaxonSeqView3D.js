@@ -6,7 +6,7 @@ $import("fo.ani.Animation");
 $include("fo.res.TaxonSeqView.css");
 $include("fo.res.TaxonSeqView3D.css");
 
-fo.view.TaxonSeqView = function()
+fo.view.TaxonSeqView3D = function()
 {
     var me = $extend(fo.view.View3D);
     me.elementClass = "TaxonSeqView";

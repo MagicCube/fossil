@@ -203,10 +203,9 @@ fo.App = function()
         me.poppedScene = scene;
         me.activeScene = scene;
         scene.activate(args, false);
-        scene.$container.css({ scale: 4, opacity: 0, left: (me.frame.width - scene.frame.width) / 2, top: (me.frame.height - scene.frame.height) / 2, });
+        scene.$container.css({ scale: 1, opacity: 0, left: (me.frame.width - scene.frame.width) / 2, top: (me.frame.height - scene.frame.height) / 2, });
         scene.$container.transit({
             opacity: 1,
-            scale: 1,
             width: scene.frame.width,
             height: scene.frame.height
         }, 400, "ease");

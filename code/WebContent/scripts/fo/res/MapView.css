@@ -1,6 +1,7 @@
 .MapView
 {
     -webkit-transition: -webkit-transform 1s ease-out;
+    background: #1c1c1c;
 }
 
 .Lmap

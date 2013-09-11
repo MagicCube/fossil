@@ -1,6 +1,6 @@
 $ns("fo.scn");
 
-$import("fo.view.TaxonSeqView");
+$import("fo.view.TaxonSeqView3D");
 
 $include("fo.res.OverviewScene.css");
 
@@ -23,7 +23,7 @@ fo.scn.OverviewScene = function()
     
     me.initSeqView = function()
     {
-        me.seqView = new fo.view.TaxonSeqView({
+        me.seqView = new fo.view.TaxonSeqView3D({
             frame: {
                 left: 0,
                 top: 0,

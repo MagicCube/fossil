@@ -56,7 +56,6 @@ fo.view.HeatmapView = function()
             me.dataSet[section.id] = row;
             me.dataSet.add(row);
         }        
-        me.heatmapLayer.setData(me.dataSet, 1);
     };
     
     me.setPlayControlView = function(p_playControlView)
@@ -88,6 +87,7 @@ fo.view.HeatmapView = function()
     
     function _playControlView_onpositionchanged(e)
     {
+        return;
         _updateDataSet();
         me.heatmapLayer.setData(me.dataSet, 1);
     }
