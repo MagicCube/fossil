@@ -8,8 +8,6 @@ $import("fo.view.GlobeView3D");
 fo.view.DistributionGlobeView3D = function()
 {
     var me = $extend(fo.view.GlobeView3D);
-    me.isAnimating = true;
-    me.antialias = false;
     me.maxLineLength = 1;
     var base = {};
 
