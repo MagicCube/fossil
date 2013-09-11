@@ -102,10 +102,6 @@ fo.App = function()
                 fo.taxons.add(taxon);
                 fo.taxons[taxon.id] = taxon;
             }
-            fo.taxons = fo.taxons.sort(function(a, b)
-            {
-                return a.start - b.start;
-            });
         });
     };
     
@@ -129,8 +125,7 @@ fo.App = function()
     base.run = me.run;
     me.run = function(args)
     {
-        me.setRootScene(me.homeSceneName);
-        //me.setRootScene("TaxonDetail", { taxon: fo.taxons[0], frame: { left: 0, right: 0 } });
+        me.setRootScene(me.homeSceneName, { taxon: fo.taxons[0], frame: { left: 0, right: 0 } });
     };
     
     

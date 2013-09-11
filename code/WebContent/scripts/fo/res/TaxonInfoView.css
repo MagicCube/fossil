@@ -1,9 +1,9 @@
 .TaxonInfoView
 {
     z-index: 99999999;
-    min-width: 420px;
+    min-width: 400px;
     padding: 14px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .TaxonInfoView *
@@ -13,12 +13,12 @@
 
 .TaxonInfoView #name
 {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: bold;
     margin: 0;
     padding: 0;
-    color: rgb(255, 128, 0);
-    border-bottom: 1px solid rgb(255, 128, 0);
+    color: white;
+    border-bottom: 1px solid white;
 }
 
 .TaxonInfoView #shortName
@@ -31,16 +31,15 @@
 
 .TaxonInfoView #detailList
 {
-    padding-left: 8px;
     padding-top: 8px;
 }
 
 .TaxonInfoView dl
 {
-    font-size: 17px;
+    font-size: 16px;
     display: block;
     list-style: none;
-    margin-top: 5px;
+    margin-top: 2px;
     margin-bottom: 0;
 }
 

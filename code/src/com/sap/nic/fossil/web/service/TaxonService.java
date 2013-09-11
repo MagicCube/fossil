@@ -24,7 +24,7 @@ public class TaxonService
 	@GET
 	public JSONArray getTaxons() throws JSONException, SQLException
 	{
-		ResultSet resultSet = executeSql("call fossil.FS_PROC_SQL_GET_SPECIES_LIVE_TIME()");
+		ResultSet resultSet = executeSql("call fossil01.FS_PROC_SQL_GET_SPECIES_LIVE_TIME()");
 		
 		JSONArray taxons = new JSONArray();
 		while (resultSet.next())
@@ -75,8 +75,8 @@ public class TaxonService
 			taxon.put("fullName", fullName);
 			
 			
-			int start = resultSet.getInt("STARTPOS");
-			int end = resultSet.getInt("ENDPOS");
+			int start = resultSet.getInt("START_IDX");
+			int end = resultSet.getInt("END_IDX");
 			taxon.put("start", start < end ? start : end);
 			taxon.put("end", start < end ? end : start);			
 			

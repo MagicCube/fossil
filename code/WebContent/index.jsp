@@ -36,7 +36,7 @@ mx.whenReady(function()
     
     if ($speed == "fast")
     {
-        fo.app.homeSceneName = "Overview";
+        fo.app.homeSceneName = "TaxonDetail";
     }
     else
     {

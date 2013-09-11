@@ -10,7 +10,6 @@ fo.view.HeatmapView = function()
     me.elementClass = "HeatmapView";
     var base = {};
     
-    me.playControlView = null;
     me.heatmapLayer = null;
     me.dataSet = null;
 
@@ -18,11 +17,6 @@ fo.view.HeatmapView = function()
     me.init = function(p_options)
     {
         base.init(p_options);
-        
-        if (me.playControlView != null)
-        {
-            me.setPlayControlView(me.playControlView);
-        }
     };
     
     base.initLayers = me.initLayers;
@@ -47,33 +41,13 @@ fo.view.HeatmapView = function()
             }
         });
         me.map.addLayer(me.heatmapLayer);
-        
-        me.dataSet = [];
-        for (var i = 0; i < fo.sections.length; i++)
-        {
-            var section = fo.sections[i];
-            var row = { location: section.location, value: 0 };
-            me.dataSet[section.id] = row;
-            me.dataSet.add(row);
-        }        
     };
     
-    me.setPlayControlView = function(p_playControlView)
+    me.setDataSet = function(p_dataSet, p_max)
     {
-        if (me.playControlView != null)
-        {
-            me.playControlView.off("positionchanged", _playControlView_onpositionchanged);
-            me.playControlView = null;
-        }
-        
-        if (p_playControlView != null)
-        {
-            me.playControlView = p_playControlView;
-            me.playControlView.on("positionchanged", _playControlView_onpositionchanged);
-        }
+        me.dataSet = p_dataSet;
+        me.heatmapLayer.setData(me.dataSet, p_max);
     };
-    
-    
     
     
     function _updateDataSet()
@@ -87,7 +61,6 @@ fo.view.HeatmapView = function()
     
     function _playControlView_onpositionchanged(e)
     {
-        return;
         _updateDataSet();
         me.heatmapLayer.setData(me.dataSet, 1);
     }

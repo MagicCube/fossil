@@ -32,15 +32,28 @@ fo.view.GlobeView3D = function()
             var vertex = geometry.vertices[i];
             vertex.z += 0.5;
         }
-        _point = new THREE.Mesh(geometry);        
+        _point = new THREE.Mesh(geometry);
+    };
+    
+    me.initTrackballControl = function()
+    {
+        if (me.trackballControl == null)
+        {
+            me.trackballControl = new THREE.TrackballControls(me.camera, me.renderer.domElement);
+            me.trackballControl.rotateSpeed = 0.5;
+            me.trackballControl.noRotateY = true;
+            me.trackballControl.addEventListener("change", function(){
+                me.render();
+            });
+        }
     };
 
     me.initCamera = function()
     {
         me.camera = new THREE.PerspectiveCamera(45, me.frame.width / me.frame.height, 0.1, 10000);
-        me.camera.position.x = -55;
-        me.camera.position.y = 177;
-        me.camera.position.z = -623;
+        me.camera.position.x = 0;
+        me.camera.position.y = 0;
+        me.camera.position.z = 0;
     };
 
     base.initObjects = me.initObjects;
@@ -67,19 +80,63 @@ fo.view.GlobeView3D = function()
             fragmentShader : [ 'uniform sampler2D texture;', 'varying vec3 vNormal;', 'varying vec2 vUv;', 'void main() {', 'vec3 diffuse = texture2D( texture, vUv ).xyz;', 'float intensity = 1.05 - dot( vNormal, vec3( 0.0, 0.0, 1.0 ) );', 'vec3 atmosphere = vec3( 1.0, 1.0, 1.0 ) * pow( intensity, 3.0 );', 'gl_FragColor = vec4( diffuse + atmosphere, 1.0 );', '}' ].join('\n')
         });
         me.earth = new THREE.Mesh(me.geometry, material);
+        me.earth.matrixAutoUpdate = false;
         me.scene.add(me.earth);
     };
 
-    base.startAnimation = me.startAnimation;
+    me.render = function ()
+    {
+        if (me.isRendering)
+        {
+            me.trigger("rendering");
+            me.renderer.render(me.scene, me.camera);
+        }
+    };
+    
     me.startAnimation = function()
     {
-        base.startAnimation();
+        me.isAnimating = true;
+        me.loop();
+        
+        var duration = 2500;
+        new TWEEN.Tween(me.camera.position)
+            .to({ x: 60, y: 60, z: 650 }, duration)
+            .easing(TWEEN.Easing.Exponential.Out)
+            .onUpdate(function(){
+                me.camera.lookAt(me.scene.position);
+                me.render();
+            })
+            .start();
+        
         if (me.trackballControl == null)
         {
             me.initTrackballControl();
         }
     };
     
+    me.stopAnimation = function()
+    {
+        me.isAnimating = false;
+    };
+    
+    me.loop = function()
+    {
+        if (me.isAnimating)
+        {
+            requestAnimationFrame(me.loop);
+        }
+        else
+        {
+            return;
+        }
+        
+        TWEEN.update();
+        
+        if (me.trackballControl != null)
+        {
+            me.trackballControl.update();
+        }
+    };
     
 
     me.addPoint = function(p_location, p_size, p_color)
