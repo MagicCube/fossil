@@ -19,9 +19,6 @@ $import("fo.DiversityApp");
 mx.whenReady(function()
 {
     fo.app = new fo.DiversityApp();
-    
-    fo.app.homeSceneName = "Diversity";
-    
     var args = { };
     fo.app.run(args);
 });

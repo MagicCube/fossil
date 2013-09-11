@@ -1,7 +1,7 @@
 .TaxonInfoView
 {
     z-index: 99999999;
-    min-width: 360px;
+    min-width: 300px;
     padding: 14px;
     background: rgba(255, 255, 255, 0.1);
 }
@@ -53,6 +53,6 @@
 
 .TaxonInfoView dd
 {
-    margin-left: 25px;
+    margin-left: 15px;
     display: inline-block;
 }
