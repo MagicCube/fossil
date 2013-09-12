@@ -21,6 +21,8 @@ fo.view.PlayControlView = function()
     
     var _$label = null;
     var _$playPause = null;
+    var _$forward = null;
+    var _$back = null;
     var _$progressBar = null;
     var _$cursor = null;
     var _$start = null;
@@ -32,7 +34,7 @@ fo.view.PlayControlView = function()
         base.init(p_options);
         
         _initLabel();
-        _initPlayPause();
+        _initButtons();
         _initProgressBar();
         _initRange();
         
@@ -46,11 +48,19 @@ fo.view.PlayControlView = function()
         me.$container.append(_$label);
     }
 
-    function _initPlayPause()
+    function _initButtons()
     {
-        _$playPause = $("<div id=playPause/>");
-        _$playPause.on("click", _playPause_onclick);
+        _$back = $("<div id=back class=button/>");
+        _$back.on("click", me.moveToPreviousFrame);
+        me.$container.append(_$back);
+        
+        _$playPause = $("<div id=playPause class=button/>");
+        _$playPause.on("click", me.togglePlay);
         me.$container.append(_$playPause);
+        
+        _$forward = $("<div id=forward class=button/>");
+        _$forward.on("click", me.moveToNextFrame);
+        me.$container.append(_$forward);
     }
     
     function _initProgressBar()
@@ -168,11 +178,19 @@ fo.view.PlayControlView = function()
     
     me.moveToNextFrame = function()
     {
+        if (me.position >= me.range[1])
+        {
+            return;
+        }
         me.setPosition(me.position + 1, true);
     };
     
     me.moveToPreviousFrame = function()
     {
+        if (me.position <= me.range[0])
+        {
+            return;
+        }
         me.setPosition(me.position - 1, true);
     };
     
@@ -216,10 +234,7 @@ fo.view.PlayControlView = function()
     
     
     
-    function _playPause_onclick(e)
-    {
-        me.togglePlay();
-    }
+    
     
     function _progressBar_onmousedown(e)
     {
