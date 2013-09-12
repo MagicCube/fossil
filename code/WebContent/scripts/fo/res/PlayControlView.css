@@ -75,10 +75,11 @@
 
 .PlayControlView #label
 {
+    color: rgba(255, 255, 255, 0.5);
     position: absolute;
-    top: -68px;
+    top: -58px;
     right: 8px;
-    font-size: 58px;
+    font-size: 40px;
 }
 
 .PlayControlView .range

@@ -23,8 +23,8 @@ fo.scn.TaxonDetailScene = function()
     base.init = me.init;
     me.init = function(p_options)
     {
-        var width = 1280;
-        var height = 720;
+        var width = 1440;
+        var height = 810;
         if (width > fo.app.frame.width - 80)
         {
             width = fo.app.frame.width - 80;

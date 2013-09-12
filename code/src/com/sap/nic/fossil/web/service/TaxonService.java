@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONArray;
@@ -108,7 +109,45 @@ public class TaxonService
 		JSONArray result = new JSONArray();
 		return result;
 	}
+	
+	@GET
+	@Path("diversity")
+	public JSONArray getTaxonDiversity(
+			@QueryParam("from") int p_from,
+			@QueryParam("to") int p_to) throws JSONException, SQLException
+	{
+		ResultSet resultSet = executeSql("CALL FOSSIL01.FS_PROC_SQL_GET_SECTION_COUNT(?, ?)", p_from, p_to);
+		
+		JSONArray result = new JSONArray();
+		while (resultSet.next())
+		{
+			JSONObject time = new JSONObject();
+			time.put("index", resultSet.getInt("RANKID"));
+			time.put("sectionId", resultSet.getInt("SECTIONID"));
+			time.put("taxonCount", resultSet.getInt("TAXACOUNT"));
+			result.put(time);
+		}
+		return result;
+	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public ResultSet executeSql(String p_sql, Object... p_parameters) throws SQLException
 	{
 		String convertedSQL = p_sql;

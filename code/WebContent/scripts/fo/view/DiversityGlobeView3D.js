@@ -7,7 +7,7 @@ fo.view.DiversityGlobeView3D = function()
 {
     var me = $extend(fo.view.GlobeView3D);
     me.maxLineLength = 40;
-    me.antialias = true;
+    me.antialias = false;
     var base = {};
     
     me.playControlView = null;
