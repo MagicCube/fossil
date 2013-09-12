@@ -76,6 +76,7 @@ fo.scn.TaxonDetailScene = function()
     me.initPlayControlView = function()
     {
         me.playControlView = new fo.view.PlayControlView({
+            drivenMode: "timer",
             frame: { bottom: 10, left: 10, right: 10 } 
         });
         me.addSubview(me.playControlView);

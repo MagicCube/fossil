@@ -9,9 +9,12 @@ fo.view.PlayControlView = function()
     var base = {};
     
     me.playState = null;
+    me.fps = 8;
     me.position = 0;
     me.positionPercentage = 0;
     me.range = [0, 100];
+    
+    me.drivenMode = "animationFrame";
     
     me.onplaystatechanged = null;
     me.onpositionchanged = null;
@@ -189,7 +192,18 @@ fo.view.PlayControlView = function()
     {
         if (me.playState == "playing")
         {
-            requestAnimationFrame(_loop);
+            if (me.drivenMode == "animationFrame")
+            {
+                requestAnimationFrame(_loop);
+            }
+            else if (me.drivenMode == "timer")
+            {
+                setTimeout(_loop, 1000 / me.fps);
+            }
+            else
+            {
+                return;
+            }
         }
         else
         {
