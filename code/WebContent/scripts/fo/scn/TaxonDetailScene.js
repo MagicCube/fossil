@@ -89,6 +89,7 @@ fo.scn.TaxonDetailScene = function()
 
         if (!isPoppedBack)
         {
+            me.distributionView.activate();
             me.setTaxon(args.taxon);
         }
         else
@@ -101,7 +102,7 @@ fo.scn.TaxonDetailScene = function()
     me.deactivate = function()
     {
         base.deactivate();
-        
+        me.distributionView.deactivate();
         me.playControlView.pause();
     };
     

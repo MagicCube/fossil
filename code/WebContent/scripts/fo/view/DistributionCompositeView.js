@@ -111,6 +111,20 @@ fo.view.DistributionCompositeView = function()
     
     
     
+    me.activate = function()
+    {
+        if (me.activeView != null && isFunction(me.activeView.activate))
+        {
+            me.activeView.activate();
+        }
+    };
+    me.deactivate = function()
+    {
+        if (me.activeView != null && isFunction(me.activeView.deactivate))
+        {
+            me.activeView.deactivate();
+        }
+    };
     
     
     
