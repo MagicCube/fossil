@@ -228,9 +228,10 @@ fo.view.GlobeView3D = function()
         
         var max = 5000;
         var zoom = (max - me.camera.position.z) / max;
-        var x = 4000 * zoom;
+        var z = 4000 * zoom;
         me.$container.css({
-            backgroundSize: x + "px auto"
+            backgroundSize: z + "px auto",
+            backgroundPositionX: Math.sqrt(z) + "px"
         });
     };
 

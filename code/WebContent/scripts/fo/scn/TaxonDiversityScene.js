@@ -4,7 +4,7 @@ $import("fo.view.DiversityGlobeView3D");
 
 $include("fo.res.DiversityScene.css");
 
-fo.scn.DiversityScene = function()
+fo.scn.TaxonDiversityScene = function()
 {
     var me = $extend(mx.scn.Scene);
     me.title = "";

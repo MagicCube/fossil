@@ -1,12 +1,12 @@
 $ns("fo");
 
 $import("fo.BaseApp");
-$import("fo.scn.DiversityScene");
+$import("fo.scn.TaxonDiversityScene");
 
 fo.DiversityApp = function()
 {
     var me = $extend(fo.BaseApp);
-    me.homeSceneName = "Diversity";
+    me.homeSceneName = "TaxonDiversity";
     var base = {};
 
     base.init = me.init;

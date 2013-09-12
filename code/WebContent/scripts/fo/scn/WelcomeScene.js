@@ -61,7 +61,7 @@ fo.scn.WelcomeScene = function()
         {
             _$intro.remove();
             
-            fo.app.setRootScene("Overview");
+            fo.app.setRootScene("TaxonSequence");
         });
     };
     

@@ -2,13 +2,11 @@ $ns("fo.scn");
 
 $import("fo.view.TaxonSeqView3D");
 
-$include("fo.res.OverviewScene.css");
-
-fo.scn.OverviewScene = function()
+fo.scn.TaxonSequenceScene = function()
 {
     var me = $extend(mx.scn.Scene);
     me.autoFillParent = true;
-    me.elementClass = "OverviewScene";
+    me.elementClass = "TaxonSequenceScene";
     var base = {};
     
     me.seqView = null;

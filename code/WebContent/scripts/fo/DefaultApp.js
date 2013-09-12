@@ -2,7 +2,7 @@ $ns("fo");
 
 $import("fo.BaseApp");
 $import("fo.view.SearchBoxView");
-$import("fo.scn.OverviewScene");
+$import("fo.scn.TaxonSequenceScene");
 $import("fo.scn.TaxonDetailScene");
 $import("fo.scn.WelcomeScene");
 
