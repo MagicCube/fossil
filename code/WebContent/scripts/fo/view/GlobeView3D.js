@@ -9,7 +9,7 @@ fo.view.GlobeView3D = function()
     var me = $extend(fo.view.View3D);
     me.elementClass = "GlobeView3D";
     me.isAnimating = true;
-    me.antialias = false;
+    me.antialias = true;
     var base = {};
 
     me.data = null;
@@ -214,6 +214,24 @@ fo.view.GlobeView3D = function()
         var c = new THREE.Color();
         c.setHSV((0.6 - (x * 0.5)), 1.0, 1.0);
         return c;
+    };
+    
+    
+    
+    base.render = me.render;
+    me.render = function()
+    {
+        if (me.isRendering)
+        {
+            base.render();
+        }
+        
+        var max = 5000;
+        var zoom = (max - me.camera.position.z) / max;
+        var x = 4000 * zoom;
+        me.$container.css({
+            backgroundSize: x + "px auto"
+        });
     };
 
     return me.endOfClass(arguments);

@@ -180,8 +180,9 @@ fo.BaseApp = function()
         me.activeScene = scene;
         scene.activate(args, false);
         $("#projectLogo").fadeOut();
-        scene.$container.css({ scale: 1, opacity: 0, left: (me.frame.width - scene.frame.width) / 2, top: (me.frame.height - scene.frame.height) / 2, });
+        scene.$container.css({ scale: 0.2, opacity: 0, left: (me.frame.width - scene.frame.width) / 2, top: (me.frame.height - scene.frame.height) / 2, });
         scene.$container.transit({
+            scale: 1,
             opacity: 1,
             width: scene.frame.width,
             height: scene.frame.height
