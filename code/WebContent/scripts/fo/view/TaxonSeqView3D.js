@@ -297,6 +297,19 @@ fo.view.TaxonSeqView3D = function()
             {
                 e.preventDefault();
             }
+            if (event.wheelDeltaX < 0 && me.$scene.get(0).scrollLeft == me.$scene.get(0).scrollWidth - me.$scene.get(0).offsetWidth)
+            {
+                e.preventDefault();
+            }
+            
+            if (event.wheelDelta < -30)
+            {
+                fo.app.searchBoxView.$container.stop(false).fadeOut(30);
+            }
+            else if (event.wheelDelta > 60)
+            {
+                fo.app.searchBoxView.$container.stop(false).fadeIn(30);
+            }
         }
         e.stopPropagation();
     }
