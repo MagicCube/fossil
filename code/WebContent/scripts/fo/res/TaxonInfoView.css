@@ -1,7 +1,7 @@
 .TaxonInfoView
 {
     z-index: 99999999;
-    min-width: 300px;
+    min-width: 280px;
     padding: 14px;
     background: rgba(255, 255, 255, 0.1);
 }
