@@ -60,7 +60,6 @@ fo.view.GlobeView3D = function()
     base.initObjects = me.initObjects;
     me.initObjects = function()
     {
-        //me.geometry = new THREE.SphereGeometry(200, 30, 30);
         me.geometry = new THREE.IcosahedronGeometry(200, 4);
         me.initEarth();
     };
@@ -94,12 +93,22 @@ fo.view.GlobeView3D = function()
         }
     };
     
+    me.reset = function()
+    {
+        if (me.camera != null)
+        {
+            me.camera.position.x = 0;
+            me.camera.position.y = 0;
+            me.camera.position.z = 0;
+        }
+    };
+    
     me.startAnimation = function()
     {
         me.isAnimating = true;
         me.loop();
         
-        if (me.trackballControl == null)
+        if (me.camera.position.x == 0 && me.camera.position.y == 0)
         {
             var duration = 2500;
             new TWEEN.Tween(me.camera.position)
@@ -111,6 +120,9 @@ fo.view.GlobeView3D = function()
                     me.render();
                 })
                 .start();
+        }
+        if (me.trackballControl == null)
+        {
             me.initTrackballControl();
         }
     };

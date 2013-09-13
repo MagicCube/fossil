@@ -28,7 +28,6 @@ fo.view.DistributionGlobeView3D = function()
         me.stopAnimation();
     };
     
-    
     me.updateDataSet = function()
     {
         me.data = [];

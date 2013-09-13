@@ -124,6 +124,15 @@ fo.view.DistributionCompositeView = function()
         {
             me.activeView.deactivate();
         }
+        
+        if (me.heatmapView != null)
+        {
+            me.heatmapView.reset();
+        }
+        if (me.globeView != null)
+        {
+            me.globeView.reset();
+        }
     };
     
     

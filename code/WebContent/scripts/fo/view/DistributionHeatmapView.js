@@ -23,6 +23,11 @@ fo.view.DistributionHeatmapView = function()
     {
         me.setData(me.dataSet, 1);
     };
+    
+    me.reset = function()
+    {
+        me.zoomToDefault();
+    };
 
 
     return me.endOfClass(arguments);
