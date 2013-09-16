@@ -7,7 +7,7 @@
 {
     display: block;
     position: absolute;
-    width: 800px;
+    width: 760px;
     text-transform: uppercase;
     cursor: pointer;
 }
@@ -38,5 +38,5 @@
 {
     text-align: center;
     font-family: MyriadProCondRegular;
-    font-size: 23px;
+    font-size: 18px;
 }

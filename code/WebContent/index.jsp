@@ -17,7 +17,8 @@
             The Fossil Project
         </div>
         <div id="description">
-            The simplest definition is "the study of ancient life". Paleontology seeks information about several aspects of past organisms: "their identity and origin, their environment and evolution, and what they can tell us about the Earth's organic and inorganic past".
+            The biggest stratigraphy database. The second biggest paleontology database. An application to "piece together all the time-lines of event in Earth history to get an optimized permutation of all the biological events."
+            <br>Powered by SAP HANA.
         </div>
     </div>
 </body>
@@ -25,7 +26,7 @@
 <script>
 $import("fo.DefaultApp");
 
-$speed = "fast";
+$speed = "fas";
 if (!mx.debugMode)
 {
     $speed = "normal";
