@@ -105,7 +105,7 @@ fo.BaseApp = function()
     base.run = me.run;
     me.run = function(args)
     {
-        
+        me.setRootScene(me.homeSceneName, { taxon: fo.taxons[0], frame: { left: 0, right: 0 } });
     };
     
     
@@ -118,10 +118,6 @@ fo.BaseApp = function()
         else if (me.activeScene != null && isFunction(me.activeScene.onKeydown))
         {
             me.activeScene.onKeydown(e);
-        }
-        else
-        {
-            me.setRootScene(me.homeSceneName, { taxon: fo.taxons[0], frame: { left: 0, right: 0 } });
         }
     });
     

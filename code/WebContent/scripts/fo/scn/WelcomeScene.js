@@ -22,12 +22,14 @@ fo.scn.WelcomeScene = function()
     function _initIntro()
     {
         _$intro = $("#intro");
-        _$intro.css({
+        var $front = _$intro.find("#front");
+        $front.css({
             left: (me.frame.width - 800) / 2,
-            top: (me.frame.height - _$intro.height()) * (0.35)
+            top: (me.frame.height - $front.height()) * (0.35)
         });
-        _$intro.on("click", function(){
-            me.start();
+        var $back = _$intro.find("#back");
+        $back.css({
+            webkitBackgroundSize: (me.frame.width / 1920) * 100 + "% auto"
         });
         me.$container.append(_$intro);
     }
@@ -41,13 +43,8 @@ fo.scn.WelcomeScene = function()
         {
             _$intro.css({
                 display: "block",
-                opacity: 0,
-                webkitTransform: "scale(0.96)"
+                opacity: 1
             });
-            _$intro.transit({
-                opacity: 1,
-                scale: 1
-            }, 2000);
         }
         else
         {
@@ -57,28 +54,39 @@ fo.scn.WelcomeScene = function()
     
     me.start = function()
     {
-        _$intro.fadeOut(function()
+        _$intro.transit({
+            opacity: 0,
+            scale: 0.01
+        }, 1000, function()
         {
             _$intro.remove();
-            
             fo.app.setRootScene("TaxonSequence");
         });
     };
     
     
+    var _step = 0;
     me.onKeydown = function(e)
     {
-        if (e.keyCode == 13 || e.keyCode == 32)
+        if (e.keyCode == 13 || e.keyCode == 32 || e.keyCode == 34)
         {
-            me.start();
-        }
-        else if (e.keyCode == 34)
-        {
-            me.start();
+            if (_step == 0)
+            {
+                _$intro.addClass("flipped");
+                _step = 1;
+            }
+            else
+            {
+                me.start();
+            }
         }
         else if (e.keyCode == 33)
         {
-            
+            if (_step == 1)
+            {
+                _$intro.removeClass("flipped");
+                _step = 0;
+            }
         }
     };
 

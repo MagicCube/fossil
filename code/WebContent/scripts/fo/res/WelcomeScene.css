@@ -1,25 +1,42 @@
 .WelcomeScene
 {
-    
+    -webkit-perspective: 800px;
 }
 
 .WelcomeScene #intro
 {
     display: block;
     position: absolute;
-    width: 760px;
-    text-transform: uppercase;
-    cursor: pointer;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    -webkit-transform-style: preserve-3d;
+    -webkit-transition: -webkit-transform 1s;
 }
 
-.WelcomeScene #intro #welcomeTo
+.WelcomeScene #intro #front, .WelcomeScene #intro #back
+{
+    -webkit-backface-visibility: hidden;
+}
+
+
+
+.WelcomeScene #intro #front
+{
+    position: absolute;
+    width: 760px;
+    text-transform: uppercase;
+}
+
+.WelcomeScene #intro #front #welcomeTo
 {
     text-align: center;
     font-family: MyriadProCondRegular;
     font-size: 25px;
 }
 
-.WelcomeScene #intro #title
+.WelcomeScene #intro #front #title
 {
     display: block;
     width: 540px;
@@ -34,9 +51,33 @@
     font-weight: bold;
 }
 
-.WelcomeScene #intro #description
+.WelcomeScene #intro #front #description
 {
     text-align: center;
     font-family: MyriadProCondRegular;
     font-size: 18px;
+}
+
+
+
+
+
+
+.WelcomeScene #intro #back
+{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: url(images/helix.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+    -webkit-transform: rotateY(180deg);
+}
+
+
+.WelcomeScene #intro.flipped
+{
+    -webkit-transform: rotateY(180deg);
 }

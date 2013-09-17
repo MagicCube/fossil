@@ -12,14 +12,17 @@
 <body>
     <div id="projectLogo"></div>
     <div id="intro" style="display: none;">
-        <div id="welcomeTo">Welcome to</div>
-        <div id="title">
-            The Fossil Project
+        <div id="front">
+            <div id="welcomeTo">Welcome to</div>
+            <div id="title">
+                The Fossil Project
+            </div>
+            <div id="description">
+                The biggest stratigraphy database. The second biggest paleontology database. An application to "piece together all the time-lines of event in Earth history to get an optimized permutation of all the biological events."
+                <br>Powered by SAP HANA.
+            </div>
         </div>
-        <div id="description">
-            The biggest stratigraphy database. The second biggest paleontology database. An application to "piece together all the time-lines of event in Earth history to get an optimized permutation of all the biological events."
-            <br>Powered by SAP HANA.
-        </div>
+        <div id="back" src="scripts/fo/res/images/helix.png"></div>
     </div>
 </body>
 
