@@ -64,8 +64,7 @@ fo.BaseApp = function()
                 me.hidePoppedScene();
             }
         });
-    };
-    
+    };   
     
     
     
@@ -106,15 +105,23 @@ fo.BaseApp = function()
     base.run = me.run;
     me.run = function(args)
     {
-        me.setRootScene(me.homeSceneName, { taxon: fo.taxons[0], frame: { left: 0, right: 0 } });
+        
     };
     
     
     $(document).on("keydown", function(e)
     {
-        if (me.activeScene != null && isFunction(me.activeScene.onKeydown))
+        if (e.keyCode == 190)
+        {
+            window.location.reload(false);
+        }
+        else if (me.activeScene != null && isFunction(me.activeScene.onKeydown))
         {
             me.activeScene.onKeydown(e);
+        }
+        else
+        {
+            me.setRootScene(me.homeSceneName, { taxon: fo.taxons[0], frame: { left: 0, right: 0 } });
         }
     });
     
@@ -216,6 +223,16 @@ fo.BaseApp = function()
             $("#projectLogo").fadeIn();
             me.searchBoxView.$container.fadeIn();
         }
+    };
+    
+    me.showOverlay = function()
+    {
+        _$overlay.fadeIn();
+    };
+    
+    me.hideOverlay = function()
+    {
+        _$overlay.fadeOut();
     };
 
     return me.endOfClass(arguments);

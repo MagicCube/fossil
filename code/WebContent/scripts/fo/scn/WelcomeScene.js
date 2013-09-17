@@ -72,6 +72,14 @@ fo.scn.WelcomeScene = function()
         {
             me.start();
         }
+        else if (e.keyCode == 34)
+        {
+            me.start();
+        }
+        else if (e.keyCode == 33)
+        {
+            
+        }
     };
 
     return me.endOfClass(arguments);

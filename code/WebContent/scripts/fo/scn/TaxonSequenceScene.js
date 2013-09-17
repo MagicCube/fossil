@@ -58,6 +58,11 @@ fo.scn.TaxonSequenceScene = function()
             _to2D = true;
             me.seqView.startAnimation("To2D");
         }
+        else if (e.keyCode == 34)
+        {
+            _to2D = true;
+            me.seqView.startAnimation("To2D");
+        }
     };
 
     return me.endOfClass(arguments);
