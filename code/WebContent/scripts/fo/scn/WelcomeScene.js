@@ -28,9 +28,12 @@ fo.scn.WelcomeScene = function()
             top: (me.frame.height - $front.height()) * (0.35)
         });
         var $back = _$intro.find("#back");
-        $back.css({
-            webkitBackgroundSize: (me.frame.width / 1920) * 100 + "% auto"
-        });
+        if (me.frame.width < 1900)
+        {
+            $back.css({
+                webkitBackgroundSize: (me.frame.height / 1080) * 135 + "% auto"
+            });
+        }
         me.$container.append(_$intro);
     }
 
@@ -56,12 +59,16 @@ fo.scn.WelcomeScene = function()
     {
         _$intro.transit({
             opacity: 0,
-            scale: 0.01
-        }, 1000, function()
+            scale: 0.01,
+            rotateY: "180deg"
+        }, 500, function()
         {
             _$intro.remove();
-            fo.app.setRootScene("TaxonSequence");
         });
+        
+        setTimeout(function(){
+            fo.app.setRootScene("TaxonSequence");
+        }, 250);
     };
     
     
