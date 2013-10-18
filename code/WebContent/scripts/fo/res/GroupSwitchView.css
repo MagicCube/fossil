@@ -1,0 +1,58 @@
+.GroupSwitchView
+{
+	color: #727171;
+	font-size: 14px;
+	height: 20px;
+	line-height: 20px;
+	white-space: nowrap;
+}
+
+.GroupSwitchView #groupBy
+{
+	display: inline-block;
+	height: 20px;
+}
+
+.GroupSwitchView #line
+{
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background: red;
+}
+
+
+.GroupSwitchView ul
+{
+	list-style: none;
+	display: inline-block;
+	background: none;
+	width: 100;
+	margin: 0;
+	padding: 0;
+}
+
+.GroupSwitchView li
+{
+	display: inline-block;
+	border: 1px solid #727171;
+	border-radius: 4px;
+	padding-left: 3px;
+	padding-right: 3px;
+	margin-left: 2px;
+	margin-right: 2px;
+	cursor: pointer;
+}
+
+
+.GroupSwitchView li#class.selected
+{
+	background-color: rgba(255, 226, 0, 0.3);
+	color: #9FA0A0;
+}
+
+.GroupSwitchView li#genus.selected
+{
+	background-color: rgba(0, 154, 62, 0.3);
+	color: #9FA0A0;
+}
