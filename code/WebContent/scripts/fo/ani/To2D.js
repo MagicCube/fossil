@@ -116,6 +116,8 @@ fo.ani.To2D = function()
     {
         me.view.switchTo2D();
         
+        $("#projectLogo").fadeOut();
+        
         for (var i = 0; i < me.objects.length; i++)
         {
             var obj = me.objects[i];

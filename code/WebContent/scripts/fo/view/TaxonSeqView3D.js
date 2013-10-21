@@ -17,7 +17,7 @@ fo.view.TaxonSeqView3D = function()
     me.scale = 1;
     
     me.padding = {
-        top: 75,
+        top: 240,
         left: 25,
         right: 25
     };
@@ -27,7 +27,7 @@ fo.view.TaxonSeqView3D = function()
     me.$scene = null;
     me.$camera = null;
     me.styleSheet = null;
-
+    
     base.init = me.init;
     me.init = function(p_options)
     {
@@ -158,15 +158,20 @@ fo.view.TaxonSeqView3D = function()
     
     me.switchTo2D = function()
     {
+    	
         me.stopAnimation();
         me.isRendering = false;
         me.mode = "2D";
         
-        fo.app.searchBoxView.$container.delay(600).fadeIn("slow");
+        //fo.app.searchBoxView.$container.delay(600).fadeIn("slow");
         
         me.$container.append("<div id='topShadow' class='shadow'/><div id='bottomShadow' class='shadow'/>");
-        me.$container.find(".shadow").hide().fadeIn(5000);
+       // me.$container.find(".shadow").hide().fadeIn(5000);
         
+       var scene = me.parentView;
+       scene.chronLineView.$element.fadeIn(3000);
+       scene.groupSwitchView.$element.fadeIn(3000);
+       scene.$mask.fadeIn(1000);
         
         me.$container.find(".camera").css(
         {
@@ -302,6 +307,7 @@ fo.view.TaxonSeqView3D = function()
                 e.preventDefault();
             }
             
+            /*
             if (event.wheelDelta < -30)
             {
                 fo.app.searchBoxView.$container.stop(false).fadeOut(30);
@@ -310,6 +316,7 @@ fo.view.TaxonSeqView3D = function()
             {
                 fo.app.searchBoxView.$container.stop(false).fadeIn(30);
             }
+            */
         }
         e.stopPropagation();
     }
