@@ -21,8 +21,90 @@ import com.sap.nic.fossil.db.DbConnectionPool;
 public class TaxonService
 {
 	private static final Logger _logger = Logger.getLogger(TaxonService.class);
-
+	
 	@GET
+	public JSONObject getTaxa() throws JSONException, SQLException
+	{
+		ResultSet resultSet = executeSql("call FOSSIL195.FS_PROC_SQL_TEST_MA()");
+		
+		JSONObject result = new JSONObject();
+		JSONArray taxa = new JSONArray();
+		result.put("taxa", taxa);
+		int i = 0;
+		while (resultSet.next())
+		{
+			double appear = resultSet.getDouble("APPEAR");
+			double disappear = resultSet.getDouble("DISAPPEAR");
+			
+			if (i++ == 0)
+			{
+				result.put("first", appear);
+			}
+			
+			JSONObject taxon = new JSONObject();
+			taxon.put("id", "t" + resultSet.getInt("TAXAID"));
+			taxon.put("author", resultSet.getString("AUTHOR"));
+			taxon.put("genus", resultSet.getString("GENUS"));
+			String name = resultSet.getString("SHORTNAME");
+			name = name.replace(".1111", "").replace(".1", "");
+			taxon.put("name", name);
+			taxa.put(taxon);
+			
+			String cls = resultSet.getString("CLASS");
+			if (cls.trim().equals("") || cls.equals("1") || cls.equals("1111"))
+			{
+				cls = null;
+			} 
+			taxon.put("cls", cls);
+			String genus = resultSet.getString("GENUS");
+			if (genus.trim().equals("") || genus.equals("1") || genus.equals("1111"))
+			{
+				genus = null;
+			}
+			taxon.put("genus", genus);
+			
+			String species = resultSet.getString("SPECIES");
+			if (species.trim().equals("") || species.equals("1") || species.equals("1111"))
+			{
+				species = null;
+			}
+			taxon.put("species", species);
+			
+			String fullName = "";
+			if (genus != null)
+			{
+				fullName = genus;
+			}
+			if (species != null)
+			{
+				if (fullName.equals(""))
+				{
+					fullName = species;
+				}
+				else
+				{
+					fullName += " " + species; 
+				}
+			}
+			taxon.put("fullName", fullName);
+			
+			int start = resultSet.getInt("FAD");
+			int end = resultSet.getInt("LAD");
+			taxon.put("start", start < end ? start : end);
+			taxon.put("end", start < end ? end : start);
+			
+			taxon.put("appear", appear);
+			taxon.put("disappear", disappear);
+			
+			if (!result.has("last") || disappear < result.getDouble("last"))
+			{
+				result.put("last", disappear);
+			}
+		}
+		return result;
+	}
+
+	//@GET
 	public JSONArray getTaxons() throws JSONException, SQLException
 	{
 		ResultSet resultSet = executeSql("call fossil01.FS_PROC_SQL_GET_SPECIES_LIVE_TIME()");
