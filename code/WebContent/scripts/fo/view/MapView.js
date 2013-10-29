@@ -22,7 +22,7 @@ fo.view.MapView = function()
     me.mapElement = null;
     
     
-    me.baseTileUrl = "https://tiles.mapbox.com/v3/henryli.map-ccti13xw/{z}/{x}/{y}.png";
+    me.baseTileUrl = "https://tiles.mapbox.com/v3/henryli.map-a96c6hbf/{z}/{x}/{y}.png";
     
     
     me.defaultZoom = 4;
