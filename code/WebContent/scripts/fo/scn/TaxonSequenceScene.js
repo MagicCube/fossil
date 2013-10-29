@@ -125,6 +125,10 @@ fo.scn.TaxonSequenceScene = function()
     function _ongroupclicked(e)
     {
     	console.log(e.className);
+        fo.app.popupScene("BioDiversity", {
+            className: e.className
+           
+        });
     }
 
     return me.endOfClass(arguments);
