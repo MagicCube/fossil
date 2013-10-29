@@ -29,7 +29,7 @@
 <script>
 $import("fo.DefaultApp");
 
-$speed = "fas";
+$speed = "<%= request.getParameter("speed")%>";
 if (!mx.debugMode)
 {
     $speed = "normal";
