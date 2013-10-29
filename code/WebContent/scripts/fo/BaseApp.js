@@ -198,7 +198,7 @@ fo.BaseApp = function()
             me.activeScene.deactivate();
             me.activeScene = null;
         }
-        me.searchBoxView.$container.fadeOut();
+        //me.searchBoxView.$container.fadeOut();
         scene.$container.addClass("popped");
         _$overlay.hide();
         me.$container.append(_$overlay);
@@ -207,7 +207,7 @@ fo.BaseApp = function()
         me.poppedScene = scene;
         me.activeScene = scene;
         scene.activate(args, false);
-        $("#projectLogo").fadeOut();
+        //$("#projectLogo").fadeOut();
         scene.$container.css({ scale: 0.2, opacity: 0, left: (me.frame.width - scene.frame.width) / 2, top: (me.frame.height - scene.frame.height) / 2, });
         scene.$container.transit({
             scale: 1,
@@ -241,8 +241,8 @@ fo.BaseApp = function()
                 me.activateScene = me.rootScene;
                 me.activateScene.activate({}, true);
             }
-            $("#projectLogo").fadeIn();
-            me.searchBoxView.$container.fadeIn();
+            //$("#projectLogo").fadeIn();
+            //me.searchBoxView.$container.fadeIn();
         }
     };
     
