@@ -23,6 +23,17 @@ fo.scn.BioDiversityScene = function(){
     base.init = me.init;
     me.init = function(p_options)
     {
+        var width = 1800;
+        var height = 1012;
+        if (width > fo.app.frame.width * 0.95)
+        {
+            width = fo.app.frame.width * 0.95;
+        }
+        if (height > fo.app.frame.height * 0.95)
+        {
+            height = fo.app.frame.height * 0.95;
+        }
+        me.frame = { width: width, height: height };
         base.init(p_options);
                   
         me.initLineChartView();

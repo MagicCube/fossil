@@ -50,7 +50,7 @@ fo.view.MapView = function()
     
     me.initMap = function()
     {
-        me.map = L.mapbox.map(me.mapElement, "henryli.map-ccti13xw", {
+        me.map = L.mapbox.map(me.mapElement, "henryli.map-a96c6hbf", {
             minZoom: 3,
             maxZoom: 10,
             zoomControl: false,
