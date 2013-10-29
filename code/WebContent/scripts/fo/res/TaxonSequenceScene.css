@@ -1,0 +1,20 @@
+.TaxonSequenceScene 
+{
+	
+}
+
+.TaxonSequenceScene #mask
+{
+	position: absolute;
+	background: url(images/background.jpg);
+	top: 0px;
+	left: 0;
+	right: 0px;
+	height: 229px;
+
+}
+
+.TaxonSequenceScene #taxonSeqView
+{
+	
+}

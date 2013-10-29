@@ -5,6 +5,8 @@ $import("fo.view.SearchBoxView");
 $import("fo.scn.TaxonSequenceScene");
 $import("fo.scn.TaxonDetailScene");
 $import("fo.scn.WelcomeScene");
+$import("fo.scn.TestScene");
+$import("fo.scn.HomeTestScene");
 
 fo.DefaultApp = function()
 {
@@ -20,6 +22,7 @@ fo.DefaultApp = function()
         base.init(p_options);
         
         me.initSearchBoxView();
+
     };
 
     me.initSearchBoxView = function()

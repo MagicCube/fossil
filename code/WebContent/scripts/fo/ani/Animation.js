@@ -2,6 +2,7 @@ $ns("fo.ani");
 
 $import("fo.ani.Splash");
 $import("fo.ani.To2D");
+$import("fo.ani.Grouping");
 
 fo.ani.Animation = function()
 {
@@ -49,6 +50,11 @@ fo.ani.Animation = function()
         me.camera = null;
         me.objects = null;
     };
+    
+    me.groupByClasses = function()
+    {
+    	console.log("ani");
+    };
 
     return me.endOfClass(arguments);
 };
@@ -59,3 +65,5 @@ fo.ani.Animation.createInstance = function(p_name, args)
     var inst = new cls(args);
     return inst;
 };
+
+

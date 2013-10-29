@@ -39,7 +39,7 @@ fo.view.TaxonInfoView = function()
         me.taxon = p_taxon;
         _setProps({
             name: p_taxon.fullName,
-            rank: "#" + (fo.taxons.indexOf(p_taxon) + 1),
+            rank: "#" + (fo.taxa.indexOf(p_taxon) + 1),
             cls: p_taxon.cls,
             genus: p_taxon.genus,
             author: p_taxon.author + "(" + p_taxon.year + ")",

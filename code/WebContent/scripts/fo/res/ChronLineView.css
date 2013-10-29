@@ -3,6 +3,15 @@
 	font-size:27px;
 }
 
+.ChronLineView .cover
+{
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 1920px;
+	height: 180px;
+}
+
 .ChronLineView table
 {
 	table-layout:fixed;
@@ -106,6 +115,7 @@
 {
 	position: absolute;
 	top: 0px;
+
 }
 
 .ChronLineView .linechart
@@ -113,6 +123,7 @@
 	position: absolute;
 	top: 0px;
 	left: 0px;
+
 }
 
 .ChronLineView .diverLine 
@@ -122,8 +133,11 @@
   stroke-width: 2px;
 }
 
-.ChronLineView .seriesLine
+.seriesLines
 {
 	position: absolute;
 	top: 45px;
+	width: 3px;
+	z-index: 100000;
 }
+

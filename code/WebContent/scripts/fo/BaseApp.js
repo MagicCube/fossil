@@ -7,6 +7,8 @@ $import("lib.three.Three", function(){
 $import("lib.d3.D3");
 $import("lib.jquery.plugin.Transit");
 $import("lib.tween.Tween");
+$import("fo.util.ChronUtil");
+$import("fo.util.GroupUtil");
 
 $include("fo.res.DefaultApp.css");
 
@@ -39,7 +41,8 @@ fo.BaseApp = function()
         
         me.initBackground();
         me.initOverlay();
-        me.loadTaxons();
+       // me.loadTaxons();
+        me.loadTaxa();
         me.loadSections();
         
         me.$container.on("mousewheel", function(e)
@@ -85,6 +88,28 @@ fo.BaseApp = function()
         });
     };
     
+    me.loadTaxa = function()
+    {
+        $.ajax({
+            url: $mappath("~/data/taxa.json"),
+            async: false
+        }).success(function(fossil)
+        {
+            fo.taxa = [];
+            fo.first = fossil.first;
+            fo.last = fossil.last;
+            var taxa = fossil.taxa;
+            for (var i = 0; i < taxa.length; i++)
+            {
+                var taxon = taxa[i];
+               
+                fo.taxa.add(taxon);
+                fo.taxa[taxon.id] = taxon;
+                
+            }
+        });
+    };
+    
     me.loadSections = function()
     {
         $.ajax({
@@ -105,7 +130,7 @@ fo.BaseApp = function()
     base.run = me.run;
     me.run = function(args)
     {
-        me.setRootScene(me.homeSceneName, { taxon: fo.taxons[0], frame: { left: 0, right: 0 } });
+        me.setRootScene(me.homeSceneName, { taxon: fo.taxa[0], frame: { left: 0, right: 0 } });
     };
     
     

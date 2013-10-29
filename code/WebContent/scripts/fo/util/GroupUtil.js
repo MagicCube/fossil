@@ -21,24 +21,34 @@ fo.util.GroupUtilClass = function()
     me.getClsTaxaGroups = function()
     {
 		var groups = [];
-		for (var i = 0; i < fo.taxons.length; i++)
+		for (var i = 0; i < fo.taxa.length; i++)
         {
-            var taxon = fo.taxons[i];
+            var taxon = fo.taxa[i];
             var group = null;
-            var key = taxon.cls;
+            var key = null;
+            
+            if(taxon.cls)
+            {
+            	key = taxon.cls;
+            }
+            else
+            {
+            	
+            	key = "Unkown";
+            }
+            
             if (groups[key] == null)
             {
-            	// 创建新的
+  
             	group = {
-            		name: taxon.cls,
+            		name: key,
             		taxa: []
             	};
             	groups.add(group);
             	groups[group.name] = group;
             }
             else
-        	{
-            	// 用老的
+        	{            
             	group = groups[key];
         	}
             group.taxa.add(taxon);
@@ -49,14 +59,24 @@ fo.util.GroupUtilClass = function()
     me.getGenusTaxaGroups = function()
     {
 		var groups = [];
-		for (var i = 0; i < fo.taxons.length; i++)
+		for (var i = 0; i < fo.taxa.length; i++)
         {
-            var taxon = fo.taxons[i];
+            var taxon = fo.taxa[i];
             var group = null;
-            var key = taxon.cls + " - " + taxon.genus;
+            var key = null;
+            
+            if(taxon.cls)
+            {
+            	key = taxon.cls + " - " + taxon.genus;
+            }
+            else
+            {
+            	key = "Unknown" + " - " + taxon.genus;
+            }
+            
             if (groups[key] == null)
             {
-            	// 创建新的
+            
             	group = {
             		name: key,
             		taxa: []
@@ -66,7 +86,7 @@ fo.util.GroupUtilClass = function()
             }
             else
         	{
-            	// 用老的
+            
             	group = groups[key];
         	}
             group.taxa.add(taxon);

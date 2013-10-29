@@ -29,12 +29,14 @@ fo.scn.TaxonSequenceScene = function()
         me.initChronLineView();
         me.initGroupSwitchView();
         
-        me.$mask.hide();          
+        me.$mask.hide(); 
     };
     
     me.initSeqView = function()
     {
         me.seqView = new fo.view.TaxonSeqView3D({
+        	id:"taxonSeqView",
+        	ongroupclicked: _ongroupclicked,
             frame: {
                 left: 0,
                 top: 0,
@@ -48,13 +50,14 @@ fo.scn.TaxonSequenceScene = function()
     
     me.initChronLineView = function()
     {
-    	var $table = $("<div id=chronLineView></div>");
-    	$(document.body).append($table);
+    	var $chronLine = $("<div id=chronLineView></div>");
+    	$(document.body).append($chronLine);
+    	console.log(me.seqView.$container[0]);
     	me.chronLineView = new fo.view.ChronLineView({
     		id:"chronLineView", 
-    		$element:$table,
+    		$element:$chronLine,
     		frame:{
-    			width: me.frame.width,
+    			width: me.frame.width * 2,
     			top: 20   			
     		}
     		
@@ -70,6 +73,7 @@ fo.scn.TaxonSequenceScene = function()
     {
     	me.groupSwitchView = new fo.view.GroupSwitchView({
     		id: "groupSwitchView",
+    		ongroupchanged: _ongroupchanged,
     		frame:{
     			top: 205,
     			right: 40
@@ -88,7 +92,7 @@ fo.scn.TaxonSequenceScene = function()
 
         if (!isPoppedBack)
         {
-            $("#projectLogo").fadeIn();
+//            $("#projectLogo").fadeIn();
         }
         else
         {
@@ -112,6 +116,16 @@ fo.scn.TaxonSequenceScene = function()
             me.seqView.startAnimation("To2D");
         }
     };
+    
+    function _ongroupchanged()
+    {
+    	me.seqView.groupBy(me.groupSwitchView.group);
+    }
+    
+    function _ongroupclicked(e)
+    {
+    	console.log(e.className);
+    }
 
     return me.endOfClass(arguments);
 };
