@@ -1,0 +1,80 @@
+.MapView
+{
+    -webkit-transition: -webkit-transform 1s ease-out;
+    background: #1c1c1c;
+}
+
+.Lmap
+{
+    width: 100%;
+    height: 100%;
+}
+
+.Lmap .leaflet-top
+{
+    opacity: 0.4;
+}
+
+.Lmap .leaflet-control-attribution
+{
+    display: none;
+}
+
+.Lmap.leaflet-container, .Lmap .leaflet-container
+{
+    background: transparent;
+}
+
+
+
+
+.MapView .viewSwitcher
+{
+	z-index: 9999999;
+	position: absolute;
+	left: 40px;
+	bottom: 78px;
+	display: block;
+	width: 210px;
+	height: 59px;
+	line-height: 56px;
+	font-size: 28px;
+	white-space: nowrap;
+}	
+
+.MapView .viewSwitcher ul
+{
+	list-style: none;
+	display: block;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+.MapView .viewSwitcher li
+{
+	color: #999;
+	display: inline-block;
+	width: 50%;
+	border: 1px solid #999;
+	cursor: pointer;
+	text-align: center;
+}
+
+.MapView .viewSwitcher li:first-child
+{
+	border-radius: 8px 0 0 8px;
+}
+
+.MapView .viewSwitcher li:last-child
+{
+	border-radius: 0 8px 8px 0;
+}
+
+
+
+.MapView .viewSwitcher li.selected
+{
+	color: white;
+}

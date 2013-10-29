@@ -37,7 +37,7 @@ fo.scn.TaxonDiversityScene = function()
     me.initPlayControlView = function()
     {
         me.playControlView = new fo.view.PlayControlView({
-            range: [0, fo.taxons.length * 2],
+            range: [0, fo.taxa.length * 2],
             frame: { bottom: 10, left: 10, right: 10 } 
         });
         me.addSubview(me.playControlView);

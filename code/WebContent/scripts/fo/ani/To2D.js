@@ -21,22 +21,29 @@ fo.ani.To2D = function()
         
         TWEEN.removeAll();
         
-        var duration = me.duration;
-        
+        var duration = me.duration;        
+        var scale = me.view.parentView.chronLineView.scale;
+
         var $extra = me.view.$container.children(".taxon");
-        for (var i = 0; i < fo.taxons.length; i++)
+        for (var i = 0; i < fo.taxa.length; i++)
         {
-            var t = fo.taxons[i];
+            var t = fo.taxa[i];
+            var tStart = scale.invert(t.appear);
+            var tEnd = scale.invert(t.disappear);
+
             var target = { 
-                    left: t.start + me.view.padding.left,
-                    width: (t.end - t.start),
+                    left: tStart + me.view.padding.left + me.view.leftMove,
+                    width: (tEnd - tStart),
                     height: 18,
                     top: (-i) * 19 - me.view.padding.top,
                     borderOpacity: 0
             };
+
+            
             if (i < me.objects.length)
             {
                 var obj = me.objects[i];
+                
                 
                 new TWEEN.Tween(obj.rotation)
                     .delay(Math.random() * duration / 2)
@@ -79,6 +86,10 @@ fo.ani.To2D = function()
                 taxonInnerDiv.style.width = target.width + "px";
                 taxonInnerDiv.style.height = target.height + "px";
                 taxonInnerDiv.style.left = target.left + "px";
+                
+                taxonDiv.style.top = -target.top + "px";
+            
+                
             }
         }
         
@@ -112,9 +123,12 @@ fo.ani.To2D = function()
             .start();
     };
     
+    
     function _afterFirstMove()
     {
         me.view.switchTo2D();
+        
+        $("#projectLogo").fadeOut();
         
         for (var i = 0; i < me.objects.length; i++)
         {
