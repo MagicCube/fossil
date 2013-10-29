@@ -5,6 +5,7 @@ $import("fo.view.SearchBoxView");
 $import("fo.scn.TaxonSequenceScene");
 $import("fo.scn.TaxonDetailScene");
 $import("fo.scn.WelcomeScene");
+$import("fo.scn.BioDiversityScene");
 
 fo.DefaultApp = function()
 {

@@ -261,7 +261,7 @@ fo.view.LineChartView = function()
     	  if (year < r[0]) year = r[0];
     	  if (year > r[1]) year = r[1];
 
-    	  var t = d3.select("#New")
+    	  var t = d3.select("#BioDiversity")
     	    .transition()
     	      .ease("linear")
     	      .duration(duration);
