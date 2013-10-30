@@ -23,6 +23,19 @@ public class TaxonService
 	private static final Logger _logger = Logger.getLogger(TaxonService.class);
 	
 	@GET
+	@Path("diversity/curve")
+	public JSONArray getDiversityCurve(
+			@QueryParam("class") String p_className
+			) throws JSONException, SQLException
+	{
+		if (p_className == null)
+		{
+			
+		}
+		return null;
+	}
+	
+	@GET
 	public JSONObject getTaxa() throws JSONException, SQLException
 	{
 		ResultSet resultSet = executeSql("call FOSSIL195.FS_PROC_SQL_TEST_MA()");
