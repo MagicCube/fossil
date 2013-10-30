@@ -126,6 +126,7 @@ fo.view.LineChartView = function()
 	        .ticks(5);
 
 	    //Define Line Chart
+	    if (_svg !=null) _svg.remove();
 	    _svg = d3.select("#linechart").append("svg")
 	        .attr("width", width)
 	        .attr("height", height)
