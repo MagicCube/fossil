@@ -28,6 +28,7 @@ fo.view.PieChartView = function()
     var _arc = null;
     var _infopadview = null;
     var _svg = null;
+    var _bullets = null;
     var _label_group = null;
     var _lines = null;
     
@@ -60,6 +61,8 @@ fo.view.PieChartView = function()
        	_infopadview.append("span")
        				.attr("id", "proportion");
 		_svg = _infopadview.append("svg");
+		_infopadview.append("ul")
+					.attr("id", "bullets");
 		
 		
     };
@@ -74,7 +77,7 @@ fo.view.PieChartView = function()
     	}
     	else
     	{
-        	me.data = [{className: "Gastropoda", count: 4}, {className: "Cephdddiopod", count: 7}, {className: "Brachdddiopod", count: 9},  {className: "Cephadddiopod", count: 3}, {className: "Lophodddiopod", count: 1}, {className: "Others", count: 5}];
+        	me.data = [{className: "Gastropoda", count: 4}, {className: "Cephdddiopod", count: 7}, {className: "Others", count: 5}];
     	}
     	//args.className = "Brachiopod";  //test data
     	var total = 10; //getClassTaxonCountJson (yearSelected);
@@ -87,16 +90,34 @@ fo.view.PieChartView = function()
     	_infopadview.select("#area").text("Area: " + me.polygonArea + "km²");
 
     	if (args.className !=null) return; 
-    	if (_oldPieData.length == 0)	//not first loading
-    	{
+//    	if (_oldPieData.length == 0)	//first loading
+//    	{
     		me.initPie();
-    	}
-    	else
-    	{
-    		_updatePie();
-    	}
+//    	}
+//    	else
+//    	{
+//    		_updatePie();
+//    	}
         //me.initLabel();
 
+        //remove old class proportion info list and create new one
+      	var bullets = _infopadview.select("#bullets");
+      	bullets.selectAll("li").remove();
+     	_infopadview.selectAll("span.bullet").remove();
+     	
+      	bullets.selectAll("li")
+      				.data(_filteredPieData)
+      				.enter()
+      				.append("li")
+         			 .text(function(d, i){
+
+         				 _infopadview.append("span")
+         		      			.attr("class", "bullet")
+         		      			.attr("style", "background-color:"+_color(i)+" ;top:" + (21*i+617) + "px; position: absolute;");
+
+         				 var percentage = (d.value/_totalValue)*100;
+         				 return d.name + " " + percentage.toFixed(1) + "%";
+	      			 });
 
     };
 
@@ -105,11 +126,17 @@ fo.view.PieChartView = function()
 
     	_infopadview.select("#proportion").text("Class Proportion");
  		
-		//Set up groups
-		var arcs = _svg.selectAll("g.arc")
-			  .data(_pie(me.data));
-		 arcs.exit().remove();
-		 arcs.enter()
+    	//delete old pie
+    	_svg.selectAll("g.arc").remove();
+		_totalValue = 0;	//reset to zero
+    	
+		//Create new pie
+        _filteredPieData = _pie(me.data).filter(_filterData);
+        _oldPieData = _filteredPieData;
+    	var arcs = _svg.selectAll("g.arc")
+			  .data(_filteredPieData);
+
+        arcs.enter()
 			  .append("g")
 			  .attr("class", "arc")
 			  .attr("transform", "translate(" + (_width/2) + "," + (_height/2) + ")");
@@ -123,23 +150,9 @@ fo.view.PieChartView = function()
 			.attr("fill", function(d, i) {
 				return _color(i);
 			})
-	      .each(function(d) { this._current = d; });		
+//	      .each(function(d) { this._current = d; });		
 		 
-        _filteredPieData = _pie(me.data).filter(_filterData);
-        _oldPieData = _filteredPieData;
         
-      	var bullets = _infopadview.append("ul")
-					.attr("id", "bullets");
-      	bullets.selectAll("li")
-      			.data(me.data)
-      			.exit().remove()
-      			.enter()
-      			 .append("li")
-      			 .atttr("class","bullet")
-      			 .text(function(d){
-      				 return d;
-      			 });
-		
     };
     
     function _filterData(element, index, array) {
@@ -162,6 +175,11 @@ fo.view.PieChartView = function()
 	      path.transition().duration(_tweenDuration).attrTween("d", _arcTween); // redraw the arcs
     }
 
+    
+    
+    
+    
+    
     me.initLabel = function()
     {
        	//Create label group	

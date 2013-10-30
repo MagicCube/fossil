@@ -211,6 +211,7 @@ fo.view.LineChartView = function()
 
       selectorHand.append("circle")
         .attr("class", "halo")
+        .attr("stroke-width", "0")
         .attr("opacity", "0.4")
         .attr("fill", "url(#selectorHandHalo)")
         .attr("cx", 0)

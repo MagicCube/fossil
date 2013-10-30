@@ -73,7 +73,7 @@
     background-image: url(images/paused.png);
     border-radius: 10px;
     z-index: 9999999;
-	cursor: hand;
+	cursor: pointer;
  
 }
 

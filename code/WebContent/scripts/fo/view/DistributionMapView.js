@@ -42,11 +42,11 @@ fo.view.DistributionMapView = function()
      	for (var i=0; i<fo.sections.length; i++)
      	{	
 	 		 var circle = L.circle(fo.sections[i].location, 0, {
-				 stroke: true,
+				 stroke: false,
 				 color: '#d8e214',
 				 fillcolor: '#d8e214',				
-	 			 fillOpacity: 0.5,
-	 			 weight: 1
+	 			 fillOpacity: 0,
+	 			 weight: 0
 			 });
 	 		_sectionCircleGroup.addLayer(circle);
 	 		_sectionCircleGroup[fo.sections[i].id] = circle;
@@ -158,8 +158,8 @@ fo.view.DistributionMapView = function()
    				}
    				
    				_sectionCircleGroup[sectionID].setRadius(taxonNumber/_maxTaxon*_maxCircleRadius); //set Radius by taxon number
-   				_sectionCircleGroup[sectionID].fillopacity = 0;
-   			}
+   				_sectionCircleGroup[sectionID].setStyle({"fillOpacity": 0.5});
+   			    			}
    		 }	 
    	 }
     };
