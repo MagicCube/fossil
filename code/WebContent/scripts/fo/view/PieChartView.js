@@ -14,8 +14,7 @@ fo.view.PieChartView = function()
     
     var _width = 190;
     var _height = 200;
-    var _radius = 90;
-    var _r = 90;
+    var _radious = 90;
     var _tweenDuration = 250;
     var _textOffset = 30;
     var _totalValue = 0;
@@ -28,7 +27,6 @@ fo.view.PieChartView = function()
     var _arc = null;
     var _infopadview = null;
     var _svg = null;
-    var _bullets = null;
     var _label_group = null;
     var _lines = null;
     
@@ -113,7 +111,7 @@ fo.view.PieChartView = function()
 
          				 _infopadview.append("span")
          		      			.attr("class", "bullet")
-         		      			.attr("style", "background-color:"+_color(i)+" ;top:" + (21*i+617) + "px; position: absolute;");
+         		      			.attr("style", "background-color:"+_color(i)+" ;top:" + (20*i+615) + "px; position: absolute;");
 
          				 var percentage = (d.value/_totalValue)*100;
          				 return d.name + " " + percentage.toFixed(1) + "%";
@@ -142,7 +140,7 @@ fo.view.PieChartView = function()
 			  .attr("transform", "translate(" + (_width/2) + "," + (_height/2) + ")");
 		
 		//Draw arc paths
-		_arc = d3.svg.arc().outerRadius(_r);
+		_arc = d3.svg.arc().outerRadius(_radious);
         
 		arcs.selectAll("path").remove();
 		arcs.append("path")
@@ -197,7 +195,7 @@ fo.view.PieChartView = function()
       nameLabels.enter().append("svg:text")
         .attr("class", "cls")
         .attr("transform", function(d) {
-          return "translate(" + Math.cos(((d.startAngle+d.endAngle - Math.PI)/2)) * (_r+_textOffset) + "," + Math.sin((d.startAngle+d.endAngle - Math.PI)/2) * (_r+_textOffset) + ")";
+          return "translate(" + Math.cos(((d.startAngle+d.endAngle - Math.PI)/2)) * (_radious+_textOffset) + "," + Math.sin((d.startAngle+d.endAngle - Math.PI)/2) * (_radious+_textOffset) + ")";
         })
         .attr("dy", function(d){
           if ((d.startAngle+d.endAngle)/2 > Math.PI/2 && (d.startAngle+d.endAngle)/2 < Math.PI*1.5 ) {
@@ -225,7 +223,7 @@ fo.view.PieChartView = function()
       valueLabels.enter().append("svg:text")
       .attr("class", "percent")
       .attr("transform", function(d) {
-        return "translate(" + Math.cos(((d.startAngle+d.endAngle - Math.PI)/2)) * (_r+_textOffset) + "," + Math.sin((d.startAngle+d.endAngle - Math.PI)/2) * (_r+_textOffset) + ")";
+        return "translate(" + Math.cos(((d.startAngle+d.endAngle - Math.PI)/2)) * (_radious+_textOffset) + "," + Math.sin((d.startAngle+d.endAngle - Math.PI)/2) * (_radious+_textOffset) + ")";
       })
       .attr("dy", function(d){
         if ((d.startAngle+d.endAngle)/2 > Math.PI/2 && (d.startAngle+d.endAngle)/2 < Math.PI*1.5 ) {
@@ -254,8 +252,8 @@ fo.view.PieChartView = function()
       _lines.enter().append("svg:line")
         		.attr("x1", 0)
         		.attr("x2", 0)
-        		.attr("y1", -_r-5)
-        		.attr("y2", -_r-20)
+        		.attr("y1", -_radious-5)
+        		.attr("y2", -_radious-20)
         		.attr("transform", function(d) {
         			return "rotate(" + (d.startAngle+d.endAngle)/2 * (180/Math.PI) + ")";
         		 });
@@ -293,7 +291,7 @@ fo.view.PieChartView = function()
 		  var fn = d3.interpolateNumber(a, b);
 		  return function(t) {
 		    var val = fn(t);
-		    return "translate(" + Math.cos(val) * (_r+_textOffset) + "," + Math.sin(val) * (_r+_textOffset) + ")";
+		    return "translate(" + Math.cos(val) * (_radious+_textOffset) + "," + Math.sin(val) * (_radious+_textOffset) + ")";
 		  };
 	}
 

@@ -15,6 +15,7 @@
 	color: #efefef;
 	left: 38px;
 	top: 40px;
+	font-family: BentonSans Regular;
 }
 
 .PieChartView span#year
@@ -29,6 +30,7 @@
 	width: 85px;
 	height: 52px;
 	text-align: center;
+	font-family: BentonSans Book;
 }
 
 .PieChartView span#ma
@@ -39,6 +41,7 @@
 	color: #bcbec0;
 	left: 135px;
 	top: 146px;
+	font-family: BentonSans Book;
 }
 
 .PieChartView span#taxacount
@@ -48,6 +51,7 @@
 	color: #bcbec0;
 	left: 39px;
 	top: 213px;
+	font-family: BentonSans Book;
 	
 }
 
@@ -58,6 +62,7 @@
 	color: #bcbec0;
 	left: 39px;
 	top: 255px;
+	font-family: BentonSans Book;
 }
 
 .PieChartView span#proportion
@@ -67,6 +72,7 @@
 	color: #bcbec0;
 	left: 39px;
 	top: 367px;
+	font-family: BentonSans Book;
 }
 
 
@@ -106,6 +112,7 @@
 
 .PieChartView li
 {
+	font-family: BentonSans Light;
 	font-size:16px;
 	color: #bcbec0;
 }

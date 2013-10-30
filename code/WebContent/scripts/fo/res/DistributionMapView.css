@@ -26,8 +26,6 @@
 }
 
 
-
-
 .MapView .viewSwitcher
 {
 	z-index: 9999999;
@@ -60,6 +58,7 @@
 	text-align: center;
 	opacity: 0.4;
 	font-size: 21px;
+	font-family: BentonSans Book;
 	width: 50%;
 }
 

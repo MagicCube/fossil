@@ -100,7 +100,7 @@ fo.view.LineChartView = function()
 		_dataset = [{year: 298, taxonNumber: 5}, {year: 295, taxonNumber: 10}, {year: 290, taxonNumber: 12}, {year: 279, taxonNumber: 7}, {year: 272, taxonNumber: 5}, {year: 268, taxonNumber: 20}, {year: 265, taxonNumber: 14}, {year: 259, taxonNumber: 15}, {year: 254, taxonNumber: 20}, {year: 252, taxonNumber: 4}].reverse();
 		
 		
-		var margin = {top: 20, right: 20, bottom: 20, left: 40},
+		var margin = {top: 20, right: 30, bottom: 20, left: 30},
     	width = 500;
     	height = 200;
 	

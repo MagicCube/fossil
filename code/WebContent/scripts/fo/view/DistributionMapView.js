@@ -159,7 +159,7 @@ fo.view.DistributionMapView = function()
    				
    				_sectionCircleGroup[sectionID].setRadius(taxonNumber/_maxTaxon*_maxCircleRadius); //set Radius by taxon number
    				_sectionCircleGroup[sectionID].setStyle({"fillOpacity": 0.5});
-   			    			}
+   			    }
    		 }	 
    	 }
     };
