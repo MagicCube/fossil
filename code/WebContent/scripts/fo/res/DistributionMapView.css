@@ -33,7 +33,7 @@
 	z-index: 9999999;
 	position: absolute;
 	left: 40px;
-	bottom: 78px;
+	bottom: 62px;
 	display: block;
 	width: 210px;
 	height: 59px;
@@ -46,20 +46,21 @@
 {
 	list-style: none;
 	display: block;
-	width: 100%;
-	height: 100%;
+	width: 205;
+	height: 60;
 	margin: 0;
 	padding: 0;
 }
 
 .MapView .viewSwitcher li
 {
-	color: #999;
+	background-color: #ba3500;
 	display: inline-block;
-	width: 50%;
-	border: 1px solid #999;
 	cursor: pointer;
 	text-align: center;
+	opacity: 0.4;
+	font-size: 21px;
+	width: 50%;
 }
 
 .MapView .viewSwitcher li:first-child
@@ -76,5 +77,6 @@
 
 .MapView .viewSwitcher li.selected
 {
-	color: white;
+	color: #f1f2f2;
+	opacity: 0.8;
 }

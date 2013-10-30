@@ -12,10 +12,10 @@ fo.view.PieChartView = function()
     me.data = [];
     me.polygonArea = 0;
     
-    var _width = 350;
-    var _height = 250;
-    var _radius = Math.min(_width, _height) / 3;
-    var _r = _radius - 20;
+    var _width = 190;
+    var _height = 200;
+    var _radius = 90;
+    var _r = 90;
     var _tweenDuration = 250;
     var _textOffset = 30;
     var _totalValue = 0;
@@ -43,12 +43,14 @@ fo.view.PieChartView = function()
 		.value(function(d) { return d.count; })
 		.sort(null);
         
-       	_infopadview = d3.select("#piechart");
+       	_infopadview = d3.select("#padinfoview");
        	
        	_infopadview.append("span")
        				.attr("id", "title");
        	_infopadview.append("span")
-       				.attr("id", "mayear");
+       				.attr("id", "year");
+       	_infopadview.append("span")
+				.attr("id", "ma");
        	_infopadview.append("span")
 					.attr("id", "taxacount");
        	_infopadview.append("span")
@@ -56,10 +58,10 @@ fo.view.PieChartView = function()
         		
        	//Create pie chart
        	_infopadview.append("span")
-       		.attr("id", "proportion");
-		_svg = _infopadview.append("svg")
-			.attr("width", _width)
-			.attr("height", _height);
+       				.attr("id", "proportion");
+		_svg = _infopadview.append("svg");
+		
+		
     };
     
     
@@ -74,8 +76,18 @@ fo.view.PieChartView = function()
     	{
         	me.data = [{className: "Gastropoda", count: 4}, {className: "Cephdddiopod", count: 7}, {className: "Brachdddiopod", count: 9},  {className: "Cephadddiopod", count: 3}, {className: "Lophodddiopod", count: 1}, {className: "Others", count: 5}];
     	}
+    	//args.className = "Brachiopod";  //test data
+    	var total = 10; //getClassTaxonCountJson (yearSelected);
     	
-    	if (_oldPieData.length == 0)
+    	
+    	_infopadview.select("#title").text(args.className == null?"Biological Diversity":args.className);
+    	_infopadview.select("#year").text(args.yearSelected);
+    	_infopadview.select("#ma").text("million years ago");
+    	_infopadview.select("#taxacount").text("Taxa Count: " + total);
+    	_infopadview.select("#area").text("Area: " + me.polygonArea + "km²");
+
+    	if (args.className !=null) return; 
+    	if (_oldPieData.length == 0)	//not first loading
     	{
     		me.initPie();
     	}
@@ -83,19 +95,15 @@ fo.view.PieChartView = function()
     	{
     		_updatePie();
     	}
-        me.initLabel();
+        //me.initLabel();
 
-    	
-    	_infopadview.select("#title").text("Biological Diversity");
-    	_infopadview.select("#mayear").text("in" + args.yearSelected + "ma");
-    	_infopadview.select("#taxacount").text("Taxa Count: " + _totalValue);
-    	_infopadview.select("#area").text("Area: " + me.polygonArea + "km²");
-    	_infopadview.select("#proportion").text("Class Proportion");
 
     };
 
     me.initPie = function()
     {
+
+    	_infopadview.select("#proportion").text("Class Proportion");
  		
 		//Set up groups
 		var arcs = _svg.selectAll("g.arc")
@@ -119,6 +127,18 @@ fo.view.PieChartView = function()
 		 
         _filteredPieData = _pie(me.data).filter(_filterData);
         _oldPieData = _filteredPieData;
+        
+      	var bullets = _infopadview.append("ul")
+					.attr("id", "bullets");
+      	bullets.selectAll("li")
+      			.data(me.data)
+      			.exit().remove()
+      			.enter()
+      			 .append("li")
+      			 .atttr("class","bullet")
+      			 .text(function(d){
+      				 return d;
+      			 });
 		
     };
     
@@ -140,26 +160,6 @@ fo.view.PieChartView = function()
 	      var path = _svg.selectAll("g.arc path");
 	      path.data(_filteredPieData);
 	      path.transition().duration(_tweenDuration).attrTween("d", _arcTween); // redraw the arcs
-	      
-	      
-//	      valueLabels.data(filteredPieData);
-//	      valueLabels.text(function(d){
-//	          var percentage = (d.value/totalOctets)*100;
-//	          return percentage.toFixed(1) + "%";
-//	        });
-//	      nameLabels.data(filteredPieData);
-//	      nameLabels.text(function(d){
-//	          return d.name;
-//	        });
-//	      lines.data(filteredPieData);
-//	      
-//	      valueLabels.transition().duration(tweenDuration).attrTween("transform", textTween);
-//	      nameLabels.transition().duration(tweenDuration).attrTween("transform", textTween);
-//	      lines.transition()
-//	      .duration(tweenDuration)
-//	      .attr("transform", function(d) {
-//	        return "rotate(" + (d.startAngle+d.endAngle)/2 * (180/Math.PI) + ")";
-//	      });
     }
 
     me.initLabel = function()

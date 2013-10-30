@@ -25,8 +25,9 @@
 .LineChartView .line 
 {
   fill: none;
-  stroke: rgba(192, 125, 19, 0.3);
-  stroke-width: 2px;
+  stroke: #ff8500;
+  opacity: 0.8;
+  stroke-width: 3px;
 }
 
 #linechart g.selectorHand, #timeline g.tseries  
@@ -57,7 +58,7 @@
 {  
 	fill:#fff; 
 	stroke:#666; 
-	stroke-width:2; 
+	stroke-width:0; 
 }
 
 
