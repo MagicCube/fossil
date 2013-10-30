@@ -103,20 +103,24 @@ fo.view.PieChartView = function()
       	bullets.selectAll("li").remove();
      	_infopadview.selectAll("span.bullet").remove();
      	
-      	bullets.selectAll("li")
+      	var lis = bullets.selectAll("li")
       				.data(_filteredPieData)
       				.enter()
-      				.append("li")
-         			 .text(function(d, i){
-
-         				 _infopadview.append("span")
-         		      			.attr("class", "bullet")
-         		      			.attr("style", "background-color:"+_color(i)+" ;top:" + (20*i+615) + "px; position: absolute;");
-
-         				 var percentage = (d.value/_totalValue)*100;
-         				 return d.name + " " + percentage.toFixed(1) + "%";
-	      			 });
-
+      				.append("li");
+      	lis.append("span")
+      	    .attr("class", "bullet")
+      	    .style("background-color", function(d, i)
+            {
+      	        return _color(i);
+  	        });
+      	    
+      	lis.append("span")
+      	    .attr("class", "label")
+    		.text(function(d, i)
+            {   
+    			 var percentage = (d.value/_totalValue)*100;
+    			 return d.name + " " + percentage.toFixed(1) + "%";
+    		});
     };
 
     me.initPie = function()
