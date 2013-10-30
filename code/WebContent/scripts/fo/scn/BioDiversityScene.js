@@ -60,7 +60,7 @@ fo.scn.BioDiversityScene = function(){
 	
     me.initPieChartView = function()
     {
-    	var $pie = $("<div id=piechart></div>");
+    	var $pie = $("<div id=padinfoview></div>");
     	$(document.body).append($pie);
     	
     	me.pieChartView = new fo.view.PieChartView({
@@ -68,8 +68,8 @@ fo.scn.BioDiversityScene = function(){
        	    frame: {
                     left: 20,
                     top: 20,
-                    height: 400,
-                    width: 350
+                    height: 190,
+                    width: 700
                 }
     	});
     	me.addSubview(me.pieChartView);

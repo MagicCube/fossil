@@ -20,7 +20,7 @@ fo.view.DistributionMapView = function()
 
     me.activeLayer = "";
     me.polygonLayer = "polygon";
-    me.cycleLayer = "cycle";
+    me.bubbleLayer = "bubble";
     me.sectionsByYear = null; 	//complete recordset;
     me.selectedSectByYear = [];	//new recordset
     
@@ -30,7 +30,7 @@ fo.view.DistributionMapView = function()
         base.init(p_options);
         
       //draw cycles with radius 0 by default
-      	me.activeLayer =  me.cycleLayer; 	
+      	me.activeLayer =  me.bubbleLayer; 	
       	me.initCircleGroup();
       	
       	me.initLayerSwitcher();
@@ -43,8 +43,8 @@ fo.view.DistributionMapView = function()
      	{	
 	 		 var circle = L.circle(fo.sections[i].location, 0, {
 				 stroke: true,
-				 color: 'white',
-				 fillcolor: 'grey',				
+				 color: '#d8e214',
+				 fillcolor: '#d8e214',				
 	 			 fillOpacity: 0.5,
 	 			 weight: 1
 			 });
@@ -55,7 +55,7 @@ fo.view.DistributionMapView = function()
      
     me.initLayerSwitcher = function()
      {
-         _$layerSwitcher = $("<div class='viewSwitcher'><ul><li id='cycle'>Cycle</li><li id='polygon'>Polygon</li></ul></div>");
+         _$layerSwitcher = $("<div class='viewSwitcher'><ul><li id='bubble'>Bubble</li><li id='polygon'>Polygon</li></ul></div>");
          _$layerSwitcher.on("click", _switcher_onclick);
          me.$element.append(_$layerSwitcher);
      };
@@ -86,7 +86,7 @@ fo.view.DistributionMapView = function()
          {
            	 if (_sectionPolygon != null)
            		 me.map.removeLayer(_sectionPolygon);
-             me.activeLayer = me.cycleLayer;
+             me.activeLayer = me.bubbleLayer;
       	    _updateCycles();
        }
      };
@@ -101,7 +101,7 @@ fo.view.DistributionMapView = function()
     		// TODO process args to get an Json array via backend interface
     		me.sectionsByYear = [];
     		
-    		me.activeLayer = me.cycleLayer;
+    		me.activeLayer = me.bubbleLayer;
     		me.$element.find("#" + me.activeLayer).addClass("selected");
     		
     		me.selectedSectByYear = [{sectionID: "s142", taxonNumber: 20}, {sectionID: "s143", taxonNumber: 5}, {sectionID: "s145", taxonNumber: 5}, {sectionID: "s149", taxonNumber: 5}, {sectionID: "s150", taxonNumber: 5}];
@@ -118,7 +118,7 @@ fo.view.DistributionMapView = function()
     		newDataset = [{sectionID: "s142", taxonNumber: 4}, {sectionID: "s143", taxonNumber: 15}, {sectionID: "s145", taxonNumber: 8}, {sectionID: "s150", taxonNumber: 3}, {sectionID: "s183", taxonNumber: 15}];
         }
     	
-    	if (me.activeLayer == me.cycleLayer)
+    	if (me.activeLayer == me.bubbleLayer)
     	{
     		_resetRadius();
     		me.selectedSectByYear = newDataset;
@@ -204,7 +204,14 @@ fo.view.DistributionMapView = function()
 	     		 latlngs.push(fo.sections[sectionID].location);	
 	     	 }	  	
 	     	 var convexPolygon = new Polygon(latlngs).getConvexPolygon();
-	     	 return L.polygon(convexPolygon.vertices);
+	     	 return L.polygon(convexPolygon.vertices, {
+	     		 fillColor: '#d8e214',
+	     	 	 color: '#d8e214',
+	     	 	 fillOpacity: 0.5,
+	     	 	 opacity: 0.5,
+	     	 	 weight: 0
+	     	 		 
+	     	 });
 	     }
      };
      
