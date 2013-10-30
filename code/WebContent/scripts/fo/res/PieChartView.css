@@ -18,13 +18,17 @@
 	font-family: BentonSans Regular;
 }
 
+.PieChartView div#yearMA
+{
+    position: absolute;
+    left: 38px;
+    top: 145px;
+}
+
 .PieChartView span#year
 {
-	position: absolute;
 	font-size: 40px;
 	color: #333333;
-	left: 38px;
-	top: 145px;
 	display: inline-block;
 	background-color: #d1d3d4;
 	padding-top: 5px;
@@ -37,12 +41,10 @@
 
 .PieChartView span#ma
 {
-	position: absolute;
 	display: inline-block;
+	margin-left: 10px;
 	font-size: 36px;
 	color: #bcbec0;
-	left: 132px;
-	top: 150px;
 	font-family: BentonSans Book;
 }
 
