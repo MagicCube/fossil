@@ -97,19 +97,6 @@ fo.scn.BioDiversityScene = function(){
         });
         me.addSubview(me.mapView);
  	};  
- 	
-//        ///////////////////////////////////////////////////////////////////////////
-//        ///Get input of discovered sections on specific maYear based on test data//
-//         	var sectionsByYear = [];
-//         	window.setInterval(function ()
-// 		   {
-//     		for (var num = 0; num < fo.sections.length; num++)
-//   				{
-//     			sectionsByYear[num] = {"sectionID": fo.sections[num]["id"], "taxonNumber": Math.round(Math.random()*10)}; 
-//   				};	
-//	   			me.mapView.updateRadius(sectionsByYear);
-// 		   }, 1000);
-
 
     base.activate = me.activate;
     me.activate = function(args, isPoppedBack)
@@ -117,24 +104,25 @@ fo.scn.BioDiversityScene = function(){
         base.activate(args, isPoppedBack);
         
         //Test Args when clicking Chronline
-        me.args = {"className": null , "genusName": null, "yearSelected": 298};
+//        me.args = {"className": null , "genusName": null, "yearSelected": 298};
         //Test Args when clicking groups
 //        me.args = {"className": 'Brachiopod' , "genusName": null, "yearSelected": 298};
         
-        
+        me.args = args;
+        console.log(args);
         if (!isPoppedBack)
         {
             console.log("fo.scn.BioDiversityScene is now activated.");
      
              
-            me.mapView.loadDistributionMapData(me.args); 
+            me.mapView.loadDistributionMapData(args); 
 
             me.pieChartView.polygonArea = me.mapView.getPolygonArea();
-            me.pieChartView.loadPieChartData(me.args);
+            me.pieChartView.loadPieChartData(args);
             
             setTimeout(function()
             {
-                me.lineChartView.loadLineChartData(me.args);
+                me.lineChartView.loadLineChartData(args);
             }, 100);
             
         }

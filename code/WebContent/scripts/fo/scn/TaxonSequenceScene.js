@@ -126,8 +126,8 @@ fo.scn.TaxonSequenceScene = function()
     {
     	console.log(e.className);
         fo.app.popupScene("BioDiversity", {
-            className: e.className
-           
+            className: e.className,
+            yearSelected: null
         });
     }
 
