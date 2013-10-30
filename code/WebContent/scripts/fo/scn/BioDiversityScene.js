@@ -126,11 +126,16 @@ fo.scn.BioDiversityScene = function(){
         {
             console.log("fo.scn.BioDiversityScene is now activated.");
      
-            me.lineChartView.loadLineChartData(me.args); 
+             
             me.mapView.loadDistributionMapData(me.args); 
 
             me.pieChartView.polygonArea = me.mapView.getPolygonArea();
             me.pieChartView.loadPieChartData(me.args);
+            
+            setTimeout(function()
+            {
+                me.lineChartView.loadLineChartData(me.args);
+            }, 100);
             
         }
         else
