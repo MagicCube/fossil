@@ -46,10 +46,14 @@ fo.view.PieChartView = function()
        	
        	_infopadview.append("span")
        				.attr("id", "title");
-       	_infopadview.append("span")
+       	
+       	var div = _infopadview.append("div"); 
+       	div.attr("id", "yearMA");
+       	div.append("span")
        				.attr("id", "year");
-       	_infopadview.append("span")
-				.attr("id", "ma");
+       	div.append("span")
+				    .attr("id", "ma");
+       	
        	_infopadview.append("span")
 					.attr("id", "taxacount");
        	_infopadview.append("span")
