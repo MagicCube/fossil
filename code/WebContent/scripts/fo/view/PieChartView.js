@@ -20,7 +20,6 @@ fo.view.PieChartView = function()
     var _totalValue = 0;
     
     var _color = d3.scale.ordinal().range(["#FFFF00","#8FED74","#79C0E0", "#791CBB","#F43D4F","#FF7F1F"]);   //0.45 OPACITY
-//    var _color = d3.scale.category10();
     var _oldPieData = [];
     
     var _pie = null;
@@ -69,7 +68,6 @@ fo.view.PieChartView = function()
 		
     };
     
-    
     me.loadPieChartData = function(args)
     {
     	//TODO getClassTaxonCountJson (args.yearSelected)	§ Return DataSet:  [{className, count}]
@@ -79,28 +77,18 @@ fo.view.PieChartView = function()
     	}
     	else
     	{
-        	me.data = [{className: "Gastropoda", count: 4}, {className: "Cephdddiopod", count: 7}, {className: "Others", count: 5}];
+        	me.data = [{className: "Gastropoda", count: 4}, {className: "Cephdddiopod", count: 7}];
     	}
-    	console.log("className of arg:" + args.className);
     	var total = 10; //getClassTaxonCountJson (yearSelected);
     	
     	
     	_infopadview.select("#title").text((args.className == null||args.className == "")?"Biological Diversity":args.className);
-    	_infopadview.select("#year").text(args.yearSelected== null?"298":args.yearSelected);
+    	_infopadview.select("#year").text(args.yearSelected);
     	_infopadview.select("#ma").text("million years ago");
     	_infopadview.select("#taxacount").text("Taxa Count: " + total);
     	_infopadview.select("#area").text("Area: " + me.polygonArea + "km²");
 
-    	if (args.className !=null) return; 
-//    	if (_oldPieData.length == 0)	//first loading
-//    	{
-    		me.initPie();
-//    	}
-//    	else
-//    	{
-//    		_updatePie();
-//    	}
-        //me.initLabel();
+    	me.initPie();
 
         //remove old class proportion info list and create new one
       	var bullets = _infopadview.select("#bullets");
@@ -129,37 +117,43 @@ fo.view.PieChartView = function()
 
     me.initPie = function()
     {
-
+		_totalValue = 0;	//reset to zero
     	_infopadview.select("#proportion").text("Class Proportion");
  		
-    	//delete old pie
-    	_svg.selectAll("g.arc").remove();
-		_totalValue = 0;	//reset to zero
-    	
-		//Create new pie
+		//initialize pie
         _filteredPieData = _pie(me.data).filter(_filterData);
-        _oldPieData = _filteredPieData;
     	var arcs = _svg.selectAll("g.arc")
 			  .data(_filteredPieData);
 
-        arcs.enter()
+        //add extra arcs if new dataset is bigger
+		_arc = d3.svg.arc().outerRadius(_radious);
+		arcs.enter()
 			  .append("g")
 			  .attr("class", "arc")
-			  .attr("transform", "translate(" + (_width/2) + "," + (_height/2) + ")");
-		
-		//Draw arc paths
-		_arc = d3.svg.arc().outerRadius(_radious);
-        
-		arcs.selectAll("path").remove();
-		arcs.append("path")
-			.attr("d", _arc)
-			.attr("fill", function(d, i) {
-				return _color(i);
-			})
-//	      .each(function(d) { this._current = d; });		
-		 
-        
+			  .attr("transform", "translate(" + (_width/2) + "," + (_height/2) + ")")
+		      .append("path")
+			  .attr("d", _arc)
+			  .attr("fill", function(d, i) {
+					return _color(i);
+				})
+		      .each(function(d) { this._current = d;});		
+	
+    	//remove extra arcs if new dataset is smaller
+    	arcs.exit().remove(); 
+
+        var path = _svg.selectAll("g.arc path");
+	    path.data(_filteredPieData);
+	    path.transition().duration(_tweenDuration).attrTween("d", _arcTween); // redraw the arcs
+     
     };
+    
+    function _arcTween(a) {
+    	  var i = d3.interpolate(this._current, a);
+    	  this._current = i(0);
+    	  return function(t) {
+    	    return _arc(i(t));
+    	  };
+    	}
     
     function _filterData(element, index, array) {
 	  	  element.name = me.data[index].className;
@@ -169,23 +163,31 @@ fo.view.PieChartView = function()
  	}
    
     
+    
+    
+    //*********************** BELOW NOT NEEDED ******************************************************/
     function _updatePie() 
     {
 		_totalValue = 0;	//reset to zero
 	      _filteredPieData = _pie(me.data).filter(_filterData);
-	      _oldPieData = _filteredPieData;
 	     // console.log(filteredPieData);
+
+		  _arc = d3.svg.arc().outerRadius(_radious);
+			arcs.append("path")
+				.attr("d", _arc)
+				.attr("fill", function(d, i) {
+					return _color(i);
+				})
+		      .each(function(d) { this._current = d; console.log(d);});		
 	      
 	      var path = _svg.selectAll("g.arc path");
 	      path.data(_filteredPieData);
 	      path.transition().duration(_tweenDuration).attrTween("d", _arcTween); // redraw the arcs
+
+	      
+	      _oldPieData = _filteredPieData;
     }
 
-    
-    
-    
-    
-    
     me.initLabel = function()
     {
        	//Create label group	
@@ -268,17 +270,6 @@ fo.view.PieChartView = function()
 
       
     };
-    
-    
-
-
-    function _arcTween(a) {
-    	  var i = d3.interpolate(this._current, a);
-    	  this._current = i(0);
-    	  return function(t) {
-    	    return _arc(i(t));
-    	  };
-    	}
 
 	function _textTween(d, i) {
 		  var a;
@@ -302,6 +293,7 @@ fo.view.PieChartView = function()
 		    return "translate(" + Math.cos(val) * (_radious+_textOffset) + "," + Math.sin(val) * (_radious+_textOffset) + ")";
 		  };
 	}
+    //***********************ABOVE NOT NEEDED ******************************************************/
 
 
     return me.endOfClass(arguments);

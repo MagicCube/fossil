@@ -103,13 +103,24 @@ fo.scn.BioDiversityScene = function(){
     {
         base.activate(args, isPoppedBack);
         
+
         //Test Args when clicking Chronline
-//        me.args = {"className": null , "genusName": null, "yearSelected": 298};
+//       args = {"className": null ,  "yearSelected": 270};
         //Test Args when clicking groups
-//        me.args = {"className": 'Brachiopod' , "genusName": null, "yearSelected": 298};
-        
+        args = {"className": 'Brachiopod', "yearSelected": null};
+
+        if (args.yearSelected != null)
+        {
+        	args.yearSelected = Math.round(args.yearSelected);
+        }
+        else
+        {
+        	args.yearSelected = 298;
+        }
+      
         me.args = args;
-        console.log(args);
+       console.log(args);
+        
         if (!isPoppedBack)
         {
             console.log("fo.scn.BioDiversityScene is now activated.");

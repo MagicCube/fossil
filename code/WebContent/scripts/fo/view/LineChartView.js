@@ -98,8 +98,9 @@ fo.view.LineChartView = function()
 		if (args.yearSelected ==null) args.yearSelected = 298;
 
 		//TEST DATA
-		_dataset = [{year: 298, taxonNumber: 5}, {year: 295, taxonNumber: 10}, {year: 290, taxonNumber: 12}, {year: 279, taxonNumber: 7}, {year: 272, taxonNumber: 5}, {year: 268, taxonNumber: 20}, {year: 265, taxonNumber: 14}, {year: 259, taxonNumber: 15}, {year: 254, taxonNumber: 20}, {year: 252, taxonNumber: 4}].reverse();
-		
+		_dataset = [{ma: 298, count: 5}, {ma: 295, count: 10}, {ma: 290, count: 12}, {ma: 279, count: 7}, {ma: 272, count: 5}, {ma: 268, count: 20}, {ma: 265, count: 14}, {ma: 259, count: 15}, {ma: 254, count: 20}, {ma: 252, count: 4}].reverse();
+		//_dataset = fo.diveCurve;
+//		console.log(_dataset);
 		
 		var margin = {top: 20, right: 30, bottom: 20, left: 30},
     	width = 500;
@@ -107,11 +108,11 @@ fo.view.LineChartView = function()
 	
     	//Build Scale according to received dataset
 	    _yearScale = d3.scale.linear()
-	    	.domain([_minXValue = d3.max(_dataset, function(d){return d.year;}), _maxXValue = d3.min(_dataset, function(d){return d.year;})])
+	    	.domain([_minXValue = d3.max(_dataset, function(d){return d.ma;}), _maxXValue = d3.min(_dataset, function(d){return d.ma;})])
 	        .range([margin.left, width - margin.right]);
 	
 	    _numScale = d3.scale.linear()
-	    	.domain([0, d3.max(_dataset, function(d){return d.taxonNumber;})])
+	    	.domain([0, d3.max(_dataset, function(d){return d.count;})])
 	        .range([height - margin.bottom, margin.top]);
 	    
 	    //Define Axis
@@ -146,8 +147,8 @@ fo.view.LineChartView = function()
 
 	     //Draw curves to show over the axis
 		 var line = d3.svg.line()
-		        .x(function(d) { return _yearScale(d.year); })
-		        .y(function(d) { return _numScale(d.taxonNumber); })
+		        .x(function(d) { return _yearScale(d.ma); })
+		        .y(function(d) { return _numScale(d.count); })
 		        .interpolate("basis");
 	     _svg.append("path")
 	    	.attr("class", "line")
@@ -162,7 +163,7 @@ fo.view.LineChartView = function()
 	  	      _selectYearForPosition(c[0]);	//c[0] is where mouse is in the screen
 	  	    });
 	   	
-	      _position = _minXValue; 
+	      _position = args.yearSelected; 
 	      
     };    
     
