@@ -32,8 +32,9 @@ fo.view.LineChartView = function()
     
     function _initButtons()
     {
-        _$playPause = $("<div id=playPause class=button/>");
+        _$playPause = $("<div id=playPause/>");
         _$playPause.on("click", _togglePlay);
+        _$playPause.attr("style", "top:"+ (me.frame.height+me.frame.bottom)/2 + "px");
         me.$container.append(_$playPause);
     }    
     
@@ -71,10 +72,10 @@ fo.view.LineChartView = function()
     {
         if (_playing)
         {
-        	if (_position >= _maxXValue)
+        	if (_position > _maxXValue)
             {
                 setTimeout(_play, 1000);
-                _selectYear(_position--, true);	//trigger event
+                _selectYear(--_position, true);	//trigger event
                 return;
             }
          	else 	//if reaching the right limit, reset 
@@ -103,8 +104,8 @@ fo.view.LineChartView = function()
 //		console.log(_dataset);
 		
 		var margin = {top: 20, right: 30, bottom: 20, left: 30},
-    	width = 500;
-    	height = 200;
+    	width = me.frame.width;
+    	height = me.frame.height;
 	
     	//Build Scale according to received dataset
 	    _yearScale = d3.scale.linear()
@@ -158,7 +159,7 @@ fo.view.LineChartView = function()
 	      
 	      //Judge if need to play the animation depending on the trigger
 	      d3.select("#linechart g.chart")
-	  	    .on("click", function() {
+	  	    .on("mousemove", function() {
 	  	      var c = d3.mouse(this);
 	  	      _selectYearForPosition(c[0]);	//c[0] is where mouse is in the screen
 	  	    });
@@ -173,10 +174,10 @@ fo.view.LineChartView = function()
 		
 		_yearSelected = args.yearSelected;
     	
-    	var timelineHeight = 210;
-    	
-        var selectorHandHeight = Math.max(timelineHeight - 30, 60);
+    	var circleRadious = 30;
+    	var timelineHeight = me.frame.height;
 
+    	var selectorHandHeight = Math.max(timelineHeight - 30, 60);
         var selectorHand = _svg.append("g")
         .attr("class", "selectorHand")
         .attr("transform", "translate("+(_yearScale(_yearSelected))+",0)");
@@ -219,7 +220,7 @@ fo.view.LineChartView = function()
         .attr("fill", "url(#selectorHandHalo)")
         .attr("cx", 0)
         .attr("cy", timelineHeight - selectorHandHeight)
-        .attr("r", 30);
+        .attr("r", circleRadious);
       
       var selectorHandDrag = d3.behavior.drag()
       .origin(Object)
@@ -254,9 +255,16 @@ fo.view.LineChartView = function()
     function _selectYearForPosition(cx) 
     {
 	    var year = Math.round(_yearScale.invert(cx));
+	    
+	    if (Math.abs((_yearScale.invert(cx))-_position)<0.5 || year>_minXValue || year<_maxXValue)
+	    {//small movement or mouse movement out of range doesn't trigger new selection
+	    	console.log(year);
+	    	return;
+	    }	
+	    
 	    _selectYear(year, true);
 	    _pause(); 
-   	    _position = year;
+	    _position = year;
 	  }
     
     function _selectYear(year, duration)

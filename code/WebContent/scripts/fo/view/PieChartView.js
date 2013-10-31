@@ -15,7 +15,7 @@ fo.view.PieChartView = function()
     var _width = 190;
     var _height = 200;
     var _radious = 90;
-    var _tweenDuration = 250;
+    var _tweenDuration = 100;
     var _textOffset = 30;
     var _totalValue = 0;
     

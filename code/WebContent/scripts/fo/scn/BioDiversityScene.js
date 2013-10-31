@@ -50,8 +50,10 @@ fo.scn.BioDiversityScene = function(){
     	me.lineChartView = new fo.view.LineChartView({
        		$element:$line,
             frame: {
-                right: 0,
-                bottom: 0,
+                right: 50,
+                bottom: 50,
+                width: 700,
+                height: 300
             },
             onyearchanged: _lineChartView_onyearchanged
     	});
@@ -87,7 +89,7 @@ fo.scn.BioDiversityScene = function(){
         me.mapView = new fo.view.DistributionMapView({
         	id:"distmapview",
         	$element:$mapContainer,
-        	defaultZoom: 5,
+        	defaultZoom: 1,
             frame: {
                 left: 0,
                 top: 0,
