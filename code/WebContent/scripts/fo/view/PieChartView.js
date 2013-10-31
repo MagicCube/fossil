@@ -85,7 +85,7 @@ fo.view.PieChartView = function()
     	var total = 10; //getClassTaxonCountJson (yearSelected);
     	
     	
-    	_infopadview.select("#title").text(args.className == null?"Biological Diversity":args.className);
+    	_infopadview.select("#title").text((args.className == null||args.className == "")?"Biological Diversity":args.className);
     	_infopadview.select("#year").text(args.yearSelected== null?"298":args.yearSelected);
     	_infopadview.select("#ma").text("million years ago");
     	_infopadview.select("#taxacount").text("Taxa Count: " + total);
