@@ -83,7 +83,7 @@ fo.view.PieChartView = function()
     	
     	
     	_infopadview.select("#title").text((args.className == null||args.className == "")?"Biological Diversity":args.className);
-    	_infopadview.select("#year").text(args.yearSelected);
+    	_infopadview.select("#year").text((args.yearSelected).toFixed(0));
     	_infopadview.select("#ma").text("million years ago");
     	_infopadview.select("#taxacount").text("Taxa Count: " + total);
     	_infopadview.select("#area").text("Area: " + me.polygonArea + "km²");

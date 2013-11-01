@@ -64,18 +64,20 @@ fo.view.LineChartView = function()
     function _reset()
     {
     	_pause();
-       	_position = _minXValue;
-    	_selectYear(_position, true);
+       	_position = _yearScale(_minXValue);
+    	_selectYear(_minXValue, true);
     }
     
     function _play()
     {
         if (_playing)
         {
-        	if (_position > _maxXValue)
+
+        	if (_position < _yearScale(_maxXValue))
             {
-                setTimeout(_play, 1000);
-                _selectYear(--_position, true);	//trigger event
+                setTimeout(_play, 500);
+                _selectYear(_yearScale.invert(_position), true);	//trigger event
+            	_position = _position + 10;
                 return;
             }
          	else 	//if reaching the right limit, reset 
@@ -120,7 +122,6 @@ fo.view.LineChartView = function()
 	        .scale(_yearScale)
 	        .orient("bottom")	//label's relative position
 	        .ticks(10);
-	    //console.log(_yearScale(298));
 	    
 	    var yAxis = d3.svg.axis()
 	        .scale(_numScale)
@@ -163,7 +164,7 @@ fo.view.LineChartView = function()
 	  	      _selectYearForPosition(c[0]);	//c[0] is where mouse is in the screen
 	  	    });
 	   	
-	      _position = args.yearSelected; 
+	      _position = _yearScale(args.yearSelected); 
 	      
     };    
     
@@ -253,17 +254,26 @@ fo.view.LineChartView = function()
 	
     function _selectYearForPosition(cx) 
     {
-	    var year = Math.round(_yearScale.invert(cx));
 	    
-	    if (Math.abs((_yearScale.invert(cx))-_position)<0.5 || year>_minXValue || year<_maxXValue)
-	    {//small movement or mouse movement out of range doesn't trigger new selection
-	    	console.log(year);
-	    	return;
-	    }	
+	    
+    	//mouse movement out of range doesn't trigger new selection
+	    if (cx < _yearScale(_minXValue))
+	    {
+	    	cx = _yearScale(_minXValue);
+	    }
+	    else if (cx >_yearScale(_maxXValue))
+	    {
+	    	cx = _yearScale(_maxXValue);
+	    }
+	    var year = _yearScale.invert(cx);
+	    
+    	console.log(cx);
+    	console.log(year);
+
 	    
 	    _selectYear(year, true);
 	    _pause(); 
-	    _position = year;
+	    _position = cx;
 	  }
     
     function _selectYear(year, duration)
