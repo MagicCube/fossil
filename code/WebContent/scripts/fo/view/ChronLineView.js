@@ -271,12 +271,13 @@ fo.view.ChronLineView = function()
     	
     	me.data = fo.diverCurve;
     	//var circleRange = [];
-    	
-    	
-    	
+    	console.log(me.data);
+    
+    	var max = d3.max(me.data, function(d){ return d.count; });
 	    var y = d3.scale.linear()
 	    			.domain([0, me.yHeight ])
-	        		.range([1500, 0]);
+	        		.range([max, 0]);
+	      
 	
 	    var line = d3.svg.line()
 	        .x(function(d) { return me.scale.invert(d.ma) + me.moveLeft; })
