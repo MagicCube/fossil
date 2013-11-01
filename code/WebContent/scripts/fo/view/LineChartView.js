@@ -96,14 +96,13 @@ fo.view.LineChartView = function()
 	me.loadLineChartData = function (args)
     {
 		// TODO process args to get dataset via backend interface
-		if (args.yearSelected ==null) args.yearSelected = 298;
 
 		//TEST DATA
-		_dataset = [{ma: 298, count: 5}, {ma: 295, count: 10}, {ma: 290, count: 12}, {ma: 279, count: 7}, {ma: 272, count: 5}, {ma: 268, count: 20}, {ma: 265, count: 14}, {ma: 259, count: 15}, {ma: 254, count: 20}, {ma: 252, count: 4}].reverse();
-		//_dataset = fo.diveCurve;
-//		console.log(_dataset);
+//		_dataset = [{ma: 298, count: 5}, {ma: 295, count: 10}, {ma: 290, count: 12}, {ma: 279, count: 7}, {ma: 272, count: 5}, {ma: 268, count: 20}, {ma: 265, count: 14}, {ma: 259, count: 15}, {ma: 254, count: 20}, {ma: 252, count: 4}].reverse();
+		_dataset = fo.diverCurve;
 		
-		var margin = {top: 20, right: 30, bottom: 20, left: 30},
+		
+		var margin = {top: 20, right: 30, bottom: 20, left: 35},
     	width = me.frame.width;
     	height = me.frame.height;
 	
@@ -113,7 +112,7 @@ fo.view.LineChartView = function()
 	        .range([margin.left, width - margin.right]);
 	
 	    _numScale = d3.scale.linear()
-	    	.domain([0, d3.max(_dataset, function(d){return d.count;})])
+	    	.domain([0, d3.max(_dataset, function(d){return d.count;})*1.1])
 	        .range([height - margin.bottom, margin.top]);
 	    
 	    //Define Axis
@@ -126,7 +125,7 @@ fo.view.LineChartView = function()
 	    var yAxis = d3.svg.axis()
 	        .scale(_numScale)
 	        .orient("right")
-	        .ticks(5);
+	        .ticks(10);
 
 	    //Define Line Chart
 	    if (_svg !=null) _svg.remove();
@@ -175,7 +174,7 @@ fo.view.LineChartView = function()
 		_yearSelected = args.yearSelected;
     	
     	var circleRadious = 30;
-    	var timelineHeight = me.frame.height;
+    	var timelineHeight = me.frame.height - 20;
 
     	var selectorHandHeight = Math.max(timelineHeight - 30, 60);
         var selectorHand = _svg.append("g")

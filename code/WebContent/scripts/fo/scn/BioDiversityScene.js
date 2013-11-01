@@ -53,7 +53,7 @@ fo.scn.BioDiversityScene = function(){
                 right: 50,
                 bottom: 50,
                 width: 700,
-                height: 300
+                height: 320
             },
             onyearchanged: _lineChartView_onyearchanged
     	});
@@ -113,11 +113,11 @@ fo.scn.BioDiversityScene = function(){
 
         if (args.yearSelected != null)
         {
-        	args.yearSelected = Math.round(args.yearSelected);
+//        	args.yearSelected = Math.round(args.yearSelected);
         }
         else
         {
-        	args.yearSelected = 298;
+        	args.yearSelected = fo.diverCurve[0].ma;
         }
       
         me.args = args;
