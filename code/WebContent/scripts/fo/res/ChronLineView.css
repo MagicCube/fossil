@@ -143,7 +143,7 @@
 
 .ChronLineView .moveLine
 {
-	position: absolute;
+	position: fixed;
 	width: 3px;
 	top: 0px;
 }

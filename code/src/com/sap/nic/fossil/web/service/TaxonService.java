@@ -36,12 +36,12 @@ public class TaxonService
 		else
 		{
 			if(p_className == "")
-			{
-				resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE('')");
+			{				
+				resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.0001);
 			}
 			else
 			{
-			 resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE(?)", p_className);
+			 resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.0001);
 			}
 			 
 		}

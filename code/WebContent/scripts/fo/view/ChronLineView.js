@@ -271,8 +271,7 @@ fo.view.ChronLineView = function()
     	
     	me.data = fo.diverCurve;
     	//var circleRange = [];
-    	console.log(me.data);
-    
+    	
     	var max = d3.max(me.data, function(d){ return d.count; });
 	    var y = d3.scale.linear()
 	    			.domain([0, me.yHeight ])
@@ -335,6 +334,7 @@ fo.view.ChronLineView = function()
     {
     	if(e.pageX > me.moveLeft)
     	{
+    		//console.log(e.pageX);
     		me.$element.find(".moveLine").css("left", e.pageX);
     	}
     	
@@ -342,8 +342,8 @@ fo.view.ChronLineView = function()
     
     function _year_onclick(e)
     {
-    	var year = me.scale(e.pageX);
-    	
+    	var year = me.scale(e.pageX + me.parentView.$element.find(".scene").get(0).scrollLeft - me.moveLeft);
+
     	me.trigger("yearclicked", {
     		year: year
     	});
