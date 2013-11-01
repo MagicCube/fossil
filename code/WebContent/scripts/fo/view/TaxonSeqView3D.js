@@ -18,7 +18,7 @@ fo.view.TaxonSeqView3D = function()
     me.spacing = 140;
     me.taxonDivHeight = 19;
     
-    me.group = null;
+    me.groups = null;
     me.groupType = null;
     
     me.mode = "2D";
@@ -178,11 +178,19 @@ fo.view.TaxonSeqView3D = function()
     	if (p_group == "class")
     	{
     		me.groups = fo.util.GroupUtil.getClsTaxaGroups();
+    		me.groups.sort(function(a,b){
+    			return a.name.localeCompare(b.name);
+    		});
+    		
     	}
     	
     	else if (p_group == "genus")
     	{
     		me.groups = fo.util.GroupUtil.getGenusTaxaGroups();
+    		me.groups.sort(function(a,b){
+    			return a.name.localeCompare(b.name);
+    		});
+    	
     	}
     	else
 		{
@@ -269,7 +277,7 @@ fo.view.TaxonSeqView3D = function()
         me.$scene.on("click", ".taxon", _taxon_onclick);
         me.$scene.on("scroll", _onmousescroll);
         
-        
+        me.$element.on("mouseenter", _onmouseenter);
        // me.initCanvas();
     };
     
@@ -314,9 +322,17 @@ fo.view.TaxonSeqView3D = function()
     function _class_onclick(e)
     {
     	var className = this.id;
-    	me.trigger("groupclicked", {
-    		className: className
-    	});
+    	
+    	if(className == "Unkown")
+    	{
+    		
+    	}
+    	else
+    	{
+	    	me.trigger("groupclicked", {
+	    		className: className
+	    	});
+    	}
     	
     }
     
@@ -381,6 +397,11 @@ fo.view.TaxonSeqView3D = function()
     	var scene = me.parentView;
     	scene.chronLineView.$element.css("left", - me.$scene.get(0).scrollLeft);
     	
+    }
+    
+    function _onmouseenter(e)
+    {
+    	me.parentView.chronLineView.$element.find(".moveLine").css("left", -3);
     }
 
     return me.endOfClass(arguments);

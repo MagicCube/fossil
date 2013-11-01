@@ -59,6 +59,11 @@
 	left: 120px;
 }
 
+.TaxonSeqView #Unkown
+{
+	cursor: default;
+}
+
 .TaxonSeqView .groupLabel #className
 {
 	font-size: 32px;

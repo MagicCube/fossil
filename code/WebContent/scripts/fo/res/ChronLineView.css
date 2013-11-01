@@ -141,3 +141,10 @@
 	z-index: 100000;
 }
 
+.ChronLineView .moveLine
+{
+	position: absolute;
+	width: 3px;
+	top: 0px;
+}
+

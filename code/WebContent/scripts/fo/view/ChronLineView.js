@@ -17,9 +17,12 @@ fo.view.ChronLineView = function()
     me.moveLeft = 150;
     
     me.scale = null;
+    me.yHeight = 135;
     
     var _$table = null;
     var _xScale = [];
+    
+    me.onyearclicked = null;
     
 
     base.init = me.init;
@@ -27,7 +30,7 @@ fo.view.ChronLineView = function()
     {
         base.init(p_options);
         
-        me.$element.append("<div id=cover class=cover></div>");
+      //  me.$element.append("<div id=cover class=cover></div>");
 
         _$table = $("<table id=chronTable cellpadding=0 cellspacing=0></table>");
         _$table.append("<tr id=system><td width=110>System/<br>Period</td><td width=40><hr></td><td></td></tr>");
@@ -39,13 +42,17 @@ fo.view.ChronLineView = function()
                 
         me.initTimeLineScale();
         me.initTimeLabels();
-        me.initDiversityLine();
+        
         me.initTimeLines();
+        me.initDiversityLine();
         me.initSystem();
         me.initSeries();
-        me.initStages();             
+        me.initStages();   
+        me.initMoveLine();
 
-        
+        me.$element.find(".linechart").mousemove(_onmousemove);
+
+        me.$element.find(".moveLine").click(_year_onclick);
     };
     
     me.setViewWidth = function(p_width)
@@ -136,7 +143,6 @@ fo.view.ChronLineView = function()
 						.attr("id", divid)
 						.attr("class","seriesLines");
 
-//    		$("#" + divid).css("left", left + 150 -2 );
     		me.$element.find("#" + divid).css("left", left + me.moveLeft - 1 );
     		
         	svg.append("rect")
@@ -239,7 +245,7 @@ fo.view.ChronLineView = function()
 				.attr("x1", _xScale[i] + me.moveLeft)
 				.attr("y1", 0)
 				.attr("x2", _xScale[i] + me.moveLeft)
-				.attr("y2", 135)
+				.attr("y2", me.yHeight)
 				.style("stroke", "rgba(255, 255, 255, 0.1)")
 				.style("stroke-width", "1px");
 
@@ -249,7 +255,7 @@ fo.view.ChronLineView = function()
     
     me.initDiversityLine = function()
     {
-    	me.data = [{year: 297.889, value: 55},
+/*    	me.data = [{year: 297.889, value: 55},
     	           {year: 295, value: 81},
     	           {year: 291, value: 138},
     	           {year: 288, value: 38},
@@ -261,41 +267,86 @@ fo.view.ChronLineView = function()
     	           {year: 266, value: 50},
     	           {year: 262, value: 10},
     	           {year: 258.333, value: 40}
-    	           ];
+    	           ];*/
     	
-    	var yHeight = 135;
+    	me.data = fo.diverCurve;
+    	//var circleRange = [];
+    	
+    	
     	
 	    var y = d3.scale.linear()
-	    			.domain([0, yHeight ])
-	        		.range([195, 0]);
+	    			.domain([0, me.yHeight ])
+	        		.range([1500, 0]);
 	
 	    var line = d3.svg.line()
-	        .x(function(d) { return me.scale.invert(d.year) + me.moveLeft; })
-	        .y(function(d) { return y.invert(d.value) ; })
+	        .x(function(d) { return me.scale.invert(d.ma) + me.moveLeft; })
+	        .y(function(d) { return y.invert(d.count) ; })
 	        .interpolate("cardinal");
 	
 	    var svg = d3.select(me.$container.get(0)).append("svg")
 	        			.attr("width", me.frame.width)
-	        			.attr("height", yHeight)
+	        			.attr("height", me.yHeight)
 	        			.attr("class","linechart");
-
+	    
 	      
 	    svg.append("path")
 	          .datum(me.data)
 	          .attr("class", "diverLine")
 	          .attr("d", line);
+	    
+/*	    for (var i = 0; i < _xScale.length; i++)
+    	{
+	    	circleRange[i].ma = _xScale[i];
+	    	circleRange[i].count = 
+    	}*/
 	      
-	    svg.selectAll("circle")  
+/*	    svg.selectAll("circle")  
 	     	.data(me.data)
 	     	.enter() 
 	     	.append("circle") 
 	         .attr("stroke", "white")
 	         .attr("fill", function(d, i) { return "rgba(255, 255, 255, 0.2)" ;})
-	         .attr("cx", function(d, i) { return me.scale.invert(d.year) + me.moveLeft; })
-	         .attr("cy", function(d, i) { return y.invert(d.value); })
+	         .attr("cx", function(d, i) { return me.scale.invert(d.ma) + me.moveLeft; })
+	         .attr("cy", function(d, i) { return y.invert(d.count); })
 	         .attr("r", function(d, i) { return 1; });
+	         
+*/
 	      
     };
+    
+    me.initMoveLine = function()
+    {
+		var svg = d3.select(me.$container.get(0))
+					.append("svg")
+					.attr("class","moveLine");
+		
+		me.$element.find(".moveLine").css("left", -3 );
+		
+		svg.append("rect")
+			.attr("x", 0)
+			.attr("y", 0)
+			.attr("width", 2)
+			.attr("height", 1080)
+			.attr("fill","rgba(255,255,255,0.2)");
+    };
+    
+    function _onmousemove(e)
+    {
+    	if(e.pageX > me.moveLeft)
+    	{
+    		me.$element.find(".moveLine").css("left", e.pageX);
+    	}
+    	
+    }
+    
+    function _year_onclick(e)
+    {
+    	var year = me.scale(e.pageX);
+    	
+    	me.trigger("yearclicked", {
+    		year: year
+    	});
+    }
 
 
     return me.endOfClass(arguments);

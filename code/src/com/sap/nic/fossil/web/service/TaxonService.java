@@ -28,11 +28,35 @@ public class TaxonService
 			@QueryParam("class") String p_className
 			) throws JSONException, SQLException
 	{
+		ResultSet resultSet = null;
 		if (p_className == null)
 		{
-			
+			 //resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE('')");						
 		}
-		return null;
+		else
+		{
+			if(p_className == "")
+			{
+				resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE('')");
+			}
+			else
+			{
+			 resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE(?)", p_className);
+			}
+			 
+		}
+		
+		JSONArray result = new JSONArray();
+
+		while (resultSet.next())
+		{	
+			JSONObject cls = new JSONObject();
+			cls.put("ma", resultSet.getDouble("MA"));
+			cls.put("count", resultSet.getInt(2));
+
+			result.put(cls);
+		}
+		return result;
 	}
 	
 	@GET
@@ -289,6 +313,7 @@ public class TaxonService
 
 	public static void main(String[] args) throws JSONException, SQLException
 	{
-		System.out.println(new TaxonService().getTaxons().toString());
+		//System.out.println(new TaxonService().getTaxons().toString());
+		System.out.println(new TaxonService().getDiversityCurve("").toString());
 	}
 }

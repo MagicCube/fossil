@@ -44,6 +44,7 @@ fo.BaseApp = function()
        // me.loadTaxons();
         me.loadTaxa();
         me.loadSections();
+        me.loadDiversityCurve();
         
         me.$container.on("mousewheel", function(e)
         {
@@ -107,7 +108,27 @@ fo.BaseApp = function()
                 fo.taxa[taxon.id] = taxon;
                 
             }
+
         });
+    };
+    
+    me.loadDiversityCurve = function()
+    {
+    	$.ajax({
+    		url: $mappath("~/data/curve.json"),
+    		async: false
+    	}).success(function(curve)
+    	{
+    		fo.diverCurve = [];
+    		
+    		for(var i = 0; i < curve.length; i ++)
+    		{
+    			var diver =  curve[i];
+    			
+    			fo.diverCurve.add(diver);     			
+    		}
+    		
+    	});
     };
     
     me.loadSections = function()

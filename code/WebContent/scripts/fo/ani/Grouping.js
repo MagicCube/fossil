@@ -8,8 +8,8 @@ fo.ani.Grouping = function()
     var base = {};
     
     me.duration = 1000 * 3;
-    me.topMove = 240;
-    me.spacing = 48;
+    me.topMove = 200;
+    me.spacing = 88;
     me.labelMove = 55;
     
     
@@ -62,7 +62,7 @@ fo.ani.Grouping = function()
 	    			$expandDiv = $("<div class=classExpand/>");
 	    			$groupLabel.append($expandDiv);
 	    			var nameArray = group.name.split("-");
-	    			$className = $("<span id=genus class=className>" + nameArray[0] + "</span>");
+	    			$className = $("<span id="+ group.name +" class=className>" + nameArray[0] + "</span>");
 	    			var $genusName = $("<span id=genusName>" + "-" + nameArray[1] + "</span>");
 	    			$groupLabel.append($className, $genusName);
 

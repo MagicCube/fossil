@@ -52,10 +52,11 @@ fo.scn.TaxonSequenceScene = function()
     {
     	var $chronLine = $("<div id=chronLineView></div>");
     	$(document.body).append($chronLine);
-    	console.log(me.seqView.$container[0]);
+
     	me.chronLineView = new fo.view.ChronLineView({
-    		id:"chronLineView", 
-    		$element:$chronLine,
+    		id: "chronLineView", 
+    		$element: $chronLine,
+    		onyearclicked: _onyearclicked,
     		frame:{
     			width: me.frame.width * 2,
     			top: 20   			
@@ -120,6 +121,15 @@ fo.scn.TaxonSequenceScene = function()
     function _ongroupchanged()
     {
     	me.seqView.groupBy(me.groupSwitchView.group);
+    }
+    
+    function _onyearclicked(e)
+    {
+    	 fo.app.popupScene("BioDiversity", {
+             className: null,
+             yearSelected: e.year
+         });
+     
     }
     
     function _ongroupclicked(e)
