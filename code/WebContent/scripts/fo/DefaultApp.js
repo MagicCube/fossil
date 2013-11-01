@@ -15,6 +15,9 @@ fo.DefaultApp = function()
     
     me.searchBoxView = null;
     
+    me.topMove = 175;
+    me.leftMove = 150;
+    
     base.init = me.init;
     me.init = function(p_options)
     {
@@ -28,8 +31,8 @@ fo.DefaultApp = function()
     {
         me.searchBoxView = new fo.view.SearchBoxView({
             frame: {
-                left: 0,
-                top: 0
+                left: me.leftMove,
+                top: me.topMove
             }
         });
         me.searchBoxView.hide();

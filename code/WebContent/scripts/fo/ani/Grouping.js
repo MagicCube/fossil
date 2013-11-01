@@ -39,6 +39,7 @@ fo.ani.Grouping = function()
         
         if (me.groups != null)
     	{
+        	//fo.app.searchBoxView.$container.hide();
         	me.view.$element.find(".scene").scrollTop(0);
 	    	var height= me.spacing;
 	    	
@@ -157,6 +158,7 @@ fo.ani.Grouping = function()
     	}
         else
     	{
+        	fo.app.searchBoxView.$container.show();
         	me.view.$element.find(".groupLabel").remove();
         	me.view.$element.find(".scene").scrollTop(0);
             for (var i = 0; i < fo.taxa.length; i++)

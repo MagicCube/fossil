@@ -215,7 +215,7 @@ fo.view.TaxonSeqView3D = function()
         me.isRendering = false;
         me.mode = "2D";
         
-        //fo.app.searchBoxView.$container.delay(600).fadeIn("slow");
+        fo.app.searchBoxView.$container.delay(600).fadeIn("slow");
         
         me.$container.append("<div id='topShadow' class='shadow'/><div id='bottomShadow' class='shadow'/>");
         me.$container.find(".shadow").hide().fadeOut(5000);
@@ -286,17 +286,25 @@ fo.view.TaxonSeqView3D = function()
         me.setScale(1);
         var keyword = p_keyword.trim().toLowerCase();
         me.$scene.scrollTop(0);
+        
+        var firstfound = false;
         for (var i = 0; i < fo.taxa.length; i++)
         {
             var t = fo.taxa[i];
             var $div = me.$container.find(".taxon#" + t.id);
             if (t.fullName.toLowerCase().startsWith(keyword))
             {
-                $div.show();
+            	if(!firstfound)
+            	{
+            		var top = $div.css("top").split("px");
+            		me.$scene.scrollTop(parseInt(top[0]) - me.topMove - 30);
+            		firstfound = true;
+            	}
+            	$div.removeClass("searchStatus");
             }
             else
             {
-                $div.hide();
+                $div.addClass("searchStatus");
             }
         }
     };

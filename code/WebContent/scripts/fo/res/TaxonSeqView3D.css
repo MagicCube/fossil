@@ -105,3 +105,8 @@
 	top: 233px !important;
 	
 }
+
+.TaxonSeqView  .searchStatus
+{
+	opacity: 0.3;
+}
