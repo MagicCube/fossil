@@ -18,6 +18,7 @@ fo.view.PieChartView = function()
     var _tweenDuration = 100;
     var _textOffset = 30;
     var _totalValue = 0;
+    var _totalCount = 0;
     
     var _color = d3.scale.ordinal().range(["#FFFF00","#8FED74","#79C0E0", "#791CBB","#F43D4F","#FF7F1F"]);   //0.45 OPACITY
     var _oldPieData = [];
@@ -68,24 +69,61 @@ fo.view.PieChartView = function()
 		
     };
     
+    
+    function _loadDataByClassYear(args)
+    {
+    	if (args.className == null) args.className = "";
+    	$.ajax({
+    		url: "/fossil/api/taxon/diversity/distribution",
+    		data: {className: args.className, yearSelected: args.yearSelected},
+    		async: false
+    	}).success(function(dist)
+    	{
+    		_totalCount = 0;
+    		me.data = [];
+    		
+    		var classes = dist["classes"];
+    		for (var i = 0; i < classes.length && i <= 5; i++)
+    		{
+    			if (i < 5)
+    			{
+    				me.data.add(classes[i]);
+    				_totalCount += classes[i].count; 
+    			}
+    			if (i == 5)
+    			{
+    				var othersCount = 0;
+    				for (var j = 5; j< classes.length; j++)
+    				{
+    					othersCount += classes[j].count;
+    					_totalCount += classes[j].count; 
+    				}
+    				me.data.add({className: 'Others', count: othersCount});
+    			}
+			 };
+    		
+//    		console.log(me.data);
+    	});
+    };
+
     me.loadPieChartData = function(args)
     {
     	//TODO getClassTaxonCountJson (args.yearSelected)	§ Return DataSet:  [{className, count}]
-    	if (Math.random()>0.5)
-    	{
-    		me.data = [{className: "Gastropoda", count: 2}, {className: "Cephalopod", count: 2}, {className: "Brachiopod", count: 2},  {className: "Cephalopod", count: 5}, {className: "Lophophyllum", count: 5}, {className: "Others", count: 5}];
-    	}
-    	else
-    	{
-        	me.data = [{className: "Gastropoda", count: 4}, {className: "Cephdddiopod", count: 7}];
-    	}
-    	var total = 10; //getClassTaxonCountJson (yearSelected);
-    	
+    	_loadDataByClassYear(args);
+//    	if (Math.random()>0.5)
+//    	{
+//    		me.data = [{className: "Gastropoda", count: 2}, {className: "Cephalopod", count: 2}, {className: "Brachiopod", count: 2},  {className: "Cephalopod", count: 5}, {className: "Lophophyllum", count: 5}, {className: "Others", count: 5}];
+//    	}
+//    	else
+//    	{
+//        	me.data = [{className: "Gastropoda", count: 4}, {className: "Cephdddiopod", count: 7}];
+//    	}
+
     	
     	_infopadview.select("#title").text((args.className == null||args.className == "")?"Biological Diversity":args.className);
-    	_infopadview.select("#year").text((args.yearSelected).toFixed(0));
+    	_infopadview.select("#year").text(Math.round(args.yearSelected));
     	_infopadview.select("#ma").text("million years ago");
-    	_infopadview.select("#taxacount").text("Taxa Count: " + total);
+    	_infopadview.select("#taxacount").text("Taxa Count: " + _totalCount);
     	_infopadview.select("#area").text("Area: " + me.polygonArea + "km²");
 
     	me.initPie();
@@ -124,7 +162,8 @@ fo.view.PieChartView = function()
         _filteredPieData = _pie(me.data).filter(_filterData);
     	var arcs = _svg.selectAll("g.arc")
 			  .data(_filteredPieData);
-
+    	console.log(_filteredPieData);
+    	
         //add extra arcs if new dataset is bigger
 		_arc = d3.svg.arc().outerRadius(_radious);
 		arcs.enter()

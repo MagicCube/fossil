@@ -14,7 +14,7 @@ fo.view.DistributionMapView = function()
     var _sectionPolygon = null;
     
     var _maxCircleRadius = 50000;
-    var _maxTaxon = 10; 		//In average, 30 taxon could be found every ma year, less than 1 per section
+    var _maxTaxon = 200;
 
     var _$layerSwitcher = null;
 
@@ -29,10 +29,10 @@ fo.view.DistributionMapView = function()
     {
         base.init(p_options);
         
-      //draw cycles with radius 0 by default
-      	me.activeLayer =  me.bubbleLayer; 	
       	me.initCircleGroup();
       	
+        //draw cycles with radius 0 by default
+      	me.activeLayer =  me.bubbleLayer; 	
       	me.initLayerSwitcher();
      };
  
@@ -58,6 +58,8 @@ fo.view.DistributionMapView = function()
          _$layerSwitcher = $("<div class='viewSwitcher'><ul><li id='bubble'>Bubble</li><li id='polygon'>Polygon</li></ul></div>");
          _$layerSwitcher.on("click", _switcher_onclick);
          me.$element.append(_$layerSwitcher);
+ 	
+         me.$element.find("#" + me.activeLayer).addClass("selected");
      };
       
       
@@ -87,7 +89,7 @@ fo.view.DistributionMapView = function()
            	 if (_sectionPolygon != null)
            		 me.map.removeLayer(_sectionPolygon);
              me.activeLayer = me.bubbleLayer;
-      	    _updateCycles();
+      	    _updateCircles();
        }
      };
      
@@ -96,45 +98,57 @@ fo.view.DistributionMapView = function()
     me.loadDistributionMapData = function(args)
     {
     	//First loading
-    	if (me.sectionsByYear == null)
-    	{	
-    		// TODO process args to get an Json array via backend interface
-    		me.sectionsByYear = [];
+//    	if (me.sectionsByYear == null)
+//    	{	
+//    		me.sectionsByYear = [];
+//    		
+//    		me.activeLayer = me.bubbleLayer;
+//    		me.$element.find("#" + me.activeLayer).addClass("selected");
     		
-    		me.activeLayer = me.bubbleLayer;
-    		me.$element.find("#" + me.activeLayer).addClass("selected");
-    		
-    		me.selectedSectByYear = [{sectionID: "s142", taxonNumber: 20}, {sectionID: "s143", taxonNumber: 5}, {sectionID: "s145", taxonNumber: 5}, {sectionID: "s149", taxonNumber: 5}, {sectionID: "s150", taxonNumber: 5}];
-    	}
+//    		me.selectedSectByYear = [{sectionID: "s142", taxonNumber: 20}, {sectionID: "s143", taxonNumber: 5}, {sectionID: "s145", taxonNumber: 5}, {sectionID: "s149", taxonNumber: 5}, {sectionID: "s150", taxonNumber: 5}];
+//    	}
     	
     	//TEST_DATA, should be fetched with args.yearSelected and come to selectedSectByYear
-    	var newDataset = null;
-    	if (Math.random()>0.5)
-    	{
-    		newDataset = [{sectionID: "s142", taxonNumber: 20}, {sectionID: "s143", taxonNumber: 5}, {sectionID: "s145", taxonNumber: 5}, {sectionID: "s149", taxonNumber: 5}, {sectionID: "s150", taxonNumber: 5}];
-    	} 
-    	else
-    	{
-    		newDataset = [{sectionID: "s142", taxonNumber: 4}, {sectionID: "s143", taxonNumber: 15}, {sectionID: "s145", taxonNumber: 8}, {sectionID: "s150", taxonNumber: 3}, {sectionID: "s183", taxonNumber: 15}];
-        }
+//    	var newDataset = null;
+//    	if (Math.random()>0.5)
+//    	{
+//    		newDataset = [{sectionID: "s142", taxonNumber: 20}, {sectionID: "s143", taxonNumber: 5}, {sectionID: "s145", taxonNumber: 5}, {sectionID: "s149", taxonNumber: 5}, {sectionID: "s150", taxonNumber: 5}];
+//    	} 
+//    	else
+//    	{
+//    		newDataset = [{sectionID: "s142", taxonNumber: 4}, {sectionID: "s143", taxonNumber: 15}, {sectionID: "s145", taxonNumber: 8}, {sectionID: "s150", taxonNumber: 3}, {sectionID: "s183", taxonNumber: 15}];
+//        }
+    	
     	
     	if (me.activeLayer == me.bubbleLayer)
     	{
     		_resetRadius();
-    		me.selectedSectByYear = newDataset;
-     	    _updateCycles();
+        	_loadDistByClassYear(args);
+     	    _updateCircles();
     	}	
     	else
     	{
-    		me.selectedSectByYear = newDataset;
+        	_loadDistByClassYear(args);
     		_updatePolygon();
     	}
     };
     	
-    
+    function _loadDistByClassYear(args)
+    {
+    	if (args.className == null) args.className = "";
+    	$.ajax({
+    		url: "/fossil/api/taxon/diversity/distribution",
+    		data: {className: args.className, yearSelected: args.yearSelected},
+    		async: false
+    	}).success(function(dist)
+    	{
+    		me.selectedSectByYear = dist["sections"];
+//    		console.log(me.selectedSectByYear);
+    	});
+    };
     
     //update cycles' radius whose number per year is larger than zero	 
-    function _updateCycles()
+    function _updateCircles()
     {
    	 if (me.selectedSectByYear==null) 
    	 {
@@ -148,13 +162,13 @@ fo.view.DistributionMapView = function()
        	 //update Radius of relevant selectedSectByYear
        	 for (var i=0; i < me.selectedSectByYear.length; i++)
        	 {
-       		sectionID =  me.selectedSectByYear[i]["sectionID"];
-       		 taxonNumber = me.selectedSectByYear[i]["taxonNumber"];
+       		sectionID =  me.selectedSectByYear[i].sectionId;
+       		 taxonNumber = me.selectedSectByYear[i].count;
        		 if (taxonNumber != 0 && taxonNumber != null) 
    			{
    				if (taxonNumber>_maxTaxon) 
    				{
-//   					taxonNumber = _maxTaxon;	
+   					taxonNumber = _maxTaxon;	
    				}
    				
    				_sectionCircleGroup[sectionID].setRadius(taxonNumber/_maxTaxon*_maxCircleRadius); //set Radius by taxon number
@@ -169,7 +183,7 @@ fo.view.DistributionMapView = function()
     {
       	for (var i=0; i < me.selectedSectByYear.length; i++)
       	{
-        	 sectionID =  me.selectedSectByYear[i]["sectionID"];
+        	 sectionID =  me.selectedSectByYear[i].sectionId;
      		 _sectionCircleGroup[sectionID].setRadius(0);
     	}
     };
@@ -183,7 +197,7 @@ fo.view.DistributionMapView = function()
        	
        	 _sectionPolygon = 	_getConvexPolygon(); 
          me.map.addLayer(_sectionPolygon);
-    	 console.log(_sectionPolygon); 
+//    	 console.log(_sectionPolygon); 
     };
     
     function _getConvexPolygon()
@@ -200,7 +214,7 @@ fo.view.DistributionMapView = function()
 	     	 //update Radius of relevant selectedSectByYear
 	     	 for (var i=0; i < me.selectedSectByYear.length; i++)
 	     	 {
-	     		 sectionID= me.selectedSectByYear[i].sectionID;
+	     		 sectionID= me.selectedSectByYear[i].sectionId;
 	     		 latlngs.push(fo.sections[sectionID].location);	
 	     	 }	  	
 	     	 var convexPolygon = new Polygon(latlngs).getConvexPolygon();
@@ -221,6 +235,8 @@ fo.view.DistributionMapView = function()
      	var PointX = [];
      	var PointY = [];
      	var vertices = _getConvexPolygon().getLatLngs();
+     	
+     	if (vertices.length<3) return 0;
      	
      	for (var i=0; i<vertices.length; i++)
      	{

@@ -75,7 +75,7 @@ fo.view.LineChartView = function()
 
         	if (_position < _yearScale(_maxXValue))
             {
-                setTimeout(_play, 500);
+                setTimeout(_play, 1000);
                 _selectYear(_yearScale.invert(_position), true);	//trigger event
             	_position = _position + 10;
                 return;
@@ -267,8 +267,8 @@ fo.view.LineChartView = function()
 	    }
 	    var year = _yearScale.invert(cx);
 	    
-    	console.log(cx);
-    	console.log(year);
+//    	console.log(cx);
+//    	console.log(year);
 
 	    
 	    _selectYear(year, true);
@@ -290,7 +290,7 @@ fo.view.LineChartView = function()
     	  t.select("#linechart g.selectorHand")
     	    .attr("transform", "translate("+(_yearScale(year))+",0)");
     	  
-     	  me.trigger("yearchanged", year);
+     	  me.trigger("yearchanged", year.toFixed(3));
  
     	}
     

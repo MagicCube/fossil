@@ -107,13 +107,13 @@ fo.scn.BioDiversityScene = function(){
         
 
         //Test Args when clicking Chronline
-//       args = {"className": null ,  "yearSelected": 270};
+//       args = {"className": null ,  "yearSelected": 297.413};
         //Test Args when clicking groups
 //        args = {"className": 'Brachiopod', "yearSelected": null};
 
         if (args.yearSelected != null)
         {
-//        	args.yearSelected = Math.round(args.yearSelected);
+        	args.yearSelected = (args.yearSelected).toFixed(3);
         }
         else
         {
@@ -121,7 +121,6 @@ fo.scn.BioDiversityScene = function(){
         }
       
         me.args = args;
-       console.log(args);
         
         if (!isPoppedBack)
         {
@@ -151,6 +150,7 @@ fo.scn.BioDiversityScene = function(){
     {
     
    	   me.args.yearSelected = year;
+       console.log(me.args);
    	   me.mapView.loadDistributionMapData(me.args);
        me.pieChartView.polygonArea = me.mapView.getPolygonArea();
        me.pieChartView.loadPieChartData(me.args);
