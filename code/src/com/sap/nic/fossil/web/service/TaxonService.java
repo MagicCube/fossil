@@ -37,15 +37,7 @@ public class TaxonService
 		}
 		else
 		{
-			if(p_className == "")
-			{				
-				resultSet = executeSql("CALL FS_PROC_SQL_TAXA_COUNT_MAIN(?, ?)", p_className, p_year);
-			}
-			else
-			{
-			 resultSet = executeSql("CALL FS_PROC_SQL_TAXA_COUNT_MAIN(?, ?)", p_className, p_year);
-			}
-			 
+			resultSet = executeSql("CALL FS_PROC_SQL_TAXA_COUNT_MAIN(?, ?)", p_className, p_year);
 		}
 		
 		JSONArray result = new JSONArray();
@@ -53,7 +45,7 @@ public class TaxonService
 		while (resultSet.next())
 		{	
 			JSONObject cls = new JSONObject();
-			cls.put("sectionID", resultSet.getInt("SCTNUM"));
+			cls.put("sectionID", "s"+resultSet.getInt("SCTNUM"));
 			cls.put("taxonNumber", resultSet.getInt(2));
 
 			result.put(cls);
