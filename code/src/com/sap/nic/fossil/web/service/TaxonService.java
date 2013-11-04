@@ -24,7 +24,7 @@ public class TaxonService
 	
 	
 	@GET
-	@Path("distribution")
+	@Path("diversity/distribution")
 	public JSONArray getDistByClassYear(
 			@QueryParam("className") String p_className,
 			@QueryParam("yearSelected") Double p_year
