@@ -22,6 +22,48 @@ public class TaxonService
 {
 	private static final Logger _logger = Logger.getLogger(TaxonService.class);
 	
+	
+	@GET
+	@Path("distribution")
+	public JSONArray getDistByClassYear(
+			@QueryParam("className") String p_className,
+			@QueryParam("yearSelected") Double p_year
+			) throws JSONException, SQLException
+	{
+		ResultSet resultSet = null;
+		if (p_year == null)
+		{
+			 //resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE('')");						
+		}
+		else
+		{
+			if(p_className == "")
+			{				
+				resultSet = executeSql("CALL FS_PROC_SQL_TAXA_COUNT_MAIN(?, ?)", p_className, p_year);
+			}
+			else
+			{
+			 resultSet = executeSql("CALL FS_PROC_SQL_TAXA_COUNT_MAIN(?, ?)", p_className, p_year);
+			}
+			 
+		}
+		
+		JSONArray result = new JSONArray();
+
+		while (resultSet.next())
+		{	
+			JSONObject cls = new JSONObject();
+			cls.put("sectionID", resultSet.getInt("SCTNUM"));
+			cls.put("taxonNumber", resultSet.getInt(2));
+
+			result.put(cls);
+		}
+		return result;
+	}
+
+	
+	
+	
 	@GET
 	@Path("diversity/curve")
 	public JSONArray getDiversityCurve(
@@ -314,6 +356,7 @@ public class TaxonService
 	public static void main(String[] args) throws JSONException, SQLException
 	{
 		//System.out.println(new TaxonService().getTaxons().toString());
-		System.out.println(new TaxonService().getDiversityCurve("").toString());
+//		System.out.println(new TaxonService().getDiversityCurve("").toString());
+		System.out.println(new TaxonService().getDistByClassYear("", 280.09).toString());
 	}
 }
