@@ -25,30 +25,39 @@ public class TaxonService
 	
 	@GET
 	@Path("diversity/distribution")
-	public JSONArray getDistByClassYear(
+	public JSONObject getDistByClassYear(
 			@QueryParam("className") String p_className,
 			@QueryParam("yearSelected") Double p_year
 			) throws JSONException, SQLException
 	{
-		ResultSet resultSet = null;
-		if (p_year == null)
-		{
-			 //resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE('')");						
-		}
-		else
-		{
-			resultSet = executeSql("CALL FS_PROC_SQL_TAXA_COUNT_MAIN(?, ?)", p_className, p_year);
-		}
+		JSONObject result = new JSONObject();
 		
-		JSONArray result = new JSONArray();
-
+		PreparedStatement statement = createSqlStatement("CALL FOSSIL195.FS_PROC_SQL_TAXA_COUNT_MAIN(?, ?, ?, ?)", p_className, p_year);
+		statement.execute();
+		ResultSet resultSet = statement.getResultSet();
+		
+		JSONArray classes = new JSONArray();
 		while (resultSet.next())
-		{	
+		{
 			JSONObject cls = new JSONObject();
-			cls.put("sectionID", "s"+resultSet.getInt("SCTNUM"));
-			cls.put("taxonNumber", resultSet.getInt(2));
-
-			result.put(cls);
+			cls.put("className", resultSet.getString("CLASS"));
+			cls.put("count", resultSet.getInt("COUNT"));
+			classes.put(cls);
+		}
+		result.put("classes", classes);
+		
+		if (statement.getMoreResults())
+		{
+			resultSet = statement.getResultSet();
+			JSONArray sections = new JSONArray();
+			while (resultSet.next())
+			{
+				JSONObject section = new JSONObject();
+				section.put("sectionId", "s" + resultSet.getInt("SCTNUM"));
+				section.put("count", resultSet.getInt("COUNT"));
+				sections.put(section);
+			}
+			result.put("sections", sections);
 		}
 		return result;
 	}
@@ -63,13 +72,9 @@ public class TaxonService
 			) throws JSONException, SQLException
 	{
 		ResultSet resultSet = null;
-		if (p_className == null)
+		if (p_className != null)
 		{
-			 //resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE('')");						
-		}
-		else
-		{
-			if(p_className == "")
+			if(p_className == null || p_className.equals(""))
 			{				
 				resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.0001);
 			}
@@ -297,11 +302,7 @@ public class TaxonService
 	
 	
 	
-	
-	
-	
-	
-	public ResultSet executeSql(String p_sql, Object... p_parameters) throws SQLException
+	public PreparedStatement createSqlStatement(String p_sql, Object... p_parameters) throws SQLException
 	{
 		String convertedSQL = p_sql;
 		for (int i = 0; i < p_parameters.length; i++)
@@ -315,33 +316,39 @@ public class TaxonService
 				convertedSQL = convertedSQL.replaceFirst("\\?", "null");
 			}
 		}
-		_logger.info("Executing SQL: " + convertedSQL);
+		_logger.info("SQL: " + convertedSQL);
 
 		Connection connection = null;
 		while (connection == null)
 		{
 			connection = DbConnectionPool.getDefaultConnectionPool().getConnection();
 		}
-
+		
+		PreparedStatement statement = connection.prepareStatement(p_sql);
+		for (int i = 0; i < p_parameters.length; i++)
+		{
+			Object param = p_parameters[i];
+			statement.setObject(i + 1, param);
+		}
+		
+		return statement;
+	}
+	
+	
+	
+	public ResultSet executeSql(String p_sql, Object... p_parameters) throws SQLException
+	{
+		PreparedStatement statement = createSqlStatement(p_sql, p_parameters);
 		try
 		{
-			PreparedStatement statement = connection.prepareStatement(p_sql);
-			for (int i = 0; i < p_parameters.length; i++)
-			{
-				Object param = p_parameters[i];
-				statement.setObject(i + 1, param);
-			}
-
 			statement.execute();
 
 			ResultSet rs = statement.getResultSet();
-
-			_logger.info("Finish running SQL: " + convertedSQL);
 			return rs;
 		}
 		finally
 		{
-			DbConnectionPool.getDefaultConnectionPool().returnConnection(connection);
+			DbConnectionPool.getDefaultConnectionPool().returnConnection(statement.getConnection());
 		}
 	}
 
