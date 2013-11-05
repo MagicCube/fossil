@@ -244,7 +244,11 @@ fo.view.LineChartView = function()
       
       var selectorHandDrag = d3.behavior.drag()
       .origin(Object)
-      .on("dragend", _dragSelectorHand);
+      .on("drag", _dragSelectorHand);
+      
+      selectorHandDrag
+      .origin(Object)
+      .on("dragend", _onDragEnd);
 
 	  d3.select("#linechart .selectorHand")
 	    .on("mouseover", function(){
@@ -270,7 +274,6 @@ fo.view.LineChartView = function()
 	    _selectYearForPosition(c[0]);
 		 
 	  }
-    
 	
     function _selectYearForPosition(cx) 
     {
@@ -285,13 +288,13 @@ fo.view.LineChartView = function()
 	    {
 	    	cx = _yearScale(_maxXValue);
 	    }
-	    var year = _yearScale.invert(cx);
+	    _yearSelected = _yearScale.invert(cx);
 	    
 //    	console.log(cx);
 //    	console.log(year);
 
 	    
-	    _selectYear(year, true);
+	    _selectYear(_yearSelected, true);
 	    _pause(); 
 	    _position = cx;
 	  }
@@ -310,17 +313,13 @@ fo.view.LineChartView = function()
     	  t.select("#linechart g.selectorHand")
     	    .attr("transform", "translate("+(_yearScale(year))+",0)");
     	  
-     	  me.trigger("yearchanged", year.toFixed(3));
- 
     	}
     
-//    //Throw event
-//    function _setYearSelected(year)
-//    {
-//	  //reset year and throw setYearSelected event
-//    }
-    
-    
+    function _onDragEnd(d)
+    {	
+    	console.log(_yearSelected);
+    	me.trigger("yearchanged", _yearSelected.toFixed(3));
+    }
     
     
     

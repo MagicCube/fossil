@@ -181,9 +181,9 @@ fo.view.DistributionMapView = function()
     //Clear previous radius
     function _resetRadius()
     {
-      	for (var i=0; i < me.selectedSectByYear.length; i++)
+      	for (var i=0; i < fo.sections.length; i++)
       	{
-        	 sectionID =  me.selectedSectByYear[i].sectionId;
+        	 sectionID =  fo.sections[i].id;
      		 _sectionCircleGroup[sectionID].setRadius(0);
     	}
     };

@@ -109,7 +109,7 @@ fo.scn.BioDiversityScene = function(){
         //Test Args when clicking Chronline
 //       args = {"className": null ,  "yearSelected": 297.413};
         //Test Args when clicking groups
-//        args = {"className": 'Brachiopod', "yearSelected": null};
+        args = {"className": 'Brachiopod', "yearSelected": null};
 
         if (args.yearSelected != null)
         {
