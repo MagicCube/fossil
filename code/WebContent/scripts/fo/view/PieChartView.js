@@ -162,7 +162,7 @@ fo.view.PieChartView = function()
         _filteredPieData = _pie(me.data).filter(_filterData);
     	var arcs = _svg.selectAll("g.arc")
 			  .data(_filteredPieData);
-    	console.log(_filteredPieData);
+//    	console.log(_filteredPieData);
     	
         //add extra arcs if new dataset is bigger
 		_arc = d3.svg.arc().outerRadius(_radious);

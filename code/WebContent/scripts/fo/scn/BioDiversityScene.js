@@ -130,6 +130,7 @@ fo.scn.BioDiversityScene = function(){
             me.mapView.loadDistributionMapData(args); 
 
             me.pieChartView.polygonArea = me.mapView.getPolygonArea();
+        	console.log(args);
             me.pieChartView.loadPieChartData(args);
             
             setTimeout(function()
@@ -150,10 +151,9 @@ fo.scn.BioDiversityScene = function(){
     {
     
    	   me.args.yearSelected = year;
-       console.log(me.args);
    	   me.mapView.loadDistributionMapData(me.args);
        me.pieChartView.polygonArea = me.mapView.getPolygonArea();
-       me.pieChartView.loadPieChartData(me.args);
+        me.pieChartView.loadPieChartData(me.args);
     	
     }
      
