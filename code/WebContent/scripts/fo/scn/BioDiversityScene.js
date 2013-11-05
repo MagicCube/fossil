@@ -118,11 +118,11 @@ fo.scn.BioDiversityScene = function()
         // Test Args when clicking Chronline
         // args = {"className": null , "yearSelected": 297.413};
         // Test Args when clicking groups
-        args =
-        {
-            "className" : 'Brachiopod',
-            "yearSelected" : null
-        };
+//        args =
+//        {
+//            "className" : 'Brachiopod',
+//            "yearSelected" : null
+//        };
 
         if (args.yearSelected != null)
         {
@@ -134,17 +134,32 @@ fo.scn.BioDiversityScene = function()
         }
 
         me.args = args;
+        console.log(args);
 
         if (!isPoppedBack)
         {
             console.log("fo.scn.BioDiversityScene is now activated.");
-
-            me.mapView.loadDistributionMapData(args);
-
-            me.pieChartView.polygonArea = me.mapView.getPolygonArea();
             console.log(args);
-            me.pieChartView.loadPieChartData(args);
+            
+            $.ajax({
+                url: $mappath("~/api/taxon/diversity/distribution"),
+                data: {
+                    className: me.args.className ? me.args.className : "",
+                    yearSelected: me.args.yearSelected
+                },
+                context: { year: year }
+            }).success(function(p_result)
+            {
+                console.log("- " + year);
+                p_result.year = parseFloat(this.year);
+                me.mapView.setDistributionMapData(p_result);
+                
+                me.pieChartView.setPieChartData(p_result, me.args);
+                me.pieChartView.polygonArea = me.mapView.getPolygonArea();
+            });
 
+            
+            
             setTimeout(function()
             {
                 me.lineChartView.loadLineChartData(args);
@@ -162,17 +177,11 @@ fo.scn.BioDiversityScene = function()
     function _lineChartView_onyearchanged(year)
     {
         me.args.yearSelected = year;
-        /*me.mapView.loadDistributionMapData(me.args);
-        me.pieChartView.polygonArea = me.mapView.getPolygonArea();
-        me.pieChartView.loadPieChartData(me.args);
-        console.log(me.args);*/
-
-        me.args.yearSelected = year;
         console.log("+ " + year);
         $.ajax({
             url: $mappath("~/api/taxon/diversity/distribution"),
             data: {
-                className: me.args.className,
+                className: me.args.className ? me.args.className : "",
                 yearSelected: me.args.yearSelected
             },
             context: { year: year }
@@ -181,6 +190,11 @@ fo.scn.BioDiversityScene = function()
             console.log("- " + year);
             p_result.year = parseFloat(this.year);
             me.mapView.setDistributionMapData(p_result);
+
+            
+            me.pieChartView.setPieChartData(p_result, me.args);
+            me.pieChartView.polygonArea = me.mapView.getPolygonArea();
+
         }).fail(function(A, B, C){
             console.log("ERROR", A, B, C);
         });

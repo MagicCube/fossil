@@ -70,19 +70,13 @@ fo.view.PieChartView = function()
     };
     
     
-    function _loadDataByClassYear(args)
+    me.setPieChartData = function(data, args)
     {
-    	if (args.className == null) args.className = "";
-    	$.ajax({
-    		url: "/fossil/api/taxon/diversity/distribution",
-    		data: {className: args.className, yearSelected: args.yearSelected},
-    		async: false
-    	}).success(function(dist)
-    	{
+
     		_totalCount = 0;
     		me.data = [];
     		
-    		var classes = dist["classes"];
+    		var classes = data["classes"];
     		for (var i = 0; i < classes.length && i <= 5; i++)
     		{
     			if (i < 5)
@@ -103,33 +97,22 @@ fo.view.PieChartView = function()
 			 };
     		
 //    		console.log(me.data);
-    	});
+			 
+			_updateInfoPad(args);
     };
 
-    me.updateInfoPad = function(args)
+    function _updateInfoPad(args)
     {
-    	//TODO getClassTaxonCountJson (args.yearSelected)	§ Return DataSet:  [{className, count}]
-//    	_loadDataByClassYear(args);
-//    	if (Math.random()>0.5)
-//    	{
-//    		me.data = [{className: "Gastropoda", count: 2}, {className: "Cephalopod", count: 2}, {className: "Brachiopod", count: 2},  {className: "Cephalopod", count: 5}, {className: "Lophophyllum", count: 5}, {className: "Others", count: 5}];
-//    	}
-//    	else
-//    	{
-//        	me.data = [{className: "Gastropoda", count: 4}, {className: "Cephdddiopod", count: 7}];
-//    	}
-
-    	var classView  = (args.className == null||args.className == "")?false:true;
-    	_infopadview.select("#title").text(classView?"Biological Diversity":args.className);
+    	var noPieView  = (args.className == null||args.className == "")?true:false;
+    	_infopadview.select("#title").text(noPieView?"Biological Diversity":args.className);
     	_infopadview.select("#year").text(Math.round(args.yearSelected));
     	_infopadview.select("#ma").text("million years ago");
     	_infopadview.select("#taxacount").text("Taxa Count: " + _totalCount);
     	_infopadview.select("#area").text("Area: " + me.polygonArea + "km²");
 
-    	if (classView)
+    	if (noPieView)
     	{
     		me.initPie();
-    	}
 
 
         //remove old class proportion info list and create new one
@@ -155,6 +138,8 @@ fo.view.PieChartView = function()
     			 var percentage = (d.value/_totalValue)*100;
     			 return d.name + " " + percentage.toFixed(1) + "%";
     		});
+      	
+    	}
     };
 
     me.initPie = function()

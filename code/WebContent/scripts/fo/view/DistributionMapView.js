@@ -132,12 +132,10 @@ fo.view.DistributionMapView = function()
         if (me.activeLayer == me.bubbleLayer)
         {
             _resetRadius();
-            _loadDistByClassYear(args);
             _updateCircles();
         }
         else
         {
-            _loadDistByClassYear(args);
             _updatePolygon();
         }
     };
@@ -156,25 +154,25 @@ fo.view.DistributionMapView = function()
         }
     };
 
-    function _loadDistByClassYear(args)
-    {
-        if (args.className == null)
-            args.className = "";
-        $.ajax(
-        {
-            url : "/fossil/api/taxon/diversity/distribution",
-            data :
-            {
-                className : args.className,
-                yearSelected : args.yearSelected
-            },
-            async : false
-        }).success(function(dist)
-        {
-            me.selectedSectByYear = dist["sections"];
-        });
-    }
-    ;
+//    function _loadDistByClassYear(args)
+//    {
+//        if (args.className == null)
+//            args.className = "";
+//        $.ajax(
+//        {
+//            url : "/fossil/api/taxon/diversity/distribution",
+//            data :
+//            {
+//                className : args.className,
+//                yearSelected : args.yearSelected
+//            },
+//            async : false
+//        }).success(function(dist)
+//        {
+//            me.selectedSectByYear = dist["sections"];
+//        });
+//    }
+//    ;
 
     // update cycles' radius whose number per year is larger than zero
     function _updateCircles()
