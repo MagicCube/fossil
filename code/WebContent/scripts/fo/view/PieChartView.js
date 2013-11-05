@@ -106,10 +106,10 @@ fo.view.PieChartView = function()
     	});
     };
 
-    me.loadPieChartData = function(args)
+    me.updateInfoPad = function(args)
     {
     	//TODO getClassTaxonCountJson (args.yearSelected)	§ Return DataSet:  [{className, count}]
-    	_loadDataByClassYear(args);
+//    	_loadDataByClassYear(args);
 //    	if (Math.random()>0.5)
 //    	{
 //    		me.data = [{className: "Gastropoda", count: 2}, {className: "Cephalopod", count: 2}, {className: "Brachiopod", count: 2},  {className: "Cephalopod", count: 5}, {className: "Lophophyllum", count: 5}, {className: "Others", count: 5}];
@@ -119,14 +119,18 @@ fo.view.PieChartView = function()
 //        	me.data = [{className: "Gastropoda", count: 4}, {className: "Cephdddiopod", count: 7}];
 //    	}
 
-    	
-    	_infopadview.select("#title").text((args.className == null||args.className == "")?"Biological Diversity":args.className);
+    	var classView  = (args.className == null||args.className == "")?false:true;
+    	_infopadview.select("#title").text(classView?"Biological Diversity":args.className);
     	_infopadview.select("#year").text(Math.round(args.yearSelected));
     	_infopadview.select("#ma").text("million years ago");
     	_infopadview.select("#taxacount").text("Taxa Count: " + _totalCount);
     	_infopadview.select("#area").text("Area: " + me.polygonArea + "km²");
 
-    	me.initPie();
+    	if (classView)
+    	{
+    		me.initPie();
+    	}
+
 
         //remove old class proportion info list and create new one
       	var bullets = _infopadview.select("#bullets");
