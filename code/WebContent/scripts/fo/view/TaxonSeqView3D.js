@@ -14,7 +14,7 @@ fo.view.TaxonSeqView3D = function()
     var base = {};
     
     me.leftMove = 125;
-    me.topMove = 240;
+    me.topMove = 270;
     me.spacing = 140;
     me.taxonDivHeight = 19;
     me.labelHeight = 40;
@@ -294,7 +294,7 @@ fo.view.TaxonSeqView3D = function()
             	if(!firstfound)
             	{
             		var top = $div.css("top").split("px");
-            		me.$scene.scrollTop(parseInt(top[0]) - me.topMove - 30);
+            		me.$scene.scrollTop(parseInt(top[0]) - me.topMove);
             		firstfound = true;
             	}
             	$div.removeClass("searchStatus");
@@ -413,7 +413,7 @@ fo.view.TaxonSeqView3D = function()
     {
     	var groups = me.$element.find("#groupUnderlay")[0];
     	var className = null;
-    	if(e.clientY > me.fixedTop && e.clientY < me.fixedTop + me.labelHeight)
+    	if(e.clientY > me.fixedTop && e.clientY < me.fixedTop + me.labelHeight && e.clientX < 300)
     	{
     		className = me.$element.find(".labelFixed").text();
     	}
@@ -423,7 +423,7 @@ fo.view.TaxonSeqView3D = function()
     	{
     		var top = groups.children[i].offsetTop;
 
-    		if(me.$scene[0].scrollTop + e.clientY < top + me.labelHeight && me.$scene[0].scrollTop + e.clientY  > top)
+    		if(me.$scene[0].scrollTop + e.clientY < top + me.labelHeight && me.$scene[0].scrollTop + e.clientY  > top && e.clientX < 300)
     		{
     			
         		className = groups.children[i].innerText;       		       		

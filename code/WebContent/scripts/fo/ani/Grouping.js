@@ -144,7 +144,7 @@ fo.ani.Grouping = function()
             {
                 var t = fo.taxa[i];
                 var target = {                		
-                        top: i * 19 +  me.topMove + 50,                      
+                        top: i * 19 +  me.topMove + 60,                      
                 };
                 
                 var div = document.getElementById(t.id);
