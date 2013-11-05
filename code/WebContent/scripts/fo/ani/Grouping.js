@@ -8,7 +8,7 @@ fo.ani.Grouping = function()
     var base = {};
     
     me.duration = 1000 * 3;
-    me.topMove = 200;
+    me.topMove = 210;
     me.spacing = 88;
     me.labelMove = 55;
     
