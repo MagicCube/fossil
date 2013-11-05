@@ -7,6 +7,7 @@ $import("lib.three.Three", function(){
 $import("lib.d3.D3");
 $import("lib.jquery.plugin.Transit");
 $import("lib.tween.Tween");
+$import("fo.data.DiversityDataSource");
 $import("fo.util.ChronUtil");
 $import("fo.util.GroupUtil");
 
