@@ -67,6 +67,7 @@ fo.view.LineChartView = function()
     	_pause();
        	_position = _yearScale(_minXValue);
     	_selectYear(_minXValue, true);
+    	me.trigger("yearchanged", _minXValue);
     };
     
     function _play()

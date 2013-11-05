@@ -294,7 +294,7 @@ fo.view.DistributionMapView = function()
         }
         
         var result = _calArea(PointX, PointY);
-        console.log(result);
+//        console.log(result);
         
         if (isNaN(result) ) 
         {

@@ -134,7 +134,7 @@ fo.scn.BioDiversityScene = function()
         }
 
         me.args = args;
-        console.log(args);
+//        console.log(args);
 
         if (!isPoppedBack)
         {
