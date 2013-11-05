@@ -18,6 +18,7 @@ fo.view.LineChartView = function()
     var _yearSelected = null;
     var _minXValue = null;
     var _maxXValue = null;
+    var _yearInterval = null; 
     var _playing = false;
  
     me.onyearchanged = null;
@@ -94,6 +95,23 @@ fo.view.LineChartView = function()
         }
     }
     
+    
+   	
+    function _loadCurveByClass(args)
+    {
+    	if (args.className == null) args.className = "";
+    	$.ajax({
+    		url: "/fossil/api/taxon/diversity/curve",
+    		data: {class: args.className},
+    		async: false
+    	}).success(function(curve)
+    	{
+    		_dataset = curve;
+//    		console.log(me.selectedSectByYear);
+    	});
+    };
+
+    
 	//load received args to update the lineChart
 	me.loadLineChartData = function (args)
     {
@@ -101,7 +119,7 @@ fo.view.LineChartView = function()
 
 		//TEST DATA
 //		_dataset = [{ma: 298, count: 5}, {ma: 295, count: 10}, {ma: 290, count: 12}, {ma: 279, count: 7}, {ma: 272, count: 5}, {ma: 268, count: 20}, {ma: 265, count: 14}, {ma: 259, count: 15}, {ma: 254, count: 20}, {ma: 252, count: 4}].reverse();
-		_dataset = fo.diverCurve;
+		_loadCurveByClass(args);
 		
 		
 		var margin = {top: 20, right: 30, bottom: 20, left: 35},
@@ -112,7 +130,9 @@ fo.view.LineChartView = function()
 	    _yearScale = d3.scale.linear()
 	    	.domain([_minXValue = d3.max(_dataset, function(d){return d.ma;}), _maxXValue = d3.min(_dataset, function(d){return d.ma;})])
 	        .range([margin.left, width - margin.right]);
-	
+		//update the year span of 10pixel 
+	    _yearInterval = _minXValue-_yearScale.invert(margin.left+10);
+
 	    _numScale = d3.scale.linear()
 	    	.domain([0, d3.max(_dataset, function(d){return d.count;})*1.1])
 	        .range([height - margin.bottom, margin.top]);
@@ -224,7 +244,7 @@ fo.view.LineChartView = function()
       
       var selectorHandDrag = d3.behavior.drag()
       .origin(Object)
-      .on("drag", _dragSelectorHand);
+      .on("dragend", _dragSelectorHand);
 
 	  d3.select("#linechart .selectorHand")
 	    .on("mouseover", function(){
