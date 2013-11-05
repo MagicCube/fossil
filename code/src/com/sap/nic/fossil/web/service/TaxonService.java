@@ -81,18 +81,7 @@ public class TaxonService
 			) throws JSONException, SQLException
 	{
 		ResultSet resultSet = null;
-		if (p_className != null)
-		{
-			if(p_className == null || p_className.equals(""))
-			{				
-				resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.0001);
-			}
-			else
-			{
-			 resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.0001);
-			}
-			 
-		}
+		resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.0001);
 		
 		JSONArray result = new JSONArray();
 
@@ -101,7 +90,6 @@ public class TaxonService
 			JSONObject cls = new JSONObject();
 			cls.put("ma", resultSet.getDouble("MA"));
 			cls.put("count", resultSet.getInt(2));
-
 			result.put(cls);
 		}
 		return result;
