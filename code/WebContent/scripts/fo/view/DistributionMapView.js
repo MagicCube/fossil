@@ -202,21 +202,23 @@ fo.view.DistributionMapView = function()
     
     function _getConvexPolygon()
      {
-    	 if (me.selectedSectByYear==null) 
+    	 if (me.selectedSectByYear==null || me.selectedSectByYear.length <3) 
 	 	 {
-	 		 return;
+	 		 return null;
 	 	 }
 	 	 else 
 	 	 {
 	
 	 		 var sectionID = null;
 	 		 var latlngs  = [];
+	 		 
 	     	 //update Radius of relevant selectedSectByYear
 	     	 for (var i=0; i < me.selectedSectByYear.length; i++)
 	     	 {
 	     		 sectionID= me.selectedSectByYear[i].sectionId;
 	     		 latlngs.push(fo.sections[sectionID].location);	
 	     	 }	  	
+	     	 
 	     	 var convexPolygon = new Polygon(latlngs).getConvexPolygon();
 	     	 return L.polygon(convexPolygon.vertices, {
 	     		 fillColor: '#d8e214',
@@ -234,9 +236,15 @@ fo.view.DistributionMapView = function()
      {
      	var PointX = [];
      	var PointY = [];
-     	var vertices = _getConvexPolygon().getLatLngs();
      	
-     	if (vertices.length<3) return 0;
+     	var poly = _getConvexPolygon();
+     	
+     	if (poly == null)
+     	{
+     		return 0;
+     	}
+     	var vertices = poly.getLatLngs();
+     	
      	
      	for (var i=0; i<vertices.length; i++)
      	{
