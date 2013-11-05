@@ -142,9 +142,11 @@ fo.BaseApp = function()
             for (var i = 0; i < sections.length; i++)
             {
                 var section = sections[i];
+               // section.id = "s" + (i + 1);
                 fo.sections[section.id] = section;
                 fo.sections.add(section);
             }
+            //console.log(JSON.stringify(fo.sections));
         });
     };
 

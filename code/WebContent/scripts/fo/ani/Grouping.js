@@ -12,6 +12,8 @@ fo.ani.Grouping = function()
     me.spacing = 88;
     me.labelMove = 55;
     
+    me.classHeight = null;
+    me.labelHeight = null;   
     
     base.init = me.init;
     me.init = function(p_options)
@@ -26,29 +28,28 @@ fo.ani.Grouping = function()
         
         TWEEN.removeAll();
         
-        var classesHeight = [];
-        var labelHeight = [];
+        me.view.$element.find(".searchStatus").removeClass("searchStatus");
+        //console.log(me.view.$element.find(".searchStatus"));
+        me.view.$element.find("#groupUnderlay").remove();
+        
+        var $groupUnderlay =  $("<div id=groupUnderlay ></div>");
+        me.view.$element.append($groupUnderlay);
+        
+        classesHeight = [];
+        labelHeight = [];
         var duration = me.duration;
         var scrollWidth = me.view.$element.find(".scene").scrollWidth;
-        
-/*        var canvas = me.view.$element.find("#lineCanvas")[0];
-        var ctx = canvas.getContext('2d');    */   
        
         me.groups = fo.app.scenes.TaxonSequence.seqView.groups;
         var groupType = fo.app.scenes.TaxonSequence.seqView.groupType;
         
         if (me.groups != null)
     	{
-        	//fo.app.searchBoxView.$container.hide();
+        	fo.app.searchBoxView.$container.hide();
         	me.view.$element.find(".scene").scrollTop(0);
 	    	var height= me.spacing;
 	    	
 	    	me.view.$element.find(".groupLabel").remove();
-	    	
-	    	
-/*	    	ctx.clearRect(0, 0, canvas.width, canvas.height);
-	    	ctx.beginPath();*/
-	    	
 	    	
 	    	for(var i = 0; i < me.groups.length; i++)
 	    	{
@@ -79,9 +80,11 @@ fo.ani.Grouping = function()
 	    		
 	    		var fixHeight = me.topMove + height - me.labelMove;
 	    		labelHeight.push(fixHeight);
-	    		me.view.$element.find(".camera").append($groupLabel);
+
 	    		$groupLabel.css("top", fixHeight);
 	    		$groupLabel.fadeIn(3000);
+	    			    		
+	    		$groupUnderlay.append($groupLabel);
 
 	    		var taxaAmount = group.taxa.length;
 	    		for(var j = 0; j < taxaAmount; j++)
@@ -103,30 +106,17 @@ fo.ani.Grouping = function()
 	                       this.div.style.top = this.top + "px";
 	                    })
 	                    .start();	  
-	                
-	 //               var tLeft = parseInt(div.children[0].style.left);
-	/*                if(taxaAmount > 19)
-	                {
-	                	ctx.moveTo( 40 + 38 - j*38/taxaAmount, fixHeight + 38);
-	                }*/
-	                
-
-	                
-/*	                ctx.moveTo(110, fixHeight + 19);
-	                ctx.bezierCurveTo(0, fixHeight + 38 + (topHeight - fixHeight)/2,  110, topHeight + 9, tLeft, topHeight + 9);*/
-
-		    /*        ctx.moveTo( 40 + 19, fixHeight + 38);		
-	                ctx.lineTo(130, me.topMove + height + 9);	               
-	                ctx.lineTo(tLeft, me.topMove + height + 9);*/
-	          
+	                          
 	    		}
 	    	   
 	    		height = me.spacing + height;
 	    		classesHeight.push(height);
-	    	}
+	    			    		
+	    	}	    	
 
 	    	var $scene = me.view.$element.find(".scene");
 	    	$scene.scroll(function() {
+	    		me.view.$element.find("#groupUnderlay").scrollTop($scene[0].scrollTop);	   
 	    		
 	    		var divName = null;	
 	    		for(var i = 0; i < classesHeight.length; i++)
@@ -136,25 +126,14 @@ fo.ani.Grouping = function()
 	    			  divName = "groupLabel" + i;
 	    			  me.view.$element.find(".groupLabel").removeClass("labelFixed");
 	    			  me.view.$element.find("#" + divName).addClass("labelFixed");
+	    			  
 	    		  	  break;
 	    		  }
 	    		  
 	    		}
 	    		
-/*	    		var sLeft = $scene[0].scrollLeft;
-	    		if(sLeft >= 0) 
-	    		{
-	    			
-	    			$(".groupLabel").css("left", sLeft);	    			
-	    			$("#" + divName).css("left", 0);
-	    		}	*/
-	    		
 	    	});
 	    	
-/*	        ctx.closePath();
-      	    ctx.strokeStyle = "#898989";
-            ctx.stroke();*/
-
     	}
         else
     	{
@@ -194,6 +173,7 @@ fo.ani.Grouping = function()
             obj.element.style.top = obj.element.style.top.replace("-", ""); 
         }
     }
+    
 
     return me.endOfClass(arguments);
 };

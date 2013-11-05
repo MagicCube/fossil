@@ -15,7 +15,7 @@ fo.DefaultApp = function()
     
     me.searchBoxView = null;
     
-    me.topMove = 175;
+    me.topMove = 200;
     me.leftMove = 150;
     
     base.init = me.init;

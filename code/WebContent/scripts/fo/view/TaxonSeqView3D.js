@@ -17,6 +17,8 @@ fo.view.TaxonSeqView3D = function()
     me.topMove = 240;
     me.spacing = 140;
     me.taxonDivHeight = 19;
+    me.labelHeight = 40;
+    me.fixedTop = 233;
     
     me.groups = null;
     me.groupType = null;
@@ -55,6 +57,7 @@ fo.view.TaxonSeqView3D = function()
         }
         me.styleSheet = document.styleSheets[i];
         
+        me.$element.on("mousedown", ".scene", _scene_onclick);
         me.$element.on("click", ".className", _class_onclick);
     };
     
@@ -141,19 +144,14 @@ fo.view.TaxonSeqView3D = function()
         me.scene.add(me.rootObject);
     };
     
-    me.initCanvas = function()
-    {
-    	//me.$scene = me.$container.find(".scene");
-
-    	me.$scene.append("<canvas id=lineCanvas></canvas>");
-    	me.$element.find("#lineCanvas").attr({"width": me.$scene[0].scrollWidth, "height": me.$scene[0].scrollHeight});
-    };
     
     base.startAnimation = me.startAnimation;
-    me.startAnimation = function(p_animationName, duration)
+    me.startAnimation = function(p_animationName, duration, p_args)
     {
         var ani = null;
-        ani = fo.ani.Animation.createInstance(p_animationName, { camera: me.camera, scene: me.scene, rootObject: me.rootObject, objects: me.objects, view: me });
+        var args = { camera: me.camera, scene: me.scene, rootObject: me.rootObject, objects: me.objects, view: me };
+        args = $.extend({}, args, p_args);
+        ani = fo.ani.Animation.createInstance(p_animationName, args);
         if (ani != null)
         {
             if ($speed == "fast")
@@ -197,7 +195,7 @@ fo.view.TaxonSeqView3D = function()
     		me.groups = null;
 		}
     	
-    	me.startAnimation("Grouping");
+    	me.startAnimation("Grouping", null, {  });
 
     };
     
@@ -274,11 +272,10 @@ fo.view.TaxonSeqView3D = function()
         
         fo.app.searchBoxView.delegate = me;
         me.$scene.css("overflow", "auto").on("mousewheel", _onmousewheel);
-        me.$scene.on("click", ".taxon", _taxon_onclick);
+      //  me.$scene.on("click", ".taxon", _taxon_onclick);
         me.$scene.on("scroll", _onmousescroll);
         
         me.$element.on("mouseenter", _onmouseenter);
-       // me.initCanvas();
     };
     
     me.search = function(p_keyword, p_control)
@@ -410,6 +407,48 @@ fo.view.TaxonSeqView3D = function()
     function _onmouseenter(e)
     {
     	me.parentView.chronLineView.$element.find(".moveLine").css("left", -3);
+    }
+    
+    function _scene_onclick(e)
+    {
+    	var groups = me.$element.find("#groupUnderlay")[0];
+    	var className = null;
+    	if(e.clientY > me.fixedTop && e.clientY < me.fixedTop + me.labelHeight)
+    	{
+    		className = me.$element.find(".labelFixed").text();
+    	}
+
+	
+    	for(var i = 0; i < groups.children.length; i++)
+    	{
+    		var top = groups.children[i].offsetTop;
+
+    		if(me.$scene[0].scrollTop + e.clientY < top + me.labelHeight && me.$scene[0].scrollTop + e.clientY  > top)
+    		{
+    			
+        		className = groups.children[i].innerText;       		       		
+        		break;
+    		}
+    		
+    	}
+    	
+    	if(className != null)
+    	{
+    		var cls = className.split("-");
+    		console.log(cls[0]);
+    		if(cls[0] == "Unkown")
+        	{
+        		
+        	}
+        	else
+        	{
+    	    	me.trigger("groupclicked", {
+    	    		className: cls[0]
+    	    	});
+        	}
+    	}
+    	
+    	
     }
 
     return me.endOfClass(arguments);

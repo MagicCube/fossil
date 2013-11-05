@@ -1,8 +1,9 @@
 .SearchBoxView 
 {
-    height: 75px;
-    position: relative;
     z-index: 999999999;
+    top: 205px;
+    height: 30px;
+    color: rgba(128,130,133,1);
 }
 
 .SearchBoxView #head
@@ -12,8 +13,12 @@
     left: 0;
     top: 0;
     bottom: 0;
-    background: url(images/search-box-head.png) no-repeat;
-    overflow: hidden;
+    background: rgba(90, 30, 10, 1);
+    font-size: 18px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    text-align: center;
+    line-height: 29px;
 }
 
 .SearchBoxView #body
@@ -23,7 +28,7 @@
     right: 35px;
     top: 0;
     bottom: 0;
-    background: url(images/search-box-body.png) repeat-x;
+    background: rgba(255,255,255, 0.1);
 }
 
 .SearchBoxView #tail
@@ -33,18 +38,19 @@
     right: 0;
     top: 0;
     bottom: 0;
-    background: url(images/search-box-tail.png) no-repeat;
 }
 
 .SearchBoxView input
 {
     position: absolute;
-    top: 16px;
-    bottom: 19px;
-    left: 88px;
+	height: 30px;
+    left: 95px;
     right: 20px;
     border: none;
     color: white;
-    background: none;
-    font-size: 26px;
+    font-size: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    width: 350px;
 }

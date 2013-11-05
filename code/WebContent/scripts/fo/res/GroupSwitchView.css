@@ -5,6 +5,7 @@
 	height: 20px;
 	line-height: 20px;
 	white-space: nowrap;
+	z-index: 3;
 }
 
 .GroupSwitchView #groupBy

@@ -51,8 +51,8 @@ fo.view.ChronLineView = function()
         me.initMoveLine();
 
         me.$element.find(".linechart").mousemove(_onmousemove);
-
         me.$element.find(".moveLine").click(_year_onclick);
+        
     };
     
     me.setViewWidth = function(p_width)
