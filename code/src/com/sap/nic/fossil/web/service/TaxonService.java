@@ -4,11 +4,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONArray;
@@ -25,7 +29,7 @@ public class TaxonService
 	
 	@GET
 	@Path("diversity/distribution")
-	public JSONObject getDistByClassYear(
+	public Response getDistByClassYear(
 			@QueryParam("className") String p_className,
 			@QueryParam("yearSelected") Double p_year
 			) throws JSONException, SQLException
@@ -59,7 +63,12 @@ public class TaxonService
 			}
 			result.put("sections", sections);
 		}
-		return result;
+		
+		ResponseBuilder builder = Response.ok(result);
+		Calendar now = Calendar.getInstance();
+		now.add(Calendar.YEAR, 1);
+		builder.expires(now.getTime());
+		return builder.build();
 	}
 
 	
