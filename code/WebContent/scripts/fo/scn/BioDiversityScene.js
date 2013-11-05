@@ -116,7 +116,7 @@ fo.scn.BioDiversityScene = function()
         base.activate(args, isPoppedBack);
 
         // Test Args when clicking Chronline
-         args = {"className": null , "yearSelected": 297.413};
+//         args = {"className": null , "yearSelected": 297.413};
         // Test Args when clicking groups
 //        args =
 //        {
