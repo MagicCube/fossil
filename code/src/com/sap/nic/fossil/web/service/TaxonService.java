@@ -19,7 +19,7 @@ import org.codehaus.jettison.json.JSONArray;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
-import com.sap.nic.fossil.db.DbConnectionPool;
+import com.sap.nic.fossil.db.DbConnectionPoolFactory;
 
 @Path("taxon")
 public class TaxonService
@@ -32,7 +32,7 @@ public class TaxonService
 	public Response getDistByClassYear(
 			@QueryParam("className") String p_className,
 			@QueryParam("yearSelected") Double p_year
-			) throws JSONException, SQLException
+			) throws Exception
 	{
 		JSONObject result = new JSONObject();
 		
@@ -68,6 +68,9 @@ public class TaxonService
 		Calendar now = Calendar.getInstance();
 		now.add(Calendar.YEAR, 1);
 		builder.expires(now.getTime());
+		
+		DbConnectionPoolFactory.getInstance().putBackConnection(statement.getConnection());
+		
 		return builder.build();
 	}
 
@@ -78,7 +81,7 @@ public class TaxonService
 	@Path("diversity/curve")
 	public Response getDiversityCurve(
 			@QueryParam("class") String p_className
-			) throws JSONException, SQLException
+			) throws Exception
 	{
 		ResultSet resultSet = null;
 		resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.0001);
@@ -97,11 +100,13 @@ public class TaxonService
 		Calendar now = Calendar.getInstance();
 		now.add(Calendar.YEAR, 1);
 		builder.expires(now.getTime());
+		
+		DbConnectionPoolFactory.getInstance().putBackConnection(resultSet.getStatement().getConnection());
 		return builder.build();
 	}
 	
 	@GET
-	public JSONObject getTaxa() throws JSONException, SQLException
+	public JSONObject getTaxa() throws Exception
 	{
 		ResultSet resultSet = executeSql("call FOSSIL195.FS_PROC_SQL_TEST_MA()");
 		
@@ -179,11 +184,13 @@ public class TaxonService
 				result.put("last", disappear);
 			}
 		}
+		
+		DbConnectionPoolFactory.getInstance().putBackConnection(resultSet.getStatement().getConnection());
 		return result;
 	}
 
 	//@GET
-	public JSONArray getTaxons() throws JSONException, SQLException
+	public JSONArray getTaxons() throws Exception
 	{
 		ResultSet resultSet = executeSql("call fossil01.FS_PROC_SQL_GET_SPECIES_LIVE_TIME()");
 		
@@ -259,6 +266,8 @@ public class TaxonService
 			
 			taxons.put(taxon);
 		}
+		
+		DbConnectionPoolFactory.getInstance().putBackConnection(resultSet.getStatement().getConnection());
 		return taxons;
 	}
 
@@ -274,7 +283,7 @@ public class TaxonService
 	@Path("diversity")
 	public JSONArray getTaxonDiversity(
 			@QueryParam("from") int p_from,
-			@QueryParam("to") int p_to) throws JSONException, SQLException
+			@QueryParam("to") int p_to) throws Exception
 	{
 		ResultSet resultSet = executeSql("CALL FOSSIL01.FS_PROC_SQL_GET_SECTION_COUNT(?, ?)", p_from, p_to);
 		
@@ -287,6 +296,8 @@ public class TaxonService
 			time.put("taxonCount", resultSet.getInt("TAXACOUNT"));
 			result.put(time);
 		}
+		
+		DbConnectionPoolFactory.getInstance().putBackConnection(resultSet.getStatement().getConnection());
 		return result;
 	}
 
@@ -304,7 +315,7 @@ public class TaxonService
 	
 	
 	
-	public PreparedStatement createSqlStatement(String p_sql, Object... p_parameters) throws SQLException
+	public PreparedStatement createSqlStatement(String p_sql, Object... p_parameters) throws Exception
 	{
 		String convertedSQL = p_sql;
 		for (int i = 0; i < p_parameters.length; i++)
@@ -321,10 +332,7 @@ public class TaxonService
 		_logger.info("SQL: " + convertedSQL);
 
 		Connection connection = null;
-		while (connection == null)
-		{
-			connection = DbConnectionPool.getDefaultConnectionPool().getConnection();
-		}
+		connection = DbConnectionPoolFactory.getInstance().getConnection();
 		
 		PreparedStatement statement = connection.prepareStatement(p_sql);
 		for (int i = 0; i < p_parameters.length; i++)
@@ -338,7 +346,7 @@ public class TaxonService
 	
 	
 	
-	public ResultSet executeSql(String p_sql, Object... p_parameters) throws SQLException
+	public ResultSet executeSql(String p_sql, Object... p_parameters) throws Exception
 	{
 		PreparedStatement statement = createSqlStatement(p_sql, p_parameters);
 		try
@@ -350,11 +358,11 @@ public class TaxonService
 		}
 		finally
 		{
-			DbConnectionPool.getDefaultConnectionPool().returnConnection(statement.getConnection());
+			
 		}
 	}
 
-	public static void main(String[] args) throws JSONException, SQLException
+	public static void main(String[] args) throws Exception
 	{
 		//System.out.println(new TaxonService().getTaxons().toString());
 //		System.out.println(new TaxonService().getDiversityCurve("").toString());

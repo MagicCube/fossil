@@ -162,10 +162,28 @@ fo.scn.BioDiversityScene = function()
     function _lineChartView_onyearchanged(year)
     {
         me.args.yearSelected = year;
-        me.mapView.loadDistributionMapData(me.args);
+        /*me.mapView.loadDistributionMapData(me.args);
         me.pieChartView.polygonArea = me.mapView.getPolygonArea();
         me.pieChartView.loadPieChartData(me.args);
-        console.log(me.args);
+        console.log(me.args);*/
+
+        me.args.yearSelected = year;
+        console.log("+ " + year);
+        $.ajax({
+            url: $mappath("~/api/taxon/diversity/distribution"),
+            data: {
+                className: me.args.className,
+                yearSelected: me.args.yearSelected
+            },
+            context: { year: year }
+        }).success(function(p_result)
+        {
+            console.log("- " + year);
+            p_result.year = parseFloat(this.year);
+            me.mapView.setDistributionMapData(p_result);
+        }).fail(function(A, B, C){
+            console.log("ERROR", A, B, C);
+        });
     }
 
     // //GroupSwitchView To be moved to Chronline Scene
