@@ -162,9 +162,9 @@ fo.scn.BioDiversityScene = function()
     function _lineChartView_onyearchanged(year)
     {
         me.args.yearSelected = year;
-        //me.mapView.loadDistributionMapData(me.args);
-        //me.pieChartView.polygonArea = me.mapView.getPolygonArea();
-        //me.pieChartView.loadPieChartData(me.args);
+        me.mapView.loadDistributionMapData(me.args);
+        me.pieChartView.polygonArea = me.mapView.getPolygonArea();
+        me.pieChartView.loadPieChartData(me.args);
         console.log(me.args);
     }
 
