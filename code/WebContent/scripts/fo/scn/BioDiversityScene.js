@@ -5,20 +5,22 @@ $import("fo.view.LineChartView");
 $import("fo.view.PieChartView");
 $import("fo.util.GroupUtil");
 
-
-fo.scn.BioDiversityScene = function(){
+fo.scn.BioDiversityScene = function()
+{
     var me = $extend(mx.scn.Scene);
     me.autoFillParent = true;
     me.elementClass = "BioDiversityScene";
-    var base = {};
-    
+    var base =
+    {};
+
     me.linechartdata = null;
     me.groupSwitchView = null;
     me.lineChartView = null;
     me.mapView = null;
     me.pieChartView = null;
-    
-    me.args = {};
+
+    me.args =
+    {};
 
     base.init = me.init;
     me.init = function(p_options)
@@ -33,142 +35,152 @@ fo.scn.BioDiversityScene = function(){
         {
             height = fo.app.frame.height * 0.95;
         }
-        me.frame = { width: width, height: height };
+        me.frame =
+        {
+            width : width,
+            height : height
+        };
         base.init(p_options);
-                  
+
         me.initLineChartView();
         me.initDistributionMapView();
         me.initPieChartView();
     };
-	
+
     me.initLineChartView = function()
     {
-    	var $line = $("<div id=linechart></div>");
-    	$(document.body).append($line);
-    	
-    	
-    	me.lineChartView = new fo.view.LineChartView({
-       		$element:$line,
-            frame: {
-                right: 50,
-                bottom: 50,
-                width: 700,
-                height: 320
+        var $line = $("<div id=linechart></div>");
+        $(document.body).append($line);
+
+        me.lineChartView = new fo.view.LineChartView(
+        {
+            $element : $line,
+            frame :
+            {
+                right : 50,
+                bottom : 50,
+                width : 700,
+                height : 320
             },
-            onyearchanged: _lineChartView_onyearchanged
-    	});
-    	me.addSubview(me.lineChartView);
+            onyearchanged : _lineChartView_onyearchanged
+        });
+        me.addSubview(me.lineChartView);
     };
-	
+
     me.initPieChartView = function()
     {
-    	var $pie = $("<div id=padinfoview></div>");
-    	$(document.body).append($pie);
-    	
-    	me.pieChartView = new fo.view.PieChartView({
-       		$element:$pie,
-       	    frame: {
-                    left: 20,
-                    top: 20,
-                    height: 190,
-                    width: 700
-                }
-    	});
-    	me.addSubview(me.pieChartView);
-    };
-        
+        var $pie = $("<div id=padinfoview></div>");
+        $(document.body).append($pie);
 
-    //initialize Distribution View
-	me.initDistributionMapView = function()
-	{
-        //Create map container otherwise leaflet frame not shown correctly
+        me.pieChartView = new fo.view.PieChartView(
+        {
+            $element : $pie,
+            frame :
+            {
+                left : 20,
+                top : 20,
+                height : 190,
+                width : 700
+            }
+        });
+        me.addSubview(me.pieChartView);
+    };
+
+    // initialize Distribution View
+    me.initDistributionMapView = function()
+    {
+        // Create map container otherwise leaflet frame not shown correctly
         var $mapContainer = $("<div id=distmap></div>");
         $(document.body).append($mapContainer);
 
-        //Define map object: mapView
-        me.mapView = new fo.view.DistributionMapView({
-        	id:"distmapview",
-        	$element:$mapContainer,
-        	defaultZoom: 1,
-            frame: {
-                left: 0,
-                top: 0,
-                height: me.frame.height,
-                width: me.frame.width
+        // Define map object: mapView
+        me.mapView = new fo.view.DistributionMapView(
+        {
+            id : "distmapview",
+            $element : $mapContainer,
+            defaultZoom : 1,
+            frame :
+            {
+                left : 0,
+                top : 0,
+                height : me.frame.height,
+                width : me.frame.width
             }
         });
         me.addSubview(me.mapView);
- 	};  
+    };
 
     base.activate = me.activate;
     me.activate = function(args, isPoppedBack)
     {
         base.activate(args, isPoppedBack);
-        
 
-        //Test Args when clicking Chronline
-//       args = {"className": null ,  "yearSelected": 297.413};
-        //Test Args when clicking groups
-        args = {"className": 'Brachiopod', "yearSelected": null};
+        // Test Args when clicking Chronline
+        // args = {"className": null , "yearSelected": 297.413};
+        // Test Args when clicking groups
+        args =
+        {
+            "className" : 'Brachiopod',
+            "yearSelected" : null
+        };
 
         if (args.yearSelected != null)
         {
-        	args.yearSelected = (args.yearSelected).toFixed(3);
+            args.yearSelected = (args.yearSelected).toFixed(3);
         }
         else
         {
-        	args.yearSelected = fo.diverCurve[0].ma;
+            args.yearSelected = fo.diverCurve[0].ma;
         }
-      
+
         me.args = args;
-        
+
         if (!isPoppedBack)
         {
             console.log("fo.scn.BioDiversityScene is now activated.");
-     
-             
-            me.mapView.loadDistributionMapData(args); 
+
+            me.mapView.loadDistributionMapData(args);
 
             me.pieChartView.polygonArea = me.mapView.getPolygonArea();
-        	console.log(args);
+            console.log(args);
             me.pieChartView.loadPieChartData(args);
-            
+
             setTimeout(function()
             {
                 me.lineChartView.loadLineChartData(args);
             }, 100);
-            
+
         }
         else
         {
-            // TODO the scene is activated when popped back after the user pressed 'Back' button.
+            // TODO the scene is activated when popped back after the user
+            // pressed 'Back' button.
         }
     };
 
-    
-    //Event Function Handler at scene level, update the relevant views.
+    // Event Function Handler at scene level, update the relevant views.
     function _lineChartView_onyearchanged(year)
     {
-    
-   	   me.args.yearSelected = year;
-   	   me.mapView.loadDistributionMapData(me.args);
-       me.pieChartView.polygonArea = me.mapView.getPolygonArea();
-        me.pieChartView.loadPieChartData(me.args);
-    	
+        me.args.yearSelected = year;
+        //me.mapView.loadDistributionMapData(me.args);
+        //me.pieChartView.polygonArea = me.mapView.getPolygonArea();
+        //me.pieChartView.loadPieChartData(me.args);
+        console.log(me.args);
     }
-     
-//  //GroupSwitchView To be moved to Chronline Scene
-//	me.initGroupSwitchView = function()
-//	{
-//		me.groupSwitchView = new fo.view.GroupSwitchView({
-//        	id : "groupswitchview",
-//        	frame: {
-//                right: 50,
-//                top: 100
-//            }
-//        });
-//    	//Register MXEvent for the scene/view and add event handler function to listeners for execution
-//        me.addSubview(me.groupSwitchView);
-//	};
+
+    // //GroupSwitchView To be moved to Chronline Scene
+    // me.initGroupSwitchView = function()
+    // {
+    // me.groupSwitchView = new fo.view.GroupSwitchView({
+    // id : "groupswitchview",
+    // frame: {
+    // right: 50,
+    // top: 100
+    // }
+    // });
+    // //Register MXEvent for the scene/view and add event handler function to
+    // listeners for execution
+    // me.addSubview(me.groupSwitchView);
+    // };
     return me.endOfClass(arguments);
 };
