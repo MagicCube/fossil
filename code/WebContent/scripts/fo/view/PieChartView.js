@@ -74,6 +74,7 @@ fo.view.PieChartView = function()
     {
 
      		me.data = [];
+     		_totalCount = 0;
      		var classes = data["classes"];
      		
     		if (args.className == '' || args.className == null)

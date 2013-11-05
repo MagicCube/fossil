@@ -116,7 +116,7 @@ fo.scn.BioDiversityScene = function()
         base.activate(args, isPoppedBack);
 
         // Test Args when clicking Chronline
-//         args = {"className": null , "yearSelected": 297.413};
+         args = {"className": null , "yearSelected": 297.413};
         // Test Args when clicking groups
 //        args =
 //        {
@@ -134,7 +134,7 @@ fo.scn.BioDiversityScene = function()
         }
 
         me.args = args;
-//        console.log(args);
+        console.log(args);
 
         if (!isPoppedBack)
         {
@@ -178,7 +178,7 @@ fo.scn.BioDiversityScene = function()
     function _lineChartView_onyearchanged(year)
     {
         me.args.yearSelected = year;
-//        console.log("+ " + year);
+        console.log("+ " + year);
         $.ajax({
             url: $mappath("~/api/taxon/diversity/distribution"),
             data: {
@@ -188,7 +188,7 @@ fo.scn.BioDiversityScene = function()
             context: { year: year }
         }).success(function(p_result)
         {
-//            console.log("- " + year);
+            console.log("- " + year);
             p_result.year = parseFloat(this.year);
             me.mapView.setDistributionMapData(p_result);
 
