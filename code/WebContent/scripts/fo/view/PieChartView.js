@@ -73,28 +73,41 @@ fo.view.PieChartView = function()
     me.setPieChartData = function(data, args)
     {
 
-    		_totalCount = 0;
-    		me.data = [];
-    		
-    		var classes = data["classes"];
-    		for (var i = 0; i < classes.length && i <= 5; i++)
+     		me.data = [];
+     		var classes = data["classes"];
+     		
+    		if (args.className == '' || args.className == null)
     		{
-    			if (i < 5)
+	    		for (var i = 0; i < classes.length && i <= 5; i++)
+	    		{
+	    			if (i < 5)
+	    			{
+	    				me.data.add(classes[i]);
+	    				_totalCount += classes[i].count; 
+	    			}
+	    			if (i == 5)
+	    			{
+	    				var othersCount = 0;
+	    				for (var j = 5; j< classes.length; j++)
+	    				{
+	    					othersCount += classes[j].count;
+	    					_totalCount += classes[j].count; 
+	    				}
+	    				me.data.add({className: 'Others', count: othersCount});
+	    			}
+				 };
+    		}
+    		else	//no pie view
+    		{
+    			for (var i=0; i < classes.length; i++)
     			{
-    				me.data.add(classes[i]);
-    				_totalCount += classes[i].count; 
-    			}
-    			if (i == 5)
-    			{
-    				var othersCount = 0;
-    				for (var j = 5; j< classes.length; j++)
+    				if (classes[i].className == args.className)
     				{
-    					othersCount += classes[j].count;
-    					_totalCount += classes[j].count; 
+    					_totalCount = classes[i].count;
     				}
-    				me.data.add({className: 'Others', count: othersCount});
     			}
-			 };
+    			
+    		}
     		
 //    		console.log(me.data);
 			 

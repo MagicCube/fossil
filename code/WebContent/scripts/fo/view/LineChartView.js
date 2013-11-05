@@ -62,12 +62,12 @@ fo.view.LineChartView = function()
     	_playing = false;
     }
     
-    function _reset()
+    me.reset = function()
     {
     	_pause();
        	_position = _yearScale(_minXValue);
     	_selectYear(_minXValue, true);
-    }
+    };
     
     function _play()
     {
@@ -85,7 +85,7 @@ fo.view.LineChartView = function()
             }
          	else 	//if reaching the right limit, reset 
             {
-         		_reset();
+         		me.reset();
          		return;
             	
             }

@@ -95,8 +95,8 @@ fo.view.DistributionMapView = function()
     ;
 
     // Used when operating over the curve
-    me.loadDistributionMapData = function(args)
-    {
+//    me.loadDistributionMapData = function(args)
+//    {
         // First loading
         // if (me.sectionsByYear == null)
         // {
@@ -129,16 +129,16 @@ fo.view.DistributionMapView = function()
         // 15}];
         // }
 
-        if (me.activeLayer == me.bubbleLayer)
-        {
-            _resetRadius();
-            _updateCircles();
-        }
-        else
-        {
-            _updatePolygon();
-        }
-    };
+//        if (me.activeLayer == me.bubbleLayer)
+//        {
+//            _resetRadius();
+//            _updateCircles();
+//        }
+//        else
+//        {
+//            _updatePolygon();
+//        }
+//    };
 
     me.setDistributionMapData = function(p_data)
     {
@@ -152,6 +152,7 @@ fo.view.DistributionMapView = function()
         {
             _updatePolygon();
         }
+        
     };
 
 //    function _loadDistByClassYear(args)
@@ -231,14 +232,17 @@ fo.view.DistributionMapView = function()
             me.map.removeLayer(_sectionPolygon);
 
         _sectionPolygon = _getConvexPolygon();
+        
+        if (_sectionPolygon == null) 
+        	return;
         me.map.addLayer(_sectionPolygon);
-        // console.log(_sectionPolygon);
+        
     }
     ;
 
     function _getConvexPolygon()
     {
-        if (me.selectedSectByYear == null || me.selectedSectByYear.length < 3)
+    	if (me.selectedSectByYear == null || me.selectedSectByYear.length < 3)
         {
             return null;
         }
@@ -288,7 +292,18 @@ fo.view.DistributionMapView = function()
             PointX.add(vertices[i].lat);
             PointY.add(vertices[i].lng);
         }
-        return Math.round(_calArea(PointX, PointY));
+        
+        var result = _calArea(PointX, PointY);
+        console.log(result);
+        
+        if (isNaN(result) ) 
+        {
+        	return 0;
+        }
+        else
+        {
+        	return Math.round(result);
+        }
     };
 
     function _calArea(PointX, PointY)
@@ -459,7 +474,7 @@ fo.view.DistributionMapView = function()
             }
             return mtotalArea;
         }
-        return;
+        return 0;
     }
     ;
 

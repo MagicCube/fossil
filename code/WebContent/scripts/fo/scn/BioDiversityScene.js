@@ -116,11 +116,11 @@ fo.scn.BioDiversityScene = function()
         base.activate(args, isPoppedBack);
 
         // Test Args when clicking Chronline
-        // args = {"className": null , "yearSelected": 297.413};
+         args = {"className": null , "yearSelected": 297.413};
         // Test Args when clicking groups
 //        args =
 //        {
-//            "className" : 'Brachiopod',
+//            "className" : 'Equisetoph',
 //            "yearSelected" : null
 //        };
 
@@ -154,8 +154,9 @@ fo.scn.BioDiversityScene = function()
                 p_result.year = parseFloat(this.year);
                 me.mapView.setDistributionMapData(p_result);
                 
+                
+                me.pieChartView.polygonArea = me.mapView.getPolygonArea(); //must be former
                 me.pieChartView.setPieChartData(p_result, me.args);
-                me.pieChartView.polygonArea = me.mapView.getPolygonArea();
             });
 
             
@@ -177,7 +178,7 @@ fo.scn.BioDiversityScene = function()
     function _lineChartView_onyearchanged(year)
     {
         me.args.yearSelected = year;
-        console.log("+ " + year);
+//        console.log("+ " + year);
         $.ajax({
             url: $mappath("~/api/taxon/diversity/distribution"),
             data: {
@@ -187,32 +188,23 @@ fo.scn.BioDiversityScene = function()
             context: { year: year }
         }).success(function(p_result)
         {
-            console.log("- " + year);
+//            console.log("- " + year);
             p_result.year = parseFloat(this.year);
             me.mapView.setDistributionMapData(p_result);
 
-            
-            me.pieChartView.setPieChartData(p_result, me.args);
             me.pieChartView.polygonArea = me.mapView.getPolygonArea();
+            me.pieChartView.setPieChartData(p_result, me.args);
 
         }).fail(function(A, B, C){
             console.log("ERROR", A, B, C);
         });
     }
-
-    // //GroupSwitchView To be moved to Chronline Scene
-    // me.initGroupSwitchView = function()
-    // {
-    // me.groupSwitchView = new fo.view.GroupSwitchView({
-    // id : "groupswitchview",
-    // frame: {
-    // right: 50,
-    // top: 100
-    // }
-    // });
-    // //Register MXEvent for the scene/view and add event handler function to
-    // listeners for execution
-    // me.addSubview(me.groupSwitchView);
-    // };
+    
+    me.deactivate = function()
+    {
+    	me.lineChartView.reset();
+    };
+    
+    
     return me.endOfClass(arguments);
 };
