@@ -76,7 +76,7 @@ public class TaxonService
 	
 	@GET
 	@Path("diversity/curve")
-	public JSONArray getDiversityCurve(
+	public Response getDiversityCurve(
 			@QueryParam("class") String p_className
 			) throws JSONException, SQLException
 	{
@@ -92,7 +92,12 @@ public class TaxonService
 			cls.put("count", resultSet.getInt(2));
 			result.put(cls);
 		}
-		return result;
+		
+		ResponseBuilder builder = Response.ok(result);
+		Calendar now = Calendar.getInstance();
+		now.add(Calendar.YEAR, 1);
+		builder.expires(now.getTime());
+		return builder.build();
 	}
 	
 	@GET

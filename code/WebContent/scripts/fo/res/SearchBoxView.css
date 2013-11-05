@@ -1,7 +1,7 @@
 .SearchBoxView 
 {
     z-index: 999999999;
-    top: 205px;
+    top: 208px;
     height: 30px;
     color: rgba(128,130,133,1);
 }
@@ -13,7 +13,7 @@
     left: 0;
     top: 0;
     bottom: 0;
-    background: rgba(90, 30, 10, 1);
+    background: rgba(90, 30, 10, 0.8);
     font-size: 18px;
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;

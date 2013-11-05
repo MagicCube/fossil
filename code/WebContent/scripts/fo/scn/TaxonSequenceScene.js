@@ -76,7 +76,7 @@ fo.scn.TaxonSequenceScene = function()
     		id: "groupSwitchView",
     		ongroupchanged: _ongroupchanged,
     		frame:{
-    			top: 205,
+    			top: 208,
     			right: 40
     		}
     	});
