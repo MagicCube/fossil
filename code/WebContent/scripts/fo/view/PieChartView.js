@@ -146,6 +146,8 @@ fo.view.PieChartView = function()
 
     	if (!_classView)
     	{
+    		_pieChart.style({'display': 'block'});
+
     		me.updatePie();
     		
     		me.updatePieInfo();
@@ -153,7 +155,7 @@ fo.view.PieChartView = function()
     	}
     	else
     	{
-        	if (_pieChart != null) _pieChart.remove();
+        	if (_pieChart != null) _pieChart.style({'display': 'none'});;
   	}
     };
 
@@ -221,7 +223,7 @@ fo.view.PieChartView = function()
     
     me.reset = function()
     {
-    	if (!_classView) _infopadview.select("#piechart").remove();
+    	if (!_classView) _infopadview.select("#piechart").style({'display': 'none'});
     };
     
     
