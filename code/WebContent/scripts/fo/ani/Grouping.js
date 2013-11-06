@@ -118,12 +118,12 @@ fo.ani.Grouping = function()
 	    	var $scene = me.view.$element.find(".scene");
 	    	$scene.scroll(function() {
 	    		me.view.$element.find("#groupUnderlay").scrollTop($scene[0].scrollTop);	   
-	    		
 	    		var divName = null;	
 	    		for(var i = 0; i < classesHeight.length; i++)
 	    		{
-	    		  if($scene[0].scrollTop < classesHeight[i] - me.spacing)
+	    		  if($scene[0].scrollTop < classesHeight[i] - me.spacing - me.labelMove)
 	    		  {
+
 	    			  divName = "groupLabel" + i;
 	    			  me.view.$element.find(".groupLabel").removeClass("labelFixed");
 	    			  me.view.$element.find("#" + divName).addClass("labelFixed");
