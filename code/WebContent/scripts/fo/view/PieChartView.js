@@ -201,7 +201,7 @@ fo.view.PieChartView = function()
     
     me.reset = function()
     {
-    	_pieInfo.remove();
+    	if (_pieInfo != null) _pieInfo.remove();
     };
     
     
