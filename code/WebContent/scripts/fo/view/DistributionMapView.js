@@ -256,8 +256,8 @@ fo.view.DistributionMapView = function()
             {
                 fillColor : '#d8e214',
                 color : '#d8e214',
-                fillOpacity : 0.5,
-                opacity : 0.5,
+                fillOpacity : 0.37,
+                opacity : 0.37,
                 weight : 0
 
             });

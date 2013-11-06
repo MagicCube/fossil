@@ -80,7 +80,7 @@ fo.view.LineChartView = function()
                 _yearSelected = _yearScale.invert(_position);
                 _selectYear(_yearSelected, true);	//place selector
                 me.trigger("yearchanged", _yearSelected.toFixed(3));					//trigger event
-            	_position = _position + 10;
+            	_position = _position + 5;
                 return;
             }
          	else 	//if reaching the right limit, reset 
