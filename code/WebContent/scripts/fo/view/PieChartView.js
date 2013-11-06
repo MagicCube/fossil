@@ -109,12 +109,21 @@ fo.view.PieChartView = function()
     function _updateInfoPad(args)
     {
     	
-    	console.log(args);
     	var classView  = (args.className == null||args.className == "")?false:true;
     	_infopadview.select("#title").text(!classView?"Biological Diversity":args.className);
     	_infopadview.select("#year").text(Math.round(args.yearSelected));
     	_infopadview.select("#ma").text("million years ago");
     	_infopadview.select("#taxacount").text("Taxa Count: " + _totalCount);
+    	
+    	//Calculate area
+    	if (me.polygonArea == 0 || me.polygonArea == "")
+    	{
+    		me.polygonArea = "0";
+    	}
+    	else
+    	{
+    		me.polygonArea = _addCommas(me.polygonArea.toString());
+    	}
     	_infopadview.select("#area").text("Area: " + me.polygonArea + "km²");
 
     	if (!classView)
@@ -205,7 +214,18 @@ fo.view.PieChartView = function()
     };
     
     
-    
+    function _addCommas(nStr)
+    {
+    	nStr += '';
+    	x = nStr.split('.');
+    	x1 = x[0];
+    	x2 = x.length > 1 ? '.' + x[1] : '';
+    	var rgx = /(\d+)(\d{3})/;
+    	while (rgx.test(x1)) {
+    		x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    	}
+    	return x1 + x2;
+    }
     function _arcTween(a) {
     	  var i = d3.interpolate(this._current, a);
     	  this._current = i(0);
