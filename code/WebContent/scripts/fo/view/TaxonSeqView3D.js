@@ -297,10 +297,12 @@ fo.view.TaxonSeqView3D = function()
             		me.$scene.scrollTop(parseInt(top[0]) - me.topMove);
             		firstfound = true;
             	}
+            	$div.addClass("foundStatus");
             	$div.removeClass("searchStatus");
             }
             else
             {
+            	$div.removeClass("foundStatus");
                 $div.addClass("searchStatus");
             }
         }

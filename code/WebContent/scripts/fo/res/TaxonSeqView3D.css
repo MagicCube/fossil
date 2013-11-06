@@ -108,7 +108,17 @@
 
 .TaxonSeqView  .searchStatus
 {
-	opacity: 0.3;
+	opacity: 0.2;
+}
+
+.TaxonSeqView .foundStatus > div > #name
+{
+	display: none;
+}
+
+.TaxonSeqView .foundStatus > div > #fullName
+{
+	display: inline-block !important;
 }
 
 .TaxonSeqView #groupContainer

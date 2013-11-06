@@ -274,7 +274,7 @@ fo.view.ChronLineView = function()
     	
     	var max = d3.max(me.data, function(d){ return d.count; });
 	    var y = d3.scale.linear()
-	    			.domain([0, me.yHeight ])
+	    			.domain([10, me.yHeight ])
 	        		.range([max, 0]);
 	      
 	

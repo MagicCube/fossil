@@ -29,6 +29,7 @@ fo.ani.Grouping = function()
         TWEEN.removeAll();
         
         me.view.$element.find(".searchStatus").removeClass("searchStatus");
+        me.view.$element.find(".foundStatus").removeClass("foundStatus");
         //console.log(me.view.$element.find(".searchStatus"));
         me.view.$element.find("#groupUnderlay").remove();
         
