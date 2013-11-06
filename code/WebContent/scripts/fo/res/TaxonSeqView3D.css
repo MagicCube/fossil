@@ -138,3 +138,10 @@
 	z-index: 1;
 	padding-top: 240px;
 }
+
+.TaxonSeqView #lastGroupDiv
+{
+	position: absolute;
+	left: 0;
+	right: 0;
+}

@@ -30,7 +30,6 @@ fo.ani.Grouping = function()
         
         me.view.$element.find(".searchStatus").removeClass("searchStatus");
         me.view.$element.find(".foundStatus").removeClass("foundStatus");
-        //console.log(me.view.$element.find(".searchStatus"));
         me.view.$element.find("#groupUnderlay").remove();
         
         var $groupUnderlay =  $("<div id=groupUnderlay ></div>");
@@ -86,6 +85,8 @@ fo.ani.Grouping = function()
 	    		$groupLabel.fadeIn(3000);
 	    			    		
 	    		$groupUnderlay.append($groupLabel);
+	    		
+
 
 	    		var taxaAmount = group.taxa.length;
 	    		for(var j = 0; j < taxaAmount; j++)
@@ -112,6 +113,14 @@ fo.ani.Grouping = function()
 	    	   
 	    		height = me.spacing + height;
 	    		classesHeight.push(height);
+	    		
+	    		if(i == me.groups.length -1)
+	    		{
+	    			var $lastGroupDiv = ("<div id= lastGroupDiv></div>");
+	    			$groupUnderlay.append($lastGroupDiv);
+	    			$("#lastGroupDiv").css({"top": height, "height": 19*j + 30});
+	    			
+	    		}
 	    			    		
 	    	}	    	
 
@@ -123,7 +132,6 @@ fo.ani.Grouping = function()
 	    		{
 	    		  if($scene[0].scrollTop < classesHeight[i] - me.spacing - me.labelMove)
 	    		  {
-
 	    			  divName = "groupLabel" + i;
 	    			  me.view.$element.find(".groupLabel").removeClass("labelFixed");
 	    			  me.view.$element.find("#" + divName).addClass("labelFixed");
@@ -139,7 +147,7 @@ fo.ani.Grouping = function()
         else
     	{
         	fo.app.searchBoxView.$container.show();
-        	me.view.$element.find(".groupLabel").remove();
+        	me.view.$element.find("#groupUnderlay").remove();
         	me.view.$element.find(".scene").scrollTop(0);
             for (var i = 0; i < fo.taxa.length; i++)
             {
