@@ -16,9 +16,8 @@ fo.view.LineChartView = function()
     var _yearScale = null;
     var _numScale = null;
     var _yearSelected = null;
-    var _minXValue = null;
-    var _maxXValue = null;
-    var _yearInterval = null; 
+    var _leftXValue = null;
+    var _rightXValue = null;
     var _playing = false;
  
     me.onyearchanged = null;
@@ -64,10 +63,10 @@ fo.view.LineChartView = function()
     
     me.reset = function()
     {
-    	_pause();
-       	_position = _yearScale(_minXValue);
-    	_selectYear(_minXValue, true);
-    	me.trigger("yearchanged", _minXValue);
+        _pause();
+       	_position = _yearScale(_leftXValue);
+    	_selectYear(_leftXValue, true);
+    	me.trigger("yearchanged", _leftXValue);
     };
     
     function _play()
@@ -75,7 +74,7 @@ fo.view.LineChartView = function()
         if (_playing)
         {
 
-        	if (_position < _yearScale(_maxXValue))
+        	if (_position < _yearScale(_rightXValue))
             {
                 setTimeout(_play, 1000);
                 _yearSelected = _yearScale.invert(_position);
@@ -131,10 +130,10 @@ fo.view.LineChartView = function()
 	
     	//Build Scale according to received dataset
 	    _yearScale = d3.scale.linear()
-	    	.domain([_minXValue = d3.max(_dataset, function(d){return d.ma;}), _maxXValue = d3.min(_dataset, function(d){return d.ma;})])
+	    	.domain([_leftXValue = d3.max(_dataset, function(d){return d.ma;}), _rightXValue = d3.min(_dataset, function(d){return d.ma;})])
 	        .range([margin.left, width - margin.right]);
 		//update the year span of 10pixel 
-	    _yearInterval = _minXValue-_yearScale.invert(margin.left+10);
+	    _yearInterval = _leftXValue-_yearScale.invert(margin.left+10);
 
 	    _numScale = d3.scale.linear()
 	    	.domain([0, d3.max(_dataset, function(d){return d.count;})*1.1])
@@ -283,19 +282,16 @@ fo.view.LineChartView = function()
 	    
 	    
     	//mouse movement out of range doesn't trigger new selection
-	    if (cx < _yearScale(_minXValue))
+	    if (cx < _yearScale(_leftXValue))
 	    {
-	    	cx = _yearScale(_minXValue);
+	    	cx = _yearScale(_leftXValue);
 	    }
-	    else if (cx >_yearScale(_maxXValue))
+	    else if (cx >_yearScale(_rightXValue))
 	    {
-	    	cx = _yearScale(_maxXValue);
+	    	cx = _yearScale(_rightXValue);
 	    }
 	    _yearSelected = _yearScale.invert(cx);
 	    
-//    	console.log(cx);
-//    	console.log(year);
-
 	    
 	    _selectYear(_yearSelected, true);
 	    _pause(); 

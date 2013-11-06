@@ -28,13 +28,24 @@ fo.view.DistributionMapView = function()
     {
         base.init(p_options);
 
+        // draw cycles with radius 0 by default
         me.initCircleGroup();
 
-        // draw cycles with radius 0 by default
+        //bubbleLayer as default
         me.activeLayer = me.bubbleLayer;
         me.initLayerSwitcher();
     };
 
+    me.reset = function()
+    {
+    	_resetRadius();
+        me.activeLayer = me.bubbleLayer;
+        
+        if (_sectionPolygon != null)
+            me.map.removeLayer(_sectionPolygon);
+
+    };
+    
     me.initCircleGroup = function()
     {
         _sectionCircleGroup = L.layerGroup().addTo(me.map);
@@ -102,9 +113,7 @@ fo.view.DistributionMapView = function()
         // {
         // me.sectionsByYear = [];
         //    		
-        // me.activeLayer = me.bubbleLayer;
-        // me.$element.find("#" + me.activeLayer).addClass("selected");
-
+ 
         // me.selectedSectByYear = [{sectionID: "s142", taxonNumber: 20},
         // {sectionID: "s143", taxonNumber: 5}, {sectionID: "s145", taxonNumber:
         // 5}, {sectionID: "s149", taxonNumber: 5}, {sectionID: "s150",
@@ -142,10 +151,10 @@ fo.view.DistributionMapView = function()
 
     me.setDistributionMapData = function(p_data)
     {
-        me.selectedSectByYear = p_data.sections;
+    	me.selectedSectByYear = p_data.sections;
         if (me.activeLayer == me.bubbleLayer)
         {
-            _resetRadius();
+           _resetRadius();
             _updateCircles();
         }
         else
@@ -154,26 +163,6 @@ fo.view.DistributionMapView = function()
         }
         
     };
-
-//    function _loadDistByClassYear(args)
-//    {
-//        if (args.className == null)
-//            args.className = "";
-//        $.ajax(
-//        {
-//            url : "/fossil/api/taxon/diversity/distribution",
-//            data :
-//            {
-//                className : args.className,
-//                yearSelected : args.yearSelected
-//            },
-//            async : false
-//        }).success(function(dist)
-//        {
-//            me.selectedSectByYear = dist["sections"];
-//        });
-//    }
-//    ;
 
     // update cycles' radius whose number per year is larger than zero
     function _updateCircles()
@@ -221,7 +210,11 @@ fo.view.DistributionMapView = function()
         {
             sectionID = fo.sections[i].id;
             _sectionCircleGroup[sectionID].setRadius(0);
-        }
+            _sectionCircleGroup[sectionID].setStyle(
+                    {
+                        "fillOpacity" : 0
+                    });
+    }
     }
     ;
 
@@ -251,7 +244,6 @@ fo.view.DistributionMapView = function()
 
             var sectionID = null;
             var latlngs = [];
-
             // update Radius of relevant selectedSectByYear
             for ( var i = 0; i < me.selectedSectByYear.length; i++)
             {

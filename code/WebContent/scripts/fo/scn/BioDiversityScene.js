@@ -116,7 +116,7 @@ fo.scn.BioDiversityScene = function()
         base.activate(args, isPoppedBack);
 
         // Test Args when clicking Chronline
-         args = {"className": null , "yearSelected": 297.413};
+//         args = {"className": null , "yearSelected": 297.413};
         // Test Args when clicking groups
 //        args =
 //        {
@@ -159,8 +159,6 @@ fo.scn.BioDiversityScene = function()
                 me.pieChartView.setPieChartData(p_result, me.args);
             });
 
-            
-            
             setTimeout(function()
             {
                 me.lineChartView.loadLineChartData(args);
@@ -172,6 +170,15 @@ fo.scn.BioDiversityScene = function()
             // TODO the scene is activated when popped back after the user
             // pressed 'Back' button.
         }
+    };
+
+    
+    
+    me.deactivate = function()
+    {
+    	me.mapView.reset();
+    	me.pieChartView.reset();
+    	me.lineChartView.reset();
     };
 
     // Event Function Handler at scene level, update the relevant views.
@@ -199,11 +206,6 @@ fo.scn.BioDiversityScene = function()
             console.log("ERROR", A, B, C);
         });
     }
-    
-    me.deactivate = function()
-    {
-    	me.lineChartView.reset();
-    };
     
     
     return me.endOfClass(arguments);
