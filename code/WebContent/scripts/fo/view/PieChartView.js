@@ -126,7 +126,7 @@ fo.view.PieChartView = function()
     	}
     	else
     	{
-        	_pieInfo.remove();
+        	if (_pieInfo != null) _pieInfo.remove();
   	}
     };
 
