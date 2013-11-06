@@ -97,32 +97,20 @@ fo.view.LineChartView = function()
         }
     }
     
-    
-   	
-    function _loadCurveByClass(args)
+    //get curvedata
+    me.setCurveData = function (curve)
     {
-    	if (args.className == null) args.className = "";
-    	$.ajax({
-    		url: "/fossil/api/taxon/diversity/curve",
-    		data: {class: args.className},
-    		async: false
-    	}).success(function(curve)
-    	{
-    		_dataset = curve;
-//    		console.log(me.selectedSectByYear);
-    	});
+    	_dataset = curve;
     };
-
     
-	//load received args to update the lineChart
-	me.loadLineChartData = function (args)
+	//create the lineChart
+	me.createLineChart = function (args)
     {
 		// TODO process args to get dataset via backend interface
 
 		//TEST DATA
 //		_dataset = [{ma: 298, count: 5}, {ma: 295, count: 10}, {ma: 290, count: 12}, {ma: 279, count: 7}, {ma: 272, count: 5}, {ma: 268, count: 20}, {ma: 265, count: 14}, {ma: 259, count: 15}, {ma: 254, count: 20}, {ma: 252, count: 4}].reverse();
-		_loadCurveByClass(args);
-		
+//		_loadCurveByClass(args);
 		
 		var margin = {top: 20, right: 30, bottom: 20, left: 35},
     	width = me.frame.width;
@@ -133,8 +121,8 @@ fo.view.LineChartView = function()
 	    	.domain([_leftXValue = d3.max(_dataset, function(d){return d.ma;}), _rightXValue = d3.min(_dataset, function(d){return d.ma;})])
 	        .range([margin.left, width - margin.right]);
 		//update the year span of 10pixel 
-	    _yearInterval = _leftXValue-_yearScale.invert(margin.left+10);
-
+//	    _yearInterval = _leftXValue-_yearScale.invert(margin.left+10);
+	    
 	    _numScale = d3.scale.linear()
 	    	.domain([0, d3.max(_dataset, function(d){return d.count;})*1.1])
 	        .range([height - margin.bottom, margin.top]);
@@ -194,7 +182,7 @@ fo.view.LineChartView = function()
     me.initSelectorHand = function(args)
     {
 		
-		_yearSelected = args.yearSelected;
+    	_yearSelected = args.yearSelected;
     	
     	var circleRadious = 30;
     	var timelineHeight = me.frame.height - 20;

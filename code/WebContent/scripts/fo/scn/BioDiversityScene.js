@@ -123,23 +123,13 @@ fo.scn.BioDiversityScene = function()
 //            "className" : 'Equisetoph',
 //            "yearSelected" : null
 //        };
-
-        if (args.yearSelected != null)
-        {
-            args.yearSelected = (args.yearSelected).toFixed(3);
-        }
-        else
-        {
-            args.yearSelected = fo.diverCurve[0].ma;
-        }
-
-        me.args = args;
-        console.log(args);
+          
+        _UpdateArgsAndLineChartData(args); //set curve and update selectedYear
 
         if (!isPoppedBack)
         {
             console.log("fo.scn.BioDiversityScene is now activated.");
-            console.log(args);
+            console.log(me.args);
             
             $.ajax({
                 url: $mappath("~/api/taxon/diversity/distribution"),
@@ -147,7 +137,7 @@ fo.scn.BioDiversityScene = function()
                     className: me.args.className ? me.args.className : "",
                     yearSelected: me.args.yearSelected
                 },
-                context: { year: year }
+                context: { year: me.args.yearSelected }
             }).success(function(p_result)
             {
                 console.log("- " + year);
@@ -159,10 +149,6 @@ fo.scn.BioDiversityScene = function()
                 me.pieChartView.setPieChartData(p_result, me.args);
             });
 
-            setTimeout(function()
-            {
-                me.lineChartView.loadLineChartData(args);
-            }, 100);
 
         }
         else
@@ -172,7 +158,42 @@ fo.scn.BioDiversityScene = function()
         }
     };
 
-    
+    function _UpdateArgsAndLineChartData(args)
+    {
+    	console.log(args);
+    	if (args.className == null)
+    	{
+    		args.className = "";
+    	}
+    	else
+    	{
+    		args.className = args.className.trim();
+    	}
+    	$.ajax({
+    		url: "/fossil/api/taxon/diversity/curve",
+    		data: {class: args.className},
+    		async: false
+    	}).success(function(p_result)
+    	{
+		        if (args.yearSelected != null)
+		        {
+		            me.args.yearSelected = (args.yearSelected).toFixed(3);
+		        }
+		        else
+		        {
+		        	me.args.yearSelected = p_result[0].ma.toFixed(3);	//if year is not defined, get startyear from linechart and update yearselected
+		        }
+		        me.args.className = args.className;
+
+		        setTimeout(function()
+                    {
+    					me.lineChartView.setCurveData(p_result);
+    			        me.lineChartView.createLineChart(me.args);
+                    }, 100);
+   	});
+    	
+     };
+   
     
     me.deactivate = function()
     {
@@ -185,6 +206,7 @@ fo.scn.BioDiversityScene = function()
     function _lineChartView_onyearchanged(year)
     {
         me.args.yearSelected = year;
+        
         console.log("+ " + year);
         $.ajax({
             url: $mappath("~/api/taxon/diversity/distribution"),
@@ -205,8 +227,8 @@ fo.scn.BioDiversityScene = function()
         }).fail(function(A, B, C){
             console.log("ERROR", A, B, C);
         });
+        
     }
-    
     
     return me.endOfClass(arguments);
 };

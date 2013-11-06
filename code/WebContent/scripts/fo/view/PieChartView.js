@@ -11,6 +11,7 @@ fo.view.PieChartView = function()
     
     me.data = [];
     me.polygonArea = 0;
+    var _classView = false;
     
     var _width = 190;
     var _height = 200;
@@ -26,7 +27,7 @@ fo.view.PieChartView = function()
     var _pie = null;
     var _arc = null;
     var _infopadview = null;
-    var _pieInfo = null;
+    var _pieChart = null;
     var _svg = null;
 //    var _label_group = null;
 //    var _lines = null;
@@ -59,6 +60,23 @@ fo.view.PieChartView = function()
 					.attr("id", "taxacount");
        	_infopadview.append("span")
        				.attr("id", "area");
+//       	
+//       	if (_classView)
+//       	{
+//       		//class is defined, no pie
+//       	}
+//       	else
+//       	{
+          	//Create pie chart
+           	_pieChart = _infopadview.append("div")
+    					.attr("id", "piechart");
+         	_pieChart.append("span")
+    			.attr("id", "proportion");
+          	_svg = _pieChart.append("svg");
+    		_pieChart.append("ul")
+    			.attr("id", "bullets");
+//       	}
+
         		
     };
     
@@ -109,8 +127,8 @@ fo.view.PieChartView = function()
     function _updateInfoPad(args)
     {
     	
-    	var classView  = (args.className == null||args.className == "")?false:true;
-    	_infopadview.select("#title").text(!classView?"Biological Diversity":args.className);
+       	_classView  = (args.className == null||args.className == "")?false:true;
+     	_infopadview.select("#title").text(_classView?args.className:"Biological Diversity");
     	_infopadview.select("#year").text(Math.round(args.yearSelected));
     	_infopadview.select("#ma").text("million years ago");
     	_infopadview.select("#taxacount").text("Taxa Count: " + _totalCount);
@@ -126,29 +144,21 @@ fo.view.PieChartView = function()
     	}
     	_infopadview.select("#area").text("Area: " + me.polygonArea + "km²");
 
-    	if (!classView)
+    	if (!_classView)
     	{
-    		me.initPie();
+    		me.updatePie();
     		
-    		me.initPieInfo();
+    		me.updatePieInfo();
 
     	}
     	else
     	{
-        	if (_pieInfo != null) _pieInfo.remove();
+        	if (_pieChart != null) _pieChart.remove();
   	}
     };
 
-    me.initPie = function()
+    me.updatePie = function()
     {
-      	//Create pie chart
-       	_pieInfo = _infopadview.append("div")
-					.attr("id", "pieInfo");
-     	_pieInfo.append("span")
-			.attr("id", "proportion");
-      	_svg = _pieInfo.append("svg");
-		_pieInfo.append("ul")
-			.attr("id", "bullets");
 		
 		_totalValue = 0;	//reset to zero
     	_infopadview.select("#proportion").text("Class Proportion");
@@ -157,7 +167,7 @@ fo.view.PieChartView = function()
         _filteredPieData = _pie(me.data).filter(_filterData);
     	var arcs = _svg.selectAll("g.arc")
 			  .data(_filteredPieData);
-//    	console.log(_filteredPieData);
+    	console.log(_filteredPieData);
     	
         //add extra arcs if new dataset is bigger
 		_arc = d3.svg.arc().outerRadius(_radious);
@@ -181,8 +191,9 @@ fo.view.PieChartView = function()
      
     };
     
-    me.initPieInfo = function()
+    me.updatePieInfo = function()
     {
+    	//remove pieinfo and add new ones again
       	var bullets = _infopadview.select("#bullets");
       	bullets.selectAll("li").remove();
      	_infopadview.selectAll("span.bullet").remove();
@@ -210,7 +221,7 @@ fo.view.PieChartView = function()
     
     me.reset = function()
     {
-    	if (_pieInfo != null) _pieInfo.remove();
+    	if (!_classView) _infopadview.select("#piechart").remove();
     };
     
     
