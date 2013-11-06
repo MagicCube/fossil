@@ -283,8 +283,11 @@ fo.view.TaxonSeqView3D = function()
     {
         me.setScale(1);
         var keyword = p_keyword.trim().toLowerCase();
-        me.$scene.scrollTop(0);
         
+
+        
+        me.$scene.scrollTop(0);
+              
         var firstfound = false;
         for (var i = 0; i < fo.taxa.length; i++)
         {
@@ -298,8 +301,17 @@ fo.view.TaxonSeqView3D = function()
             		me.$scene.scrollTop(parseInt(top[0]) - me.topMove);
             		firstfound = true;
             	}
-            	$div.addClass("foundStatus");
-            	$div.removeClass("searchStatus");
+            	
+                if(keyword == "")
+                {
+                	 $div.removeClass("foundStatus");
+                	 $div.removeClass("searchStatus");
+                }
+                else
+                {
+	            	$div.addClass("foundStatus");
+	            	$div.removeClass("searchStatus");
+                }
             }
             else
             {
