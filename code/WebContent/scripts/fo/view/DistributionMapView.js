@@ -39,8 +39,12 @@ fo.view.DistributionMapView = function()
     me.reset = function()
     {
     	_resetRadius();
-        me.activeLayer = me.bubbleLayer;
         
+    	//keep active layer as bubble;
+    	me.activeLayer = me.bubbleLayer;
+        me.$element.find(".selected").removeClass("selected");
+        me.$element.find("#" + me.activeLayer).addClass("selected");
+     
         if (_sectionPolygon != null)
             me.map.removeLayer(_sectionPolygon);
 
@@ -151,6 +155,7 @@ fo.view.DistributionMapView = function()
 
     me.setDistributionMapData = function(p_data)
     {
+    	
     	me.selectedSectByYear = p_data.sections;
         if (me.activeLayer == me.bubbleLayer)
         {
