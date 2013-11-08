@@ -181,8 +181,9 @@ fo.view.DistributionMapView = function()
             var sectionID; // section id
             var taxonNumber; // taxon total by section id
             var scale = d3.scale.linear()
-            					.domain([1,d3.max(me.selectedSectByYear, function(d){return d.count;})])
-            					.range(_minCircleRadius, _maxCircleRadius);
+            					.domain([1, d3.max(me.selectedSectByYear, function(d){return d.count;})])
+            					.range([_minCircleRadius, _maxCircleRadius]);
+           
 
             // update Radius of relevant selectedSectByYear
             for ( var i = 0; i < me.selectedSectByYear.length; i++)
