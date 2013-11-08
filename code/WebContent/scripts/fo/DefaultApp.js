@@ -16,7 +16,7 @@ fo.DefaultApp = function()
     me.searchBoxView = null;
     
     me.topMove = 206;
-    me.leftMove = 55;
+    me.leftMove = 155;
     
     base.init = me.init;
     me.init = function(p_options)

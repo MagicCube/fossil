@@ -36,7 +36,7 @@ public class TaxonService
 	{
 		JSONObject result = new JSONObject();
 		
-		PreparedStatement statement = createSqlStatement("CALL FOSSIL195.FS_PROC_SQL_TAXA_COUNT_MAIN(?, ?, ?, ?)", p_className, p_year);
+		PreparedStatement statement = createSqlStatement("CALL FOSSIL195_TEST.FS_PROC_SQL_TAXA_COUNT_MAIN(?, ?, ?, ?)", p_className, p_year);
 		statement.execute();
 		ResultSet resultSet = statement.getResultSet();
 		
@@ -84,7 +84,7 @@ public class TaxonService
 			) throws Exception
 	{
 		ResultSet resultSet = null;
-		resultSet = executeSql("CALL FOSSIL195.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.0001);
+		resultSet = executeSql("CALL FOSSIL195_TEST.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.9);
 		
 		JSONArray result = new JSONArray();
 
@@ -106,9 +106,10 @@ public class TaxonService
 	}
 	
 	@GET
+	@Path("diversity/taxa")
 	public JSONObject getTaxa() throws Exception
 	{
-		ResultSet resultSet = executeSql("call FOSSIL195.FS_PROC_SQL_TEST_MA()");
+		ResultSet resultSet = executeSql("call FOSSIL195_TEST.FS_PROC_SQL_TEST_MA()");
 		
 		JSONObject result = new JSONObject();
 		JSONArray taxa = new JSONArray();

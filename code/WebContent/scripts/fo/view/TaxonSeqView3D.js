@@ -176,7 +176,6 @@ fo.view.TaxonSeqView3D = function()
     	if (p_group == "class")
     	{
     		me.groups = fo.util.GroupUtil.getClsTaxaGroups();
-    		console.log(me.groups);
     		me.groups.sort(function(a,b){
     			return a.name.localeCompare(b.name);
     		});
@@ -186,10 +185,29 @@ fo.view.TaxonSeqView3D = function()
     	else if (p_group == "genus")
     	{
     		me.groups = fo.util.GroupUtil.getGenusTaxaGroups();
-    		me.groups.sort(function(a,b){
+    		console.log(me.groups);
+/*    		me.groups.sort(function(a,b){
     			return a.name.localeCompare(b.name);
-    		});
-    	
+    		});*/
+/*    		var unknownGroup = [];
+    		for(var i = 0; i < me.groups.length; i++)
+    		{   
+    			if( me.groups[i].name.startsWith("Unknown"))
+    			{  				
+    				unknownGroup.push(me.groups[i]);
+    				me.groups.splice(i, 1);
+    				console.log(i + " ," + me.groups[i].name);
+    			}
+    		}
+    		console.log(me.groups);
+    		if(unknownGroup.length >= 1)
+    		{
+    			for(var i = 0; i < unknownGroup.length; i++)
+    			{
+    			me.groups.push(unknownGroup[i]);
+    			}
+    		}
+    		console.log(me.groups);*/
     	}
     	else
 		{
@@ -283,9 +301,7 @@ fo.view.TaxonSeqView3D = function()
     {
         me.setScale(1);
         var keyword = p_keyword.trim().toLowerCase();
-        
-
-        
+               
         me.$scene.scrollTop(0);
               
         var firstfound = false;
@@ -413,7 +429,6 @@ fo.view.TaxonSeqView3D = function()
     
     function _onmousescroll(e)
     {
-    	//console.log(me.$scene.get(0).scrollLeft);
     	var scene = me.parentView;
     	scene.chronLineView.$element.css("left", - me.$scene.get(0).scrollLeft);
     	
@@ -427,43 +442,43 @@ fo.view.TaxonSeqView3D = function()
     function _scene_onclick(e)
     {
     	var groups = me.$element.find("#groupUnderlay")[0];
-    	var className = null;
-    	if(e.clientY > me.fixedTop && e.clientY < me.fixedTop + me.labelHeight && e.clientX < 300)
-    	{
-    		className = me.$element.find(".labelFixed").text();
-    	}
-
+    	if(groups){
+	    	var className = null;
+	    	if(e.clientY > me.fixedTop && e.clientY < me.fixedTop + me.labelHeight && e.clientX < 300)
+	    	{
+	    		className = me.$element.find(".labelFixed").text();
+	    	}
 	
-    	for(var i = 0; i < groups.children.length; i++)
-    	{
-    		var top = groups.children[i].offsetTop;
-
-    		if(me.$scene[0].scrollTop + e.clientY < top + me.labelHeight && me.$scene[0].scrollTop + e.clientY  > top && e.clientX < 300)
-    		{
-    			
-        		className = groups.children[i].innerText;       		       		
-        		break;
-    		}
-    		
+		
+	    	for(var i = 0; i < groups.children.length; i++)
+	    	{
+	    		var top = groups.children[i].offsetTop;
+	
+	    		if(me.$scene[0].scrollTop + e.clientY < top + me.labelHeight && me.$scene[0].scrollTop + e.clientY  > top && e.clientX < 300)
+	    		{
+	    			
+	        		className = groups.children[i].innerText;       		       		
+	        		break;
+	    		}
+	    		
+	    	}
+	    	
+	    	if(className != null)
+	    	{
+	    		var cls = className.split("-");
+	    		console.log(cls[0]);
+	    		if(cls[0] == "Unkown")
+	        	{
+	        		
+	        	}
+	        	else
+	        	{
+	    	    	me.trigger("groupclicked", {
+	    	    		className: cls[0]
+	    	    	});
+	        	}
+	    	}    	
     	}
-    	
-    	if(className != null)
-    	{
-    		var cls = className.split("-");
-    		console.log(cls[0]);
-    		if(cls[0] == "Unkown")
-        	{
-        		
-        	}
-        	else
-        	{
-    	    	me.trigger("groupclicked", {
-    	    		className: cls[0]
-    	    	});
-        	}
-    	}
-    	
-    	
     }
 
     return me.endOfClass(arguments);
