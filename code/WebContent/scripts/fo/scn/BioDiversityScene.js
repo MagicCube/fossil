@@ -125,7 +125,7 @@ fo.scn.BioDiversityScene = function()
 //        };
           
         _UpdateArgsAndLineChartData(args); //set curve and update selectedYear
-
+        
         if (!isPoppedBack)
         {
             console.log("fo.scn.BioDiversityScene is now activated.");
@@ -190,6 +190,8 @@ fo.scn.BioDiversityScene = function()
     					me.lineChartView.setCurveData(p_result);
     			        me.lineChartView.createLineChart(me.args);
                     }, 100);
+		       
+		        
    	});
     	
      };

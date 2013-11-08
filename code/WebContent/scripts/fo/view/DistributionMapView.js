@@ -12,8 +12,8 @@ fo.view.DistributionMapView = function()
     var _sectionCircleGroup = null;
     var _sectionPolygon = null;
 
-    var _maxCircleRadius = 100000;
-    var _maxTaxon = 200;
+    var _maxCircleRadius = 80000;
+    var _minCircleRadius = 10000;
 
     var _$layerSwitcher = null;
 
@@ -180,6 +180,9 @@ fo.view.DistributionMapView = function()
         {
             var sectionID; // section id
             var taxonNumber; // taxon total by section id
+            var scale = d3.scale.linear()
+            					.domain([1,d3.max(me.selectedSectByYear, function(d){return d.count;})])
+            					.range(_minCircleRadius, _maxCircleRadius);
 
             // update Radius of relevant selectedSectByYear
             for ( var i = 0; i < me.selectedSectByYear.length; i++)
@@ -188,16 +191,7 @@ fo.view.DistributionMapView = function()
                 taxonNumber = me.selectedSectByYear[i].count;
                 if (taxonNumber != 0 && taxonNumber != null)
                 {
-                    if (taxonNumber > _maxTaxon)
-                    {
-                        taxonNumber = _maxTaxon;
-                    }
-
-                    _sectionCircleGroup[sectionID].setRadius(taxonNumber / _maxTaxon * _maxCircleRadius); // set
-                                                                                                            // Radius
-                                                                                                            // by
-                                                                                                            // taxon
-                                                                                                            // number
+                	_sectionCircleGroup[sectionID].setRadius(scale(taxonNumber)); 
                     _sectionCircleGroup[sectionID].setStyle(
                     {
                         "fillOpacity" : 0.5
