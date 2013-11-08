@@ -185,21 +185,21 @@ fo.view.TaxonSeqView3D = function()
     	else if (p_group == "genus")
     	{
     		me.groups = fo.util.GroupUtil.getGenusTaxaGroups();
-    		console.log(me.groups);
+    		//console.log(me.groups);
 /*    		me.groups.sort(function(a,b){
     			return a.name.localeCompare(b.name);
     		});*/
-/*    		var unknownGroup = [];
+    		var unknownGroup = [];
     		for(var i = 0; i < me.groups.length; i++)
     		{   
     			if( me.groups[i].name.startsWith("Unknown"))
     			{  				
     				unknownGroup.push(me.groups[i]);
     				me.groups.splice(i, 1);
-    				console.log(i + " ," + me.groups[i].name);
+    				//console.log(i + " ," + me.groups[i].name);
     			}
     		}
-    		console.log(me.groups);
+    		//console.log(me.groups);
     		if(unknownGroup.length >= 1)
     		{
     			for(var i = 0; i < unknownGroup.length; i++)
@@ -207,7 +207,7 @@ fo.view.TaxonSeqView3D = function()
     			me.groups.push(unknownGroup[i]);
     			}
     		}
-    		console.log(me.groups);*/
+    	//	console.log(me.groups);
     	}
     	else
 		{

@@ -327,7 +327,7 @@ fo.view.ChronLineView = function()
 			.attr("y", 0)
 			.attr("width", 2)
 			.attr("height", 1080)
-			.attr("fill","rgba(255,255,255,0.2)");
+			.attr("fill","rgba(255,255,255,0.3)");
     };
     
     function _onmousemove(e)
