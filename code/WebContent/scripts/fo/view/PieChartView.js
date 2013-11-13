@@ -128,7 +128,7 @@ fo.view.PieChartView = function()
     {
     	
        	_classView  = (args.className == null||args.className == "")?false:true;
-     	_infopadview.select("#title").text(_classView?args.className:"Biological Diversity");
+     	_infopadview.select("#title").text(_classView?args.className:"Biodiversity");
     	_infopadview.select("#year").text(Math.round(args.yearSelected));
     	_infopadview.select("#ma").text("million years ago");
     	_infopadview.select("#taxacount").text("Taxa Count: " + _totalCount);
@@ -163,7 +163,7 @@ fo.view.PieChartView = function()
     {
 		
 		_totalValue = 0;	//reset to zero
-    	_infopadview.select("#proportion").text("Class Proportion");
+    	_infopadview.select("#proportion").text("Group Proportion");
  		
 		//initialize pie
         _filteredPieData = _pie(me.data).filter(_filterData);

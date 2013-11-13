@@ -48,16 +48,13 @@ fo.scn.BioDiversityScene = function()
         me.initDistributionMapView();
         me.initPieChartView();
         
-        if(screen.availHeight < 1080)
+        if(screen.availHeight != 1080)
         {
         	var rate = screen.availHeight / 1080;
         	
-        	me.$element.find("#padinfoview")[0].style.webkitTransform =  "scale(" + rate + ")";
-        	me.$element.find("#padinfoview")[0].style.webkitTransformOrigin = "left top";
-        	me.$element.find(".viewSwitcher")[0].style.webkitTransform = "scale(" + rate + ")";
-        	me.$element.find(".viewSwitcher")[0].style.webkitTransformOrigin = "left bottom" ;
-        	me.$element.find("#linechart")[0].style.webkitTransform =  "scale(" + rate + ")";
-        	me.$element.find("#linechart")[0].style.webkitTransformOrigin = "right bottom";
+        	me.$element.find("#padinfoview").css({"-webkit-Transform": "scale(" + rate + ")", "-webkit-Transform-Origin": "left top"});      	
+        	me.$element.find(".viewSwitcher").css({"-webkit-Transform": "scale(" + rate + ")", "-webkit-Transform-Origin": "left bottom"});
+        	me.$element.find("#linechart").css({"-webkit-Transform": "scale(" + rate + ")", "-webkit-Transform-Origin": "right bottom"});
         }
     };
 
