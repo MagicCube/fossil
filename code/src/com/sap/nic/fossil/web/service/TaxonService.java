@@ -44,7 +44,13 @@ public class TaxonService
 		while (resultSet.next())
 		{
 			JSONObject cls = new JSONObject();
-			cls.put("className", resultSet.getString("CLASS"));
+			
+			String className = resultSet.getString("CLASS"); 
+			if (className.trim().equals("") || className.equals("1") || className.equals("1111"))
+			{
+				className = "Unkown";
+			} 
+			cls.put("className", className);
 			cls.put("count", resultSet.getInt("COUNT"));
 			classes.put(cls);
 		}
