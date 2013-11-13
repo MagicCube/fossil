@@ -93,7 +93,7 @@ fo.BaseApp = function()
     me.loadTaxa = function()
     {
         $.ajax({
-            url: $mappath("~/data/taxa.json"),
+            url: $mappath("~/api/taxon/diversity/taxa"),
             async: false
         }).success(function(fossil)
         {
@@ -116,7 +116,8 @@ fo.BaseApp = function()
     me.loadDiversityCurve = function()
     {
     	$.ajax({
-    		url: $mappath("~/data/curve.json"),
+    		url: $mappath("~/api/taxon/diversity/curve"),
+    		data: {class: "GetExplicitCurve"},
     		async: false
     	}).success(function(curve)
     	{

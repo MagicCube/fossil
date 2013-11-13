@@ -83,8 +83,18 @@ public class TaxonService
 			@QueryParam("class") String p_className
 			) throws Exception
 	{
-		ResultSet resultSet = null;
-		resultSet = executeSql("CALL FOSSIL195_TEST.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.9);
+		PreparedStatement statement = null;
+		if(p_className.equals("GetExplicitCurve"))
+		{
+			p_className = "";
+			statement = createSqlStatement("CALL FOSSIL195_TEST.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.0001);
+		}
+		else{
+
+			statement = createSqlStatement("CALL FOSSIL195_TEST.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.9);
+		}
+		statement.execute();
+		ResultSet resultSet = statement.getResultSet();
 		
 		JSONArray result = new JSONArray();
 
@@ -101,15 +111,17 @@ public class TaxonService
 		now.add(Calendar.YEAR, 1);
 		builder.expires(now.getTime());
 		
-		DbConnectionPoolFactory.getInstance().putBackConnection(resultSet.getStatement().getConnection());
+		DbConnectionPoolFactory.getInstance().putBackConnection(statement.getConnection());
 		return builder.build();
 	}
 	
 	@GET
 	@Path("diversity/taxa")
-	public JSONObject getTaxa() throws Exception
+	public Response getTaxa() throws Exception
 	{
-		ResultSet resultSet = executeSql("call FOSSIL195_TEST.FS_PROC_SQL_TEST_MA()");
+		PreparedStatement statement = createSqlStatement("call FOSSIL195_TEST.FS_PROC_SQL_TEST_MA()");		
+		statement.execute();
+		ResultSet resultSet = statement.getResultSet();
 		
 		JSONObject result = new JSONObject();
 		JSONArray taxa = new JSONArray();
@@ -186,8 +198,14 @@ public class TaxonService
 			}
 		}
 		
-		DbConnectionPoolFactory.getInstance().putBackConnection(resultSet.getStatement().getConnection());
-		return result;
+		ResponseBuilder builder = Response.ok(result);
+		Calendar now = Calendar.getInstance();
+		now.add(Calendar.YEAR, 1);
+		builder.expires(now.getTime());
+		
+		DbConnectionPoolFactory.getInstance().putBackConnection(statement.getConnection());
+		
+		return builder.build();
 	}
 
 	//@GET

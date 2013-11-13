@@ -5,6 +5,8 @@ $import("fo.view.LineChartView");
 $import("fo.view.PieChartView");
 $import("fo.util.GroupUtil");
 
+$include("fo.res.BioDiversityScene.css");
+
 fo.scn.BioDiversityScene = function()
 {
     var me = $extend(mx.scn.Scene);
@@ -45,6 +47,18 @@ fo.scn.BioDiversityScene = function()
         me.initLineChartView();
         me.initDistributionMapView();
         me.initPieChartView();
+        
+        if(screen.availHeight < 1080)
+        {
+        	var rate = screen.availHeight / 1080;
+        	
+        	me.$element.find("#padinfoview")[0].style.webkitTransform =  "scale(" + rate + ")";
+        	me.$element.find("#padinfoview")[0].style.webkitTransformOrigin = "left top";
+        	me.$element.find(".viewSwitcher")[0].style.webkitTransform = "scale(" + rate + ")";
+        	me.$element.find(".viewSwitcher")[0].style.webkitTransformOrigin = "left bottom" ;
+        	me.$element.find("#linechart")[0].style.webkitTransform =  "scale(" + rate + ")";
+        	me.$element.find("#linechart")[0].style.webkitTransformOrigin = "right bottom";
+        }
     };
 
     me.initLineChartView = function()

@@ -118,7 +118,7 @@ fo.ani.Grouping = function()
 	    		{
 	    			var $lastGroupDiv = ("<div id= lastGroupDiv></div>");
 	    			$groupUnderlay.append($lastGroupDiv);
-	    			$("#lastGroupDiv").css({"top": height, "height": 19*j + 30});
+	    			$("#lastGroupDiv").css({"top": height, "height": 19*j});
 	    			
 	    		}
 	    			    		

@@ -118,7 +118,7 @@ fo.view.TaxonSeqView3D = function()
         me.rootObject = new THREE.Object3D();
         
         var vector = new THREE.Vector3();
-        var l = 500;
+        var l = 400;
         var radius = l * 3.5;
         
         var $t = me.$container.find(".taxon");
@@ -176,10 +176,10 @@ fo.view.TaxonSeqView3D = function()
     	if (p_group == "class")
     	{
     		me.groups = fo.util.GroupUtil.getClsTaxaGroups();
-    		me.groups.sort(function(a,b){
+/*    		me.groups.sort(function(a,b){
     			return a.name.localeCompare(b.name);
-    		});
-    		
+    		});*/
+
     	}
     	
     	else if (p_group == "genus")
@@ -189,7 +189,7 @@ fo.view.TaxonSeqView3D = function()
 /*    		me.groups.sort(function(a,b){
     			return a.name.localeCompare(b.name);
     		});*/
-    		var unknownGroup = [];
+/*    		var unknownGroup = [];
     		for(var i = 0; i < me.groups.length; i++)
     		{   
     			if( me.groups[i].name.startsWith("Unknown"))
@@ -206,14 +206,14 @@ fo.view.TaxonSeqView3D = function()
     			{
     			me.groups.push(unknownGroup[i]);
     			}
-    		}
+    		}*/
     	//	console.log(me.groups);
     	}
     	else
 		{
     		me.groups = null;
 		}
-    	
+		
     	me.startAnimation("Grouping", null, {  });
 
     };
