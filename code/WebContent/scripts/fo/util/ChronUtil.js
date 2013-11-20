@@ -7,40 +7,40 @@ fo.util.ChronUtilClass = function()
     var base = {};
     
     //Define chronostratic master data
-    me.systems = [{name: "Carboniferous", range: [298.9, 358.9]}, {name: "Permian", range: [252.2,298.9]}, {name: "Triassic", range: [201.3, 252.2]}];
+    me.systems = [{name: "石炭纪", range: [298.9, 358.9]}, {name: "二叠纪", range: [252.2,298.9]}, {name: "三叠纪", range: [201.3, 252.2]}];
     
-    me.series = [{name: "Mississippian", range: [323.2, 358.9]},
-                 {name: "Pennsylvanian", range: [298.9, 323.2]}, 
-                 {name: "Cisuralian", range: [272.3, 298.9]}, 
-                 {name: "Guadalupian", range: [259.9, 272.3]}, 
-                 {name: "Lopingian", range: [252.2, 259.9]},
-                 {name: "Lower", range: [247.2, 252.2]},
-                 {name: "Middle", range: [235, 247.2]},
-                 {name: "Upper", range: [201.3, 235]}];
+    me.series = [{name: "密西西比纪", range: [323.2, 358.9]},
+                 {name: "宾夕法尼亚纪", range: [298.9, 323.2]}, 
+                 {name: "乌拉尔世", range: [272.3, 298.9]}, 
+                 {name: "瓜德鲁普世", range: [259.9, 272.3]}, 
+                 {name: "乐平世", range: [252.2, 259.9]},
+                 {name: "早三叠世", range: [247.2, 252.2]},
+                 {name: "中三叠世", range: [235, 247.2]},
+                 {name: "晚三叠世", range: [201.3, 235]}];
     
-    me.stages = [{name: "Rhaetian", range: [201.3, 208.5]},
-                 {name: "Norian", range: [208.5, 228]},
-                 {name: "Carnian", range: [228, 235]},
-                 {name: "Ladinian", range: [235, 242]},
-                 {name: "Anisian", range: [242, 247.2]},
-                 {name: "Olenekian", range: [247.2, 251.2]},
-                 {name: "Induan", range: [251.2, 252.2]},
-                 {name: "Changhsingian", range: [252.2, 254.2]},
-                 {name: "Wuchiapingian", range: [254.2, 259.9]},
-                 {name: "Capitanian", range: [259.9,265.1]},
-                 {name: "Wordian", range: [265.1, 268.8]},
-                 {name: "Roadian", range: [268.8,272.3]},
-                 {name: "Kungurian", range: [272.3, 279.3]},
-                 {name: "Artinskian", range: [279.3,290.1]},
-                 {name:"Sakmarian", range: [290.1, 295.5]},
-                 {name: "Asselian", range: [295.5, 298.9]},
-                 {name: "Gzhelian", range: [298.9, 303.7]},
-                 {name: "Kasimovian", range: [303.7, 303.0]},
-                 {name: "Moscovian", range: [307.0, 315.2]},
-                 {name: "Bashkirian", range: [315.2, 323.2]},
-                 {name: "Serpukhovian", range: [323.2, 330.9]},
-                 {name: "Visean", range: [330.9, 346.7]},
-                 {name: "Tournaisian", range: [346.7, 358.9]}].reverse();
+    me.stages = [{name: "瑞替期", range: [201.3, 208.5]},
+                 {name: "诺利期", range: [208.5, 228]},
+                 {name: "卡尼期", range: [228, 235]},
+                 {name: "拉丁尼期", range: [235, 242]},
+                 {name: "安尼西期", range: [242, 247.2]},
+                 {name: "奥伦尼克期", range: [247.2, 251.2]},
+                 {name: "印度期", range: [251.2, 252.2]},
+                 {name: "长兴期", range: [252.2, 254.2]},
+                 {name: "吴家坪期", range: [254.2, 259.9]},
+                 {name: "卡匹敦阶", range: [259.9,265.1]},
+                 {name: "沃德期", range: [265.1, 268.8]},
+                 {name: "罗德期", range: [268.8,272.3]},
+                 {name: "空谷尔期", range: [272.3, 279.3]},
+                 {name: "阿尔丁思克期", range: [279.3,290.1]},
+                 {name:"萨克马尔期", range: [290.1, 295.5]},
+                 {name: "阿瑟尔期", range: [295.5, 298.9]},
+                 {name: "格热尔期", range: [298.9, 303.7]},
+                 {name: "卡西莫夫期", range: [303.7, 303.0]},
+                 {name: "莫斯科期", range: [307.0, 315.2]},
+                 {name: "巴什基尔期", range: [315.2, 323.2]},
+                 {name: "谢尔普霍夫期", range: [323.2, 330.9]},
+                 {name: "违宪期", range: [330.9, 346.7]},
+                 {name: "图尔奈期", range: [346.7, 358.9]}].reverse();
     
     base._ = me._;
     me._ = function(p_options)

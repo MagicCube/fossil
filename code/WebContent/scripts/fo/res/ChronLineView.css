@@ -22,6 +22,11 @@
 	border-collapse: collapse;
 }
 
+.ChronLineView td
+{
+	height: 45px;
+}
+
 .ChronLineView hr
 {
 	margin: 0px;

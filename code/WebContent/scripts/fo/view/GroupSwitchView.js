@@ -18,7 +18,7 @@ fo.view.GroupSwitchView = function()
     {
         base.init(p_options);
         
-        me.$element.append("<span id='groupBy'>Group By - </span><ul><li id='class'>Class</li><li id='genus'>Genus</li></ul>");
+        me.$element.append("<span id='groupBy'>分类标准 - </span><ul><li id='class'>纲</li><li id='genus'>属</li></ul>");
         me.$element.find("li").on("click", _li_onclick);
         
     };

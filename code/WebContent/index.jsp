@@ -13,13 +13,13 @@
     <div id="projectLogo"></div>
     <div id="intro" style="display: none;">
         <div id="front">
-            <div id="welcomeTo">Welcome to</div>
+            <div id="welcomeTo">欢迎来到</div>
             <div id="title">
-                The Fossil Project
+             		   古生物项目
             </div>
             <div id="description">
-                The biggest stratigraphy database. The second biggest paleontology database. An application to "piece together all the time-lines of event in Earth history to get an optimized permutation of all the biological events."
-                <br>Powered by SAP HANA.
+                最大地层学数据库 | 第二大古生物数据库 | 综合地质事件年代，寻求生物事件最优排序 
+                <br>由SAP HANA 提供技术支持.
             </div>
         </div>
         <div id="back" src="scripts/fo/res/images/helix.png"></div>

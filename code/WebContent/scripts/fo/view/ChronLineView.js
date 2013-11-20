@@ -33,10 +33,10 @@ fo.view.ChronLineView = function()
       //  me.$element.append("<div id=cover class=cover></div>");
 
         _$table = $("<table id=chronTable cellpadding=0 cellspacing=0></table>");
-        _$table.append("<tr id=system><td width=110>System/<br>Period</td><td width=40><hr></td><td></td></tr>");
-        _$table.append("<tr id=series><td>Series/<br>Epoch</td><td><hr></td><td></td></tr>");
-        _$table.append("<tr id=stage><td>Stage/<br>Age</td><td><hr></td><td></td></tr>");
-        _$table.append("<tr id=numerical><td>Numerical<br>age (Ma)</td><td><hr></td><td></td></tr>");
+        _$table.append("<tr id=system><td width=110>系/纪 </td><td width=40><hr></td><td></td></tr>");
+        _$table.append("<tr id=series><td>统/世</td><td><hr></td><td></td></tr>");
+        _$table.append("<tr id=stage><td>阶/期</td><td><hr></td><td></td></tr>");
+        _$table.append("<tr id=numerical><td>距今年龄值<br> (Ma)</td><td><hr></td><td></td></tr>");
         
         me.$element.append(_$table);
                 

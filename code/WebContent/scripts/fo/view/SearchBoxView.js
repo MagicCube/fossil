@@ -21,7 +21,7 @@ fo.view.SearchBoxView = function()
     {
         base.init(p_options);
         
-        me.$container.append("<div id='head'>Search</div><input/>");
+        me.$container.append("<div id='head'>搜索</div><input/>");
         _$input = me.$container.children("input");
         _$input.on("keydown", _input_onkeydown);
         _$input.on("blur", _input_onbblur);
