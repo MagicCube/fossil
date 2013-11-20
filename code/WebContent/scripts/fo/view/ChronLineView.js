@@ -8,8 +8,8 @@ fo.view.ChronLineView = function()
     me.elementClass = "ChronLineView";
     var base = {};
  
-   // me.start = 297.889;
-   // me.end = 258.333;
+/*    me.start = 299.889;
+    me.end = 248.333;*/
     me.start = fo.first;
     me.end = fo.last;
     me.data = [];
@@ -45,7 +45,7 @@ fo.view.ChronLineView = function()
         
         me.initTimeLines();
         me.initDiversityLine();
-        me.initSystem();
+        me.initSystems();
         me.initSeries();
         me.initStages();   
         me.initMoveLine();
@@ -68,10 +68,63 @@ fo.view.ChronLineView = function()
     	  	  
     };
     
-    me.initSystem = function()
+/*    me.initSystems = function()
     {
-    	var $system = me.$element.find("tr#system td:last-child");
-    	$system.append("<div class='systemLabel label'>Permian</div>");
+    	var $systems = me.$element.find("tr#system td:last-child");
+    	//$systems.append("<div class='systemLabel label'>Permian</div>");
+    	
+    	var first = fo.util.ChronUtil.getChron(me.start).systemIndex;
+    	var last = fo.util.ChronUtil.getChron(me.end).systemIndex;
+    	var colors = ["rgba(196, 43, 2, 0.45)", "rgba(224, 112, 0, 0.45)", " rgba(237, 221, 0, 0.45)"];
+    	
+    	console.log(me.start);
+    	
+    	for (var i = first; i <= last; i ++)
+    	{
+    		var system = fo.util.ChronUtil.systems[i];
+    		var left = 0;
+    		var right = 0;
+
+    		if (i == first)
+			{
+    			left = 0;
+			}
+    		else
+			{
+    			left = me.scale.invert(system.range[1]);
+			}
+    		
+     		
+    		if (i == last)
+			{
+    			right = me.frame.width - me.moveLeft;
+			}
+    		else
+			{
+    			right = me.scale.invert(system.range[0]);
+
+			}
+    		
+    		var systemName = null;
+    		if(right - left - 2 < 100)
+    		{
+    			systemName = "";
+    		}
+    		else
+    		{
+    			systemName = system.name;
+    		}
+    		
+    		
+    		var $div = $("<div class='label systemLabel'>" + systemName + "</div>");
+    		$div.css({
+    			background: colors[i],
+    			left: left,
+    			width: right - left - 2
+    		});
+    		$systems.append($div);
+    		
+    	}
     };
     
     me.initSeries = function()
@@ -79,17 +132,16 @@ fo.view.ChronLineView = function()
     	var first = fo.util.ChronUtil.getChron(me.start).seriesIndex;
     	var last = fo.util.ChronUtil.getChron(me.end).seriesIndex;
     	var $stage = me.$element.find("tr#series td:last-child");
-    	var colors= ["rgba(255, 121, 90, 0.25)", "rgba(255, 174, 100, 0.25)", "rgba(255, 250, 90, 0.25)"];
+    	var colors= ["rgba(255, 121, 90, 0.25)", "rgba(255, 121, 90, 0.25)", "rgba(255, 174, 100, 0.25)",  "rgba(255, 174, 100, 0.25)", "rgba(255, 250, 90, 0.25)", "rgba(255, 250, 90, 0.25)", "rgba(255, 250, 90, 0.25)"];
     	
-/*    	var svg = d3.select("#chronLineView")
+    	var svg = d3.select("#chronLineView")
 		.append("svg")
 		.attr("class", "seriesLine")
 		.attr("width", me.frame.width)
-		.attr("height", 1080 );*/
-    	
-    	
+		.attr("height", 1080 );
+    	var colorIndex = 0;
     	for (var i = first; i <= last; i++)
-    	{
+    	{   		
     		var series = fo.util.ChronUtil.series[i];
     		var left = 0; 
     		var right = 0;
@@ -112,30 +164,26 @@ fo.view.ChronLineView = function()
     			right = me.scale.invert(series.range[0]);
 			}
     		
-    		var $div = $("<div class='label seriesLabel'>" + series.name + "</div>");
+    		var seriesName = null;
+    		if(right - left - 2 < 100)
+    		{
+    			seriesName = "";
+    		}
+    		else
+    		{
+    			seriesName = series.name;
+    		}
+    		
+    		
+    		var $div = $("<div class='label seriesLabel'>" + seriesName + "</div>");
     		$div.css({
-    			background: colors[i],
+    			background: colors[colorIndex],
     			left: left,
     			width: right - left - 2
     		});
     		$stage.append($div);
     		
-/*    		var mLeft = left + 150;
-        	var svg = d3.select("body")
-    		.append("svg")
-    		.attr("class", "seriesLines")
-    		.attr("width", 5)
-    		.attr("height", 1080 );
-    		
-
-        	
-    		svg.append("svg:line")
-				.attr("x1", left + 150)
-				.attr("y1", 0)
-				.attr("x2", left + 150)
-				.attr("y2", 1080)
-				.style("stroke", "rgba(255, 255, 255, 0.1)")
-				.style("stroke-width", "2px");*/
+    		colorIndex ++;    		
     		
     		var divid = "svg"+i;
     		var svg = d3.select(me.$container.get(0))
@@ -163,7 +211,7 @@ fo.view.ChronLineView = function()
     	var $stage = me.$element.find("tr#stage td:last-child");
     	var currentSeries = fo.util.ChronUtil.series[0];
     	var colorIndex = -1;
-    	var colors = ["rgba(255,177,164,0.2)", "rgba(211,167,132,0.2)", "rgba(234,229,146,0.2)"];
+    	var colors = ["rgba(255,177,164,0.2)", "rgba(211,167,132,0.2)", "rgba(234,229,146,0.2)", "rgba(255,177,164,0.2)"];
     	
     	for (var i = first; i<= last; i++)
     	{   		
@@ -204,7 +252,223 @@ fo.view.ChronLineView = function()
     		
     		color = colors[colorIndex];
     		
-    		var $div = $("<div class='label stageLabel'>" + stage.name + "</div>");
+    		var stageName = null;
+    		if(right - left - 2 < 100)
+    		{
+    			stageName = "";
+    		}
+    		else
+    		{
+    			stageName = stage.name;
+    		}
+    		
+    		
+    		var $div = $("<div class='label stageLoabel'>" + stageName + "</div>");
+    		$div.css({
+    			background: color,
+    			left: left,
+    			width: right - left - 2
+    		});
+    		$stage.append($div);
+
+    	}
+    };*/
+    
+    me.initSystems = function()
+    {
+    	var $systems = me.$element.find("tr#system td:last-child");
+    	//$systems.append("<div class='systemLabel label'>Permian</div>");
+    	
+    	var first = fo.util.ChronUtil.getChron(me.start).systemIndex;
+    	var last = fo.util.ChronUtil.getChron(me.end).systemIndex;
+    	var colors = ["rgba(183,17,4, 0.5)", "-webkit-linear-gradient(left, rgba(196, 43, 2, 0.498039) 9%, rgba(237, 221, 0, 0.498039) 45%, rgba(147, 191, 0, 0.5) 50%, rgba(237, 221, 0, 0.498039) 65%, rgba(196, 43, 2, 0.498039) 100%)", "rgba(183,17,4, 0.5)", " rgba(237, 221, 0, 0.45)"];
+    	
+    	//-webkit-linear-gradient(left, rgba(196, 43, 2, 0.498039) 9%, rgba(237, 221, 0, 0.498039) 45%, rgba(147, 191, 0, 0.3) 50%, rgba(237, 221, 0, 0.498039) 65%, rgba(196, 43, 2, 0.498039) 100%)
+    	
+    	for (var i = first; i <= last; i ++)
+    	{
+    		var system = fo.util.ChronUtil.systems[i];
+    		var left = 0;
+    		var right = 0;
+
+    		if (i == first)
+			{
+    			left = 0;
+			}
+    		else
+			{
+    			left = me.scale.invert(system.range[1]);
+			}
+    		
+     		
+    		if (i == last)
+			{
+    			right = me.frame.width - me.moveLeft;
+			}
+    		else
+			{
+    			right = me.scale.invert(system.range[0]);
+
+			}
+    		
+    		var systemName = null;
+    		if(right - left - 2 < 100)
+    		{
+    			systemName = "";
+    		}
+    		else
+    		{
+    			systemName = system.name;
+    		}
+    		
+    		
+    		var $div = $("<div class='label systemLabel'>" + systemName + "</div>");
+    		$div.css({
+    			background: colors[i],
+    			left: left,
+    			width: right - left - 2
+    		});
+    		$systems.append($div);
+    		
+    	}
+    };
+    
+    me.initSeries = function()
+    {
+    	var first = fo.util.ChronUtil.getChron(me.start).seriesIndex;
+    	var last = fo.util.ChronUtil.getChron(me.end).seriesIndex;
+    	var $stage = me.$element.find("tr#series td:last-child");
+    	var colors= ["rgba(255,95,95, 0.3)", "rgba(255,124,102, 0.3)", "rgba(255,232,62, 0.3)", "rgba(211,255,62, 0.3)", "rgba(255,95,95, 0.3)", "rgba(255,239,92, 0.3)", "rgba(255,113,85,0.3)"];
+    	
+/*    	var svg = d3.select("#chronLineView")
+		.append("svg")
+		.attr("class", "seriesLine")
+		.attr("width", me.frame.width)
+		.attr("height", 1080 );*/
+    	var colorIndex = 0;
+    	for (var i = first; i <= last; i++)
+    	{
+    		var series = fo.util.ChronUtil.series[i];
+    		var left = 0; 
+    		var right = 0;
+    		if (i == first)
+			{
+    			left = 0;
+			}
+    		else
+			{
+    			left = me.scale.invert(series.range[1]);
+			}
+    		
+    		 		
+    		if (i == last)
+			{
+    			right = me.frame.width - me.moveLeft;
+			}
+    		else
+			{
+    			right = me.scale.invert(series.range[0]);
+			}
+    		
+    		var seriesName = null;
+    		if(right - left - 2 < 100)
+    		{
+    			seriesName = "";
+    		}
+    		else
+    		{
+    			seriesName = series.name;
+    		}
+    		
+    		
+    		var $div = $("<div class='label seriesLabel'>" + seriesName + "</div>");
+    		$div.css({
+    			background: colors[colorIndex],
+    			left: left,
+    			width: right - left - 2
+    		});
+    		$stage.append($div);
+    		colorIndex ++;
+    		
+    		
+    		var divid = "svg"+i;
+    		var svg = d3.select(me.$container.get(0))
+						.append("svg")
+						.attr("id", divid)
+						.attr("class","seriesLines");
+
+    		me.$element.find("#" + divid).css("left", left + me.moveLeft - 1 );
+    		
+        	svg.append("rect")
+			   .attr("x", 0)
+			   .attr("y", 0)
+			   .attr("width", 2)
+			   .attr("height", 1080)
+			   .attr("fill","rgba(255,255,255,0.1)");
+    		    		
+    	}
+    	
+    };
+    
+    me.initStages = function()
+    {
+    	var first = fo.util.ChronUtil.getChron(me.start).stageIndex;
+    	var last = fo.util.ChronUtil.getChron(me.end).stageIndex;
+    	var $stage = me.$element.find("tr#stage td:last-child");
+    	var currentSeries = fo.util.ChronUtil.series[0];
+    	var colorIndex = -1;
+    	var colors = ["rgba(255,159,159,0.2)", "rgba(255,150,136,0.2)", "rgba(255,235,118,0.2)", "rgba(237,255,133,0.2)", "rgba(255,159,159,0.2)","rgba(255,243,156, 0.2)", "rgba(255,182,174, 0.2)" ];
+    	
+    	for (var i = first; i<= last; i++)
+    	{   		
+    		var stage = fo.util.ChronUtil.stages[i];
+    		var left = 0; // bigger absolute number
+    		var right = 0;
+    		var color = null;
+    		
+    		if (i == first)
+			{
+    			left = 0;
+			}
+    		else
+			{
+    			left = me.scale.invert(stage.range[1]);
+			}
+    		
+    		
+    		
+    		if (i == last)
+			{
+    			right = me.frame.width - me.moveLeft;
+			}
+    		else
+			{
+    			right = me.scale.invert(stage.range[0]);
+			}
+    		
+    		if(currentSeries == fo.util.ChronUtil.getChron(stage.range[0] + 1).series)
+    		{
+    			
+    		}
+    		else
+    		{
+    			currentSeries = fo.util.ChronUtil.getChron(stage.range[0] + 1).series;
+    			colorIndex ++;
+    		}
+    		
+    		color = colors[colorIndex];
+    		
+    		var stageName = null;
+    		if(right - left - 2 < 100)
+    		{
+    			stageName = "";
+    		}
+    		else
+    		{
+    			stageName = stage.name;
+    		}
+    		
+    		var $div = $("<div class='label stageLabel'>" + stageName + "</div>");
     		$div.css({
     			background: color,
     			left: left,

@@ -40,8 +40,8 @@ mx.whenReady(function()
     
     if ($speed == "fast")
     {
-        fo.app.homeSceneName = "BioDiversity";
-        //fo.app.homeSceneName = "TaxonDetail";
+        //fo.app.homeSceneName = "BioDiversity";
+        fo.app.homeSceneName = "TaxonSequence";
     }
     else
     {

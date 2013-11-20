@@ -22,7 +22,7 @@ fo.view.MapView = function()
     me.mapElement = null;
     
     
-    me.baseTileUrl = "https://tiles.mapbox.com/v3/henryli.map-a96c6hbf/{z}/{x}/{y}.png";
+    me.baseTileUrl = "https://tiles.mapbox.com/v3/jingjingcheng.gagfpipd/{z}/{x}/{y}.png";
     
     
     me.defaultZoom = 4;
@@ -50,7 +50,7 @@ fo.view.MapView = function()
     
     me.initMap = function()
     {
-        me.map = L.mapbox.map(me.mapElement, "henryli.map-a96c6hbf", {
+        me.map = L.mapbox.map(me.mapElement, "jingjingcheng.gagfpipd", {
             minZoom: 3,
             maxZoom: 10,
             zoomControl: false,

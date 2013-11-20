@@ -176,9 +176,9 @@ fo.view.TaxonSeqView3D = function()
     	if (p_group == "class")
     	{
     		me.groups = fo.util.GroupUtil.getClsTaxaGroups();
-/*    		me.groups.sort(function(a,b){
+    		me.groups.sort(function(a,b){
     			return a.name.localeCompare(b.name);
-    		});*/
+    		});
 
     	}
     	

@@ -109,6 +109,8 @@ fo.BaseApp = function()
                 fo.taxa[taxon.id] = taxon;
                 
             }
+            
+            //console.log(fo.taxa);
 
         });
     };

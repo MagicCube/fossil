@@ -75,9 +75,7 @@
 {
 	position: absolute;
 	top: 0;
-	font-size:24px;
-	background: -webkit-linear-gradient(left, rgba(196, 43, 2, 0.45) 0%, rgba(224, 112, 0, 0.45) 55%, rgba(237, 221, 0, 0.45) 100%);	 
-	width:100%;
+	font-size:24px;	 
 	height:42px;
 	text-align:center;
 	line-height:42px;
@@ -91,7 +89,6 @@
 	top: 0;
 	font-size:20px;
 	height: 42px;
-	background: red;
 	text-align: center;
 	line-height:42px;
 }

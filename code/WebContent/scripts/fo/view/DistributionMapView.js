@@ -294,6 +294,7 @@ fo.view.DistributionMapView = function()
         }
         else
         {
+        	//return result;
         	return Math.round(result);
         }
     };

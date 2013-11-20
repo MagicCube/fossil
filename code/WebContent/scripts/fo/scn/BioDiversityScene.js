@@ -140,7 +140,7 @@ fo.scn.BioDiversityScene = function()
         if (!isPoppedBack)
         {
             console.log("fo.scn.BioDiversityScene is now activated.");
-            console.log(me.args);
+           // console.log(me.args);
             
             $.ajax({
                 url: $mappath("~/api/taxon/diversity/distribution"),
@@ -171,7 +171,7 @@ fo.scn.BioDiversityScene = function()
 
     function _UpdateArgsAndLineChartData(args)
     {
-    	console.log(args);
+    	//console.log(args);
     	if (args.className == null)
     	{
     		args.className = "";
@@ -220,7 +220,7 @@ fo.scn.BioDiversityScene = function()
     {
         me.args.yearSelected = year;
         
-        console.log("+ " + year);
+        //console.log("+ " + year);
         $.ajax({
             url: $mappath("~/api/taxon/diversity/distribution"),
             data: {
@@ -230,7 +230,7 @@ fo.scn.BioDiversityScene = function()
             context: { year: year }
         }).success(function(p_result)
         {
-            console.log("- " + year);
+           // console.log("- " + year);
             p_result.year = parseFloat(this.year);
             me.mapView.setDistributionMapData(p_result);
 

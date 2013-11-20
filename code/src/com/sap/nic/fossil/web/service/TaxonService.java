@@ -36,7 +36,7 @@ public class TaxonService
 	{
 		JSONObject result = new JSONObject();
 		
-		PreparedStatement statement = createSqlStatement("CALL FOSSIL195_TEST.FS_PROC_SQL_TAXA_COUNT_MAIN(?, ?, ?, ?)", p_className, p_year);
+		PreparedStatement statement = createSqlStatement("CALL FOSSIL195_DEMO.FS_PROC_SQL_TAXA_COUNT_MAIN_EX(?, ?, ?, ?)", p_className, p_year);
 		statement.execute();
 		ResultSet resultSet = statement.getResultSet();
 		
@@ -46,7 +46,7 @@ public class TaxonService
 			JSONObject cls = new JSONObject();
 			
 			String className = resultSet.getString("CLASS"); 
-			if (className.trim().equals("") || className.equals("1") || className.equals("1111"))
+			if (className.trim().equals("") || className.equals("1") || className.equals("1111") || className.equals("?"))
 			{
 				className = "Unkown";
 			} 
@@ -93,11 +93,11 @@ public class TaxonService
 		if(p_className.equals("GetExplicitCurve"))
 		{
 			p_className = "";
-			statement = createSqlStatement("CALL FOSSIL195_TEST.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.0001);
+			statement = createSqlStatement("CALL FOSSIL195_DEMO.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.1);
 		}
 		else{
 
-			statement = createSqlStatement("CALL FOSSIL195_TEST.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.9);
+			statement = createSqlStatement("CALL FOSSIL195_DEMO.FS_PROC_SQL_DIVERSITY_CURVE(?, ?)", p_className, 0.9);
 		}
 		statement.execute();
 		ResultSet resultSet = statement.getResultSet();
@@ -125,7 +125,7 @@ public class TaxonService
 	@Path("diversity/taxa")
 	public Response getTaxa() throws Exception
 	{
-		PreparedStatement statement = createSqlStatement("call FOSSIL195_TEST.FS_PROC_SQL_TEST_MA()");		
+		PreparedStatement statement = createSqlStatement("call FOSSIL195_DEMO.FS_PROC_SQL_TEST_MA()");		
 		statement.execute();
 		ResultSet resultSet = statement.getResultSet();
 		
