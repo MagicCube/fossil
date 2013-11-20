@@ -70,7 +70,7 @@ fo.view.DistributionMapView = function()
 
     me.initLayerSwitcher = function()
     {
-        _$layerSwitcher = $("<div class='viewSwitcher'><ul><li id='bubble'>Bubble</li><li id='polygon'>Polygon</li></ul></div>");
+        _$layerSwitcher = $("<div class='viewSwitcher'><ul><li id='bubble'>气泡图</li><li id='polygon'>多边形图</li></ul></div>");
         _$layerSwitcher.on("click", _switcher_onclick);
         me.$element.append(_$layerSwitcher);
 

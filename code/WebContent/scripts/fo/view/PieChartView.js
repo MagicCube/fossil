@@ -128,10 +128,10 @@ fo.view.PieChartView = function()
     {
     	
        	_classView  = (args.className == null||args.className == "")?false:true;
-     	_infopadview.select("#title").text(_classView?args.className:"Biodiversity");
+     	_infopadview.select("#title").text(_classView?args.className:"生物多样性");
     	_infopadview.select("#year").text(Math.round(args.yearSelected));
-    	_infopadview.select("#ma").text("million years ago");
-    	_infopadview.select("#taxacount").text("Taxa Count: " + _totalCount);
+    	_infopadview.select("#ma").text("百万年前");
+    	_infopadview.select("#taxacount").text("物种总数： " + _totalCount);
     	
     	//Calculate area
     	if (me.polygonArea == 0 || me.polygonArea == "")
@@ -142,7 +142,7 @@ fo.view.PieChartView = function()
     	{
     		me.polygonArea = _addCommas(me.polygonArea.toString());
     	}
-    	_infopadview.select("#area").text("Area: " + me.polygonArea + "km²");
+    	_infopadview.select("#area").text("面积： " + me.polygonArea + "km²");
 
     	if (!_classView)
     	{
@@ -163,7 +163,7 @@ fo.view.PieChartView = function()
     {
 		
 		_totalValue = 0;	//reset to zero
-    	_infopadview.select("#proportion").text("Group Proportion");
+    	_infopadview.select("#proportion").text("各纲占比");
  		
 		//initialize pie
         _filteredPieData = _pie(me.data).filter(_filterData);
