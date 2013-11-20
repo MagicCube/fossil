@@ -56,11 +56,28 @@ fo.view.PieChartView = function()
        	div.append("span")
 				    .attr("id", "ma");
        	
-       	_infopadview.append("span")
-					.attr("id", "taxacount");
-       	_infopadview.append("span")
-       				.attr("id", "area");
-//       	
+       	div = _infopadview.append("div"); 
+       	div.attr("id", "taxacount");
+       	div.append("span")
+       				.attr("id", "taxa");
+       	div.append("span")
+				    .attr("id", "count");
+      	
+       	div = _infopadview.append("div"); 
+       	div.attr("id", "taxacount");
+       	div.append("span")
+       				.attr("id", "taxa");
+       	div.append("span")
+				    .attr("id", "count");
+
+       	div = _infopadview.append("div"); 
+       	div.attr("id", "area");
+       	div.append("span")
+       				.attr("id", "areacaption");
+       	div.append("span")
+				    .attr("id", "areavalue");
+
+       	//       	
 //       	if (_classView)
 //       	{
 //       		//class is defined, no pie
@@ -131,7 +148,9 @@ fo.view.PieChartView = function()
      	_infopadview.select("#title").text(_classView?args.className:"生物多样性");
     	_infopadview.select("#year").text(Math.round(args.yearSelected));
     	_infopadview.select("#ma").text("百万年前");
-    	_infopadview.select("#taxacount").text("物种总数： " + _totalCount);
+    	_infopadview.select("#taxa").text("物种总数： " );
+       	_infopadview.select("#count").text(_totalCount);
+   	
     	
     	//Calculate area
     	if (me.polygonArea == 0 || me.polygonArea == "")
@@ -142,7 +161,9 @@ fo.view.PieChartView = function()
     	{
     		me.polygonArea = _addCommas(me.polygonArea.toString());
     	}
-    	_infopadview.select("#area").text("面积： " + me.polygonArea + "km²");
+    	_infopadview.select("#areacaption").text("面积： ");
+    	_infopadview.select("#areavalue").text(me.polygonArea + "km²");
+   	
 
     	if (!_classView)
     	{
