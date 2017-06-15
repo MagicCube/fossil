@@ -8,17 +8,17 @@ fo.scn.WelcomeScene = function()
     me.autoFillParent = true;
     me.elementClass = "WelcomeScene";
     var base = {};
-    
+
     var _$intro = null;
 
     base.init = me.init;
     me.init = function(p_options)
     {
         base.init(p_options);
-        
+
         _initIntro();
     };
-    
+
     function _initIntro()
     {
         _$intro = $("#intro");
@@ -41,51 +41,48 @@ fo.scn.WelcomeScene = function()
     me.activate = function(args, isPoppedBack)
     {
         base.activate(args, isPoppedBack);
-
-        if (!isPoppedBack)
-        {
+        _$intro.css({
+            transform: "scale(0.8)",
+            opacity: 0
+        });
+        setTimeout(function() {
             _$intro.css({
-                display: "block",
+                transform: "",
                 opacity: 1
             });
-        }
-        else
-        {
-            
-        }
+        });
     };
-    
+
     me.start = function()
     {
         _$intro.transit({
             opacity: 0,
-            scale: 0.01,
-            rotateY: "180deg"
+            scale: 0.5
         }, 500, function()
         {
             _$intro.remove();
         });
-        
+
         setTimeout(function(){
             fo.app.setRootScene("TaxonSequence");
         }, 250);
     };
-    
-    
+
+
     var _step = 0;
     me.onKeydown = function(e)
     {
         if (e.keyCode == 13 || e.keyCode == 32 || e.keyCode == 34)
         {
-            if (_step == 0)
-            {
-                _$intro.addClass("flipped");
-                _step = 1;
-            }
-            else
-            {
-                me.start();
-            }
+            // if (_step == 0)
+            // {
+            //     _$intro.addClass("flipped");
+            //     _step = 1;
+            // }
+            // else
+            // {
+            me.start();
+            // }
         }
         else if (e.keyCode == 33)
         {
