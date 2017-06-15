@@ -192,13 +192,6 @@ fo.BaseApp = function()
                     height: me.frame.height
                 };
             }
-            else if (p_sceneId === "TaxonDiversity")
-            {
-                frame = {
-                    width: me.frame.width - 100,
-                    height: me.frame.height - 100
-                };
-            }
             scene = new cls({
                 id: p_sceneId,
                 frame: frame

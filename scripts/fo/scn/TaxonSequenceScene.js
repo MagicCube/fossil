@@ -125,7 +125,7 @@ fo.scn.TaxonSequenceScene = function()
 
     function _onyearclicked(e)
     {
-    	 fo.app.popupScene("TaxonDiversity", {
+    	 fo.app.popupScene("TaxonDetail", {
              className: null,
              yearSelected: e.year
          });
@@ -135,7 +135,7 @@ fo.scn.TaxonSequenceScene = function()
     function _ongroupclicked(e)
     {
     	console.log(e.className);
-        fo.app.popupScene("TaxonDiversity", {
+        fo.app.popupScene("TaxonDetail", {
             className: e.className,
             yearSelected: null
         });

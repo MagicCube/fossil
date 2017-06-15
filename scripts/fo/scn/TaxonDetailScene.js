@@ -12,12 +12,12 @@ fo.scn.TaxonDetailScene = function()
     me.elementClass = "TaxonDetailScene";
     me.autoFillParent = true;
     var base = {};
-    
+
     me.taxon = null;
     me.distributionView = null;
     me.playControlView = null;
     me.infoView = null;
-    
+
     var _$title = null;
 
     base.init = me.init;
@@ -33,21 +33,21 @@ fo.scn.TaxonDetailScene = function()
         {
             height = fo.app.frame.height - 80;
         }
-        me.frame = { width: width, height: height };
+        me.frame = { width: width, height: height, x: (screen.availWidth - width) / 2, y: (screen.availHeight - height) / 2 };
         base.init(p_options);
-        
+
         me.initTitle();
         me.initInfoView();
         me.initPlayControlView();
         me.initDistributionView();
     };
-    
+
     me.initTitle = function()
     {
         _$title = $("<h1 id='title'>");
         me.$container.append(_$title);
     };
-    
+
     me.initInfoView = function()
     {
         me.infoView = fo.view.TaxonInfoView({
@@ -72,12 +72,12 @@ fo.scn.TaxonDetailScene = function()
         });
         me.addSubview(me.distributionView);
     };
-    
+
     me.initPlayControlView = function()
     {
         me.playControlView = new fo.view.PlayControlView({
             drivenMode: "timer",
-            frame: { bottom: 10, left: 10, right: 10 } 
+            frame: { bottom: 10, left: 10, right: 10 }
         });
         me.addSubview(me.playControlView);
     };
@@ -94,10 +94,10 @@ fo.scn.TaxonDetailScene = function()
         }
         else
         {
-            
+
         }
     };
-    
+
     base.deactivate = me.deactivate;
     me.deactivate = function()
     {
@@ -105,7 +105,7 @@ fo.scn.TaxonDetailScene = function()
         me.distributionView.deactivate();
         me.playControlView.pause();
     };
-    
+
     me.setTaxon = function(p_taxon)
     {
         me.taxon = p_taxon;
@@ -113,7 +113,7 @@ fo.scn.TaxonDetailScene = function()
         me.infoView.setTaxon(me.taxon);
         me.playControlView.setRange([me.taxon.start, me.taxon.end]);
     };
-    
+
     me.onKeydown = function(e)
     {
         if (e.keyCode == 27)

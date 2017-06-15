@@ -9,7 +9,7 @@ fo.view.DiversityGlobeView3D = function()
     me.maxLineLength = 40;
     me.antialias = false;
     var base = {};
-    
+
     me.playControlView = null;
 
     base.init = me.init;
@@ -23,7 +23,7 @@ fo.view.DiversityGlobeView3D = function()
         }
         _playControlView_onpositionchanged();
     };
-    
+
     me.initDataSet = function()
     {
         me.dataSet = [];
@@ -35,10 +35,10 @@ fo.view.DiversityGlobeView3D = function()
             me.dataSet.add(row);
         }
     };
-    
-    
-    
-    
+
+
+
+
     me.setPlayControlView = function(p_playControlView)
     {
         if (me.playControlView != null)
@@ -46,22 +46,37 @@ fo.view.DiversityGlobeView3D = function()
             me.playControlView.off("positionchanged", _playControlView_onpositionchanged);
             me.playControlView = null;
         }
-        
+
         if (p_playControlView != null)
         {
             me.playControlView = p_playControlView;
             me.playControlView.on("positionchanged", _playControlView_onpositionchanged);
         }
     };
-    
-    
+
+
     function _playControlView_onpositionchanged(e)
     {
-        _simulateDataSetChanges();
-        me.setData(me.dataSet);
-        me.render();
+        if (me.animationFrameIndex === undefined)
+        {
+            me.animationFrameIndex = 0;
+        }
+        else
+        {
+            me.animationFrameIndex++;
+        }
+        if (me.animationFrameIndex > 5)
+        {
+            me.animationFrameIndex = 0;
+        }
+        if (me.animationFrameIndex === 0)
+        {
+            _simulateDataSetChanges();
+            me.setData(me.dataSet);
+            me.render();
+        }
     }
-    
+
     function _simulateDataSetChanges()
     {
         for (var i = 0; i < me.dataSet.length; i++)

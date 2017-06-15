@@ -1,6 +1,7 @@
 $ns("fo.scn");
 
 $import("fo.view.DiversityGlobeView3D");
+$import("fo.view.DistributionGlobeView3D");
 
 $include("fo.res.DiversityScene.css");
 
@@ -10,7 +11,7 @@ fo.scn.TaxonDiversityScene = function()
     me.title = "";
     me.autoFillParent = true;
     var base = {};
-    
+
     me.globeView = null;
     me.playControlView = null;
 
@@ -21,7 +22,7 @@ fo.scn.TaxonDiversityScene = function()
         me.initPlayControlView();
         me.initGlobeView();
     };
-    
+
     me.initGlobeView = function()
     {
         me.globeView = new fo.view.DiversityGlobeView3D({
@@ -33,12 +34,12 @@ fo.scn.TaxonDiversityScene = function()
         });
         me.addSubview(me.globeView);
     };
-    
+
     me.initPlayControlView = function()
     {
         me.playControlView = new fo.view.PlayControlView({
             range: [0, fo.taxa.length * 2],
-            frame: { bottom: 10, left: 10, right: 10 } 
+            frame: { bottom: 10, left: 10, right: 10 }
         });
         me.addSubview(me.playControlView);
     };
@@ -55,13 +56,13 @@ fo.scn.TaxonDiversityScene = function()
         }
         else
         {
-            
+
         }
     };
-    
-    
-    
-    
+
+
+
+
     me.onKeydown = function(e)
     {
         if (e.keyCode == 27)
