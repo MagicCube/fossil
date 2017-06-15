@@ -6,23 +6,24 @@ $import("fo.scn.TaxonSequenceScene");
 $import("fo.scn.TaxonDetailScene");
 $import("fo.scn.WelcomeScene");
 $import("fo.scn.BioDiversityScene");
+$import("fo.scn.TaxonDiversityScene");
 
 fo.DefaultApp = function()
 {
     var me = $extend(fo.BaseApp);
     me.homeSceneName = "Welcome";
     var base = {};
-    
+
     me.searchBoxView = null;
-    
+
     me.topMove = 206;
     me.leftMove = 155;
-    
+
     base.init = me.init;
     me.init = function(p_options)
     {
         base.init(p_options);
-        
+
         me.initSearchBoxView();
 
     };
@@ -38,6 +39,6 @@ fo.DefaultApp = function()
         me.searchBoxView.hide();
         me.addSubview(me.searchBoxView);
     };
-    
+
     return me.endOfClass(arguments);
 };

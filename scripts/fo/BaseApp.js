@@ -19,18 +19,18 @@ fo.BaseApp = function()
     me.appId = "fo.App";
     me.appDisplayName = "The Fossil Project";
     var base = {};
-    
+
     me.scenes = [];
     me.rootScene = null;
     me.activeScene = null;
     me.poppedScene = null;
     me.homeSceneName = "Welcome";
-    
+
     me.taxons = [];
     me.sections = [];
-    
+
     me.searchBoxView = null;
-    
+
     var _$background = null;
     var _$overlay = null;
 
@@ -39,26 +39,26 @@ fo.BaseApp = function()
     {
         me.frame = { width: window.innerWidth, height: window.innerHeight };
         base.init(p_options);
-        
+
         me.initBackground();
         me.initOverlay();
        // me.loadTaxons();
         me.loadTaxa();
         me.loadSections();
         me.loadDiversityCurve();
-        
+
         me.$container.on("mousewheel", function(e)
         {
             e.preventDefault();
         });
     };
-    
+
     me.initBackground = function()
     {
         _$background = $("<img id='background' src='" + mx.getResourcePath("fo.res.images.background", "jpg") + "'>");
         me.$container.append(_$background);
     };
-    
+
     me.initOverlay = function()
     {
         _$overlay = $("<div id='overlay'/>");
@@ -69,10 +69,10 @@ fo.BaseApp = function()
                 me.hidePoppedScene();
             }
         });
-    };   
-    
-    
-    
+    };
+
+
+
     me.loadTaxons = function()
     {
         $.ajax({
@@ -89,11 +89,11 @@ fo.BaseApp = function()
             }
         });
     };
-    
+
     me.loadTaxa = function()
     {
         $.ajax({
-            url: $mappath("~/api/taxon/diversity/taxa"),
+            url: $mappath("~/data/taxa.json"),
             async: false
         }).success(function(fossil)
         {
@@ -104,37 +104,37 @@ fo.BaseApp = function()
             for (var i = 0; i < taxa.length; i++)
             {
                 var taxon = taxa[i];
-               
+
                 fo.taxa.add(taxon);
                 fo.taxa[taxon.id] = taxon;
-                
+
             }
-            
+
             //console.log(fo.taxa);
 
         });
     };
-    
+
     me.loadDiversityCurve = function()
     {
     	$.ajax({
-    		url: $mappath("~/api/taxon/diversity/curve"),
+    		url: $mappath("~/data/curve.json"),
     		data: {class: "GetExplicitCurve"},
     		async: false
     	}).success(function(curve)
     	{
     		fo.diverCurve = [];
-    		
+
     		for(var i = 0; i < curve.length; i ++)
     		{
     			var diver =  curve[i];
-    			
-    			fo.diverCurve.add(diver);     			
+
+    			fo.diverCurve.add(diver);
     		}
-    		
+
     	});
     };
-    
+
     me.loadSections = function()
     {
         $.ajax({
@@ -159,8 +159,8 @@ fo.BaseApp = function()
     {
         me.setRootScene(me.homeSceneName, { taxon: fo.taxa[0], frame: { left: 0, right: 0 } });
     };
-    
-    
+
+
     $(document).on("keydown", function(e)
     {
         if (e.keyCode == 190)
@@ -172,15 +172,16 @@ fo.BaseApp = function()
             me.activeScene.onKeydown(e);
         }
     });
-    
-    
-    
+
+
+
     me.getScene = function(p_sceneId, p_isRootScene)
     {
         var scene = me.scenes[p_sceneId];
         if (scene == null)
         {
             var cls = fo.scn[p_sceneId + "Scene"];
+            console.log(p_sceneId + "Scene");
             var frame = null;
             if (p_isRootScene)
             {
@@ -189,6 +190,13 @@ fo.BaseApp = function()
                     top: 0,
                     width: me.frame.width,
                     height: me.frame.height
+                };
+            }
+            else if (p_sceneId === "TaxonDiversity")
+            {
+                frame = {
+                    width: me.frame.width - 100,
+                    height: me.frame.height - 100
                 };
             }
             scene = new cls({
@@ -200,7 +208,7 @@ fo.BaseApp = function()
         }
         return scene;
     };
-    
+
     me.setRootScene = function(p_sceneId, args)
     {
         var scene = me.getScene(p_sceneId, true);
@@ -216,7 +224,7 @@ fo.BaseApp = function()
         me.activeScene = scene;
         scene.activate(args, false);
     };
-    
+
     me.popupScene = function(p_sceneId, args)
     {
         var scene = me.getScene(p_sceneId);
@@ -244,7 +252,7 @@ fo.BaseApp = function()
         }, 400, "ease");
         return scene;
     };
-    
+
     me.hidePoppedScene = function()
     {
         if (me.poppedScene != null)
@@ -272,12 +280,12 @@ fo.BaseApp = function()
             //me.searchBoxView.$container.fadeIn();
         }
     };
-    
+
     me.showOverlay = function()
     {
         _$overlay.fadeIn();
     };
-    
+
     me.hideOverlay = function()
     {
         _$overlay.fadeOut();

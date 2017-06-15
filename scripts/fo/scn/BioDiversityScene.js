@@ -47,12 +47,12 @@ fo.scn.BioDiversityScene = function()
         me.initLineChartView();
         me.initDistributionMapView();
         me.initPieChartView();
-        
+
         if(screen.availHeight != 1080)
         {
         	var rate = screen.availHeight / 1080;
-        	
-        	me.$element.find("#padinfoview").css({"-webkit-Transform": "scale(" + rate + ")", "-webkit-Transform-Origin": "left top"});      	
+
+        	me.$element.find("#padinfoview").css({"-webkit-Transform": "scale(" + rate + ")", "-webkit-Transform-Origin": "left top"});
         	me.$element.find(".viewSwitcher").css({"-webkit-Transform": "scale(" + rate + ")", "-webkit-Transform-Origin": "left bottom"});
         	me.$element.find("#linechart").css({"-webkit-Transform": "scale(" + rate + ")", "-webkit-Transform-Origin": "right bottom"});
         }
@@ -134,14 +134,14 @@ fo.scn.BioDiversityScene = function()
 //            "className" : 'Equisetoph',
 //            "yearSelected" : null
 //        };
-          
+
         _UpdateArgsAndLineChartData(args); //set curve and update selectedYear
-        
+
         if (!isPoppedBack)
         {
             console.log("fo.scn.BioDiversityScene is now activated.");
            // console.log(me.args);
-            
+
             $.ajax({
                 url: $mappath("~/api/taxon/diversity/distribution"),
                 data: {
@@ -154,8 +154,8 @@ fo.scn.BioDiversityScene = function()
                 console.log("- " + year);
                 p_result.year = parseFloat(this.year);
                 me.mapView.setDistributionMapData(p_result);
-                
-                
+
+
                 me.pieChartView.polygonArea = me.mapView.getPolygonArea(); //must be former
                 me.pieChartView.setPieChartData(p_result, me.args);
             });
@@ -181,7 +181,7 @@ fo.scn.BioDiversityScene = function()
     		args.className = args.className.trim();
     	}
     	$.ajax({
-    		url: "/fossil/api/taxon/diversity/curve",
+    		url: "/data/curve.json",
     		data: {class: args.className},
     		async: false
     	}).success(function(p_result)
@@ -201,13 +201,13 @@ fo.scn.BioDiversityScene = function()
     					me.lineChartView.setCurveData(p_result);
     			        me.lineChartView.createLineChart(me.args);
                     }, 100);
-		       
-		        
+
+
    	});
-    	
+
      };
-   
-    
+
+
     me.deactivate = function()
     {
     	me.mapView.reset();
@@ -219,7 +219,7 @@ fo.scn.BioDiversityScene = function()
     function _lineChartView_onyearchanged(year)
     {
         me.args.yearSelected = year;
-        
+
         //console.log("+ " + year);
         $.ajax({
             url: $mappath("~/api/taxon/diversity/distribution"),
@@ -240,8 +240,8 @@ fo.scn.BioDiversityScene = function()
         }).fail(function(A, B, C){
             console.log("ERROR", A, B, C);
         });
-        
+
     }
-    
+
     return me.endOfClass(arguments);
 };

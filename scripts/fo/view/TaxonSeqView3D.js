@@ -12,41 +12,41 @@ fo.view.TaxonSeqView3D = function()
     me.elementClass = "TaxonSeqView";
     me.renderingMode = "css";
     var base = {};
-    
+
     me.leftMove = 125;
     me.topMove = 270;
     me.spacing = 140;
     me.taxonDivHeight = 19;
     me.labelHeight = 40;
     me.fixedTop = 233;
-    
+
     me.groups = null;
     me.groupType = null;
-    
+
     me.mode = "2D";
     me.scale = 1;
-    
+
     me.padding = {
         top: me.topMove,
         left: 25,
         right: 25
     };
-    
-    
+
+
     me.rootObject = null;
     me.$scene = null;
     me.$camera = null;
     me.styleSheet = null;
-    
+
     me.ongroupclicked = null;
-    
+
     base.init = me.init;
     me.init = function(p_options)
     {
         base.init(p_options);
-        
+
         me.startAnimation("Splash");
-        
+
         var i = 0;
         for (i = 0; i < document.styleSheets.length; i++)
         {
@@ -56,36 +56,36 @@ fo.view.TaxonSeqView3D = function()
             }
         }
         me.styleSheet = document.styleSheets[i];
-        
+
         me.$element.on("mousedown", ".scene", _scene_onclick);
         me.$element.on("click", ".className", _class_onclick);
     };
-    
+
     base.initScene = me.initScene;
     me.initScene = function()
     {
         me.switchTo3D();
-        
+
         if ($speed == "fast")
         {
             setTimeout(function(){
                 me.startAnimation("To2D");
             }, 50);
         }
-        
+
         base.initScene();
 
     };
-    
+
     base.initCamera = me.initCamera;
     me.initCamera = function()
     {
         base.initCamera();
-        
+
         me.camera.position.z = 0;
     };
-    
-    
+
+
 
     me.initTaxons = function()
     {
@@ -97,12 +97,12 @@ fo.view.TaxonSeqView3D = function()
           .attr({
               "id": function(d) { return d.id; }
           })
-          
+
           .append("div")
           .style({
               "background-color": function() { return "rgba(123, 29, 32, " + (0.4 + Math.random() * 0.5) + ")"; }
           });
-        
+
         innerDiv.append("span")
                 .attr("id", "name")
                 .text(function(d) { return d.name; });
@@ -110,17 +110,17 @@ fo.view.TaxonSeqView3D = function()
                 .attr("id", "fullName")
                 .text(function(d) { return d.fullName; });
     };
-    
+
     me.initObjects = function()
     {
         me.initTaxons();
 
         me.rootObject = new THREE.Object3D();
-        
+
         var vector = new THREE.Vector3();
         var l = 400;
         var radius = l * 3.5;
-        
+
         var $t = me.$container.find(".taxon");
         for (var i = 0; i < l; i++)
         {
@@ -143,8 +143,8 @@ fo.view.TaxonSeqView3D = function()
         }
         me.scene.add(me.rootObject);
     };
-    
-    
+
+
     base.startAnimation = me.startAnimation;
     me.startAnimation = function(p_animationName, duration, p_args)
     {
@@ -167,12 +167,12 @@ fo.view.TaxonSeqView3D = function()
         base.startAnimation();
         return ani;
     };
-    
+
     me.groupBy = function(p_group)
     {
- 
+
     	me.groupType = p_group;
-    	
+
     	if (p_group == "class")
     	{
     		me.groups = fo.util.GroupUtil.getClsTaxaGroups();
@@ -181,7 +181,7 @@ fo.view.TaxonSeqView3D = function()
     		});
 
     	}
-    	
+
     	else if (p_group == "genus")
     	{
     		me.groups = fo.util.GroupUtil.getGenusTaxaGroups();
@@ -191,9 +191,9 @@ fo.view.TaxonSeqView3D = function()
     		});*/
 /*    		var unknownGroup = [];
     		for(var i = 0; i < me.groups.length; i++)
-    		{   
+    		{
     			if( me.groups[i].name.startsWith("Unknown"))
-    			{  				
+    			{
     				unknownGroup.push(me.groups[i]);
     				me.groups.splice(i, 1);
     				//console.log(i + " ," + me.groups[i].name);
@@ -213,35 +213,35 @@ fo.view.TaxonSeqView3D = function()
 		{
     		me.groups = null;
 		}
-		
+
     	me.startAnimation("Grouping", null, {  });
 
     };
-    
+
     me.switchTo3D = function()
     {
         me.mode = "3D";
         me.$container.removeClass("two-d");
         me.$container.addClass("three-d");
     };
-    
+
     me.switchTo2D = function()
     {
-    	
+
         me.stopAnimation();
         me.isRendering = false;
         me.mode = "2D";
-        
+
         fo.app.searchBoxView.$container.delay(600).fadeIn("slow");
-        
+
         me.$container.append("<div id='topShadow' class='shadow'/><div id='bottomShadow' class='shadow'/>");
         me.$container.find(".shadow").hide().fadeOut(5000);
-        
+
        var scene = me.parentView;
        scene.chronLineView.$element.fadeIn(1000);
        scene.groupSwitchView.$element.fadeIn(1000);
        scene.$mask.fadeIn(1000);
-        
+
         me.$container.find(".camera").css(
         {
             transform : "",
@@ -258,7 +258,7 @@ fo.view.TaxonSeqView3D = function()
         {
             transform : "",
             webkitTransformStyle : "",
-          
+
             position: "absolute"
         });
         me.$container.find(".taxon div").css(
@@ -272,7 +272,7 @@ fo.view.TaxonSeqView3D = function()
             "width": "",
             "height": ""
         });
-        
+
         me.$camera = me.$container.find(".camera");
         me.$camera.css({
             "-webkit-transform-origin-x": "",
@@ -283,27 +283,27 @@ fo.view.TaxonSeqView3D = function()
 
         me.$container.addClass("two-d");
         me.$container.removeClass("three-d");
-                
+
         me.$camera.append(me.$container.children(".taxon"));
         me.$camera.append("<div id=placeHolder/>");
-        
+
         TWEEN.removeAll();
-        
+
         fo.app.searchBoxView.delegate = me;
         me.$scene.css("overflow", "auto").on("mousewheel", _onmousewheel);
       //  me.$scene.on("click", ".taxon", _taxon_onclick);
         me.$scene.on("scroll", _onmousescroll);
-        
+
         me.$element.on("mouseenter", _onmouseenter);
     };
-    
+
     me.search = function(p_keyword, p_control)
     {
         me.setScale(1);
         var keyword = p_keyword.trim().toLowerCase();
-               
+
         me.$scene.scrollTop(0);
-              
+
         var firstfound = false;
         for (var i = 0; i < fo.taxa.length; i++)
         {
@@ -317,7 +317,7 @@ fo.view.TaxonSeqView3D = function()
             		me.$scene.scrollTop(parseInt(top[0]) - me.topMove);
             		firstfound = true;
             	}
-            	
+
                 if(keyword == "")
                 {
                 	 $div.removeClass("foundStatus");
@@ -336,13 +336,13 @@ fo.view.TaxonSeqView3D = function()
             }
         }
     };
-    
+
     me.setScale = function(p_scale)
     {
         if (me.scale == p_scale) return;
-        
+
         me.scale = p_scale;
-        
+
         var height = parseInt(18 * me.scale);
         me.styleSheet.rules[3].style.height = height + "px";
         if (me.scale >= 0.8)
@@ -354,14 +354,14 @@ fo.view.TaxonSeqView3D = function()
             me.styleSheet.rules[5].style.display = "none";
         }
     };
-    
+
     function _class_onclick(e)
     {
     	var className = this.id;
-    	
+
     	if(className == "Unkown")
     	{
-    		
+
     	}
     	else
     	{
@@ -369,9 +369,9 @@ fo.view.TaxonSeqView3D = function()
 	    		className: className
 	    	});
     	}
-    	
+
     }
-    
+
     function _taxon_onclick(e)
     {
         var element = this;
@@ -381,15 +381,15 @@ fo.view.TaxonSeqView3D = function()
             title: taxon.fullName
         });
     }
-    
+
     function _onmousewheel(e)
     {
         if (e.shiftKey)
         {
             e.preventDefault();
-            
+
             var scale = me.scale + (e.originalEvent.wheelDelta) / 1000;
-            
+
             if (scale > 1)
             {
                 scale = 1;
@@ -398,7 +398,7 @@ fo.view.TaxonSeqView3D = function()
             {
                 scale = 0.1;
             }
-            
+
             me.setScale(scale);
         }
         else
@@ -412,7 +412,7 @@ fo.view.TaxonSeqView3D = function()
             {
                 e.preventDefault();
             }
-            
+
             /*
             if (event.wheelDelta < -30)
             {
@@ -426,19 +426,19 @@ fo.view.TaxonSeqView3D = function()
         }
         e.stopPropagation();
     }
-    
+
     function _onmousescroll(e)
     {
     	var scene = me.parentView;
     	scene.chronLineView.$element.css("left", - me.$scene.get(0).scrollLeft);
-    	
+
     }
-    
+
     function _onmouseenter(e)
     {
     	me.parentView.chronLineView.$element.find(".moveLine").css("left", -3);
     }
-    
+
     function _scene_onclick(e)
     {
     	var groups = me.$element.find("#groupUnderlay")[0];
@@ -448,28 +448,28 @@ fo.view.TaxonSeqView3D = function()
 	    	{
 	    		className = me.$element.find(".labelFixed").text();
 	    	}
-	
-		
+
+
 	    	for(var i = 0; i < groups.children.length; i++)
 	    	{
 	    		var top = groups.children[i].offsetTop;
-	
+
 	    		if(me.$scene[0].scrollTop + e.clientY < top + me.labelHeight && me.$scene[0].scrollTop + e.clientY  > top && e.clientX < 300)
 	    		{
-	    			
-	        		className = groups.children[i].innerText;       		       		
+
+	        		className = groups.children[i].innerText;
 	        		break;
 	    		}
-	    		
+
 	    	}
-	    	
+
 	    	if(className != null)
 	    	{
 	    		var cls = className.split("-");
 	    		console.log(cls[0]);
 	    		if(cls[0] == "Unkown")
 	        	{
-	        		
+
 	        	}
 	        	else
 	        	{
@@ -477,7 +477,7 @@ fo.view.TaxonSeqView3D = function()
 	    	    		className: cls[0]
 	    	    	});
 	        	}
-	    	}    	
+	    	}
     	}
     }
 
